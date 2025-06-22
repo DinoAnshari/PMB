@@ -80,7 +80,7 @@
         </div>
       </li>
 
-      @foreach (['prestasi', 'afirmasi', 'pindah', 'domisili'] as $jalur)
+      @foreach (['prestasi', 'afirmasi', 'domisili'] as $jalur)
       <li class="sidebar-list">
         <i class="fa-solid fa-thumbtack"></i>
         <a class="sidebar-link" href="{{ url('dashboard/jalur-' . $jalur) }}">

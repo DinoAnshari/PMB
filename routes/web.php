@@ -37,6 +37,16 @@ Route::prefix('dashboard')->group(function () {
     Route::get('/jalur', function () {
         return view('back.superadmin.jalur.index');
     })->name('jalur.index');
+    Route::get('/resets', function () {
+        return view('back.superadmin.resets.index');
+    })->name('resets.index');
+    Route::get('/jalur-prestasi', function () {
+        return view('back.superadmin.daftar-jalur.prestasi.index');
+    })->name('jalur-prestasi.index');
+    Route::get('/jalur-prestasi/show', function () {
+        return view('back.superadmin.daftar-jalur.prestasi.show');
+    })->name('jalur-prestasi.show');
+
 });
 
 
