@@ -64,6 +64,18 @@ Route::prefix('dashboard')->group(function () {
     Route::get('/jalur-afirmasi/afirmasi-tidak-lulus-pdf', function () {
         return view('back.superadmin.daftar-jalur.afirmasi.siswa_tidak_lulus');
     })->name('afirmasi-tidak-lulus-pdf.index');
+    Route::get('/jalur-domisili', function () {
+        return view('back.superadmin.daftar-jalur.domisili.index');
+    })->name('jalur-domisili.index');
+    Route::get('/jalur-domisili/show', function () {
+        return view('back.superadmin.daftar-jalur.domisili.show');
+    })->name('jalur-domisili.show');
+    Route::get('/jalur-domisili/domisili-lulus-pdf', function () {
+        return view('back.superadmin.daftar-jalur.domisili.siswa_lulus');
+    })->name('domisili-lulus-pdf.index');
+     Route::get('/jalur-domisili/domisili-tidak-lulus-pdf', function () {
+        return view('back.superadmin.daftar-jalur.domisili.siswa_tidak_lulus');
+    })->name('domisili-tidak-lulus-pdf.index');
 });
 
 
