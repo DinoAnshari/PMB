@@ -57,22 +57,8 @@
 
 <body>
     <div class="container">
-         @php
-        $manualPath = '/home/u833213562/domains/disdiksiantar.org/public_html/ppdb.disdiksiantar.org/images/logo/header.png';
-
-        $fileExists = file_exists($manualPath);
-        $imageData = $fileExists ? base64_encode(file_get_contents($manualPath)) : null;
-        $type = pathinfo($manualPath, PATHINFO_EXTENSION);
-
-
-        @endphp
-
         <div class="header">
-            @if ($imageData)
-            <img src="data:image/{{ $type }};base64,{{ $imageData }}" class="logo" height="150">
-            @else
-            <p>Gambar tidak ditemukan.</p>
-            @endif
+            <img src="images/logo/header.png" class="logo" height="150" alt="Logo Header">
         </div>
 
         <h3 style="background-color: rgb(30, 161, 179); color: white; padding: 5px;">Daftar Siswa Jalur Afirmasi (Lulus)</h3>
@@ -86,22 +72,30 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($afirmasis as $index => $item)
                 <tr>
-                    <td>{{ $index + 1 }}</td>
-                    <td>{{ $item->user->name ?? '-' }}</td>
-                    <td>{{ $item->user->biodata->nisn ?? '-' }}</td>
-                    <td>{{ $item->user->sekolah->nama_sekolah ?? '-' }}</td>
+                    <td>1</td>
+                    <td>Andi Saputra</td>
+                    <td>1234567890</td>
+                    <td>SMP Negeri 1</td>
                 </tr>
-                @endforeach
+                <tr>
+                    <td>2</td>
+                    <td>Siti Rahma</td>
+                    <td>0987654321</td>
+                    <td>SMP Negeri 2</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Budi Santoso</td>
+                    <td>1122334455</td>
+                    <td>SMP Negeri 3</td>
+                </tr>
             </tbody>
         </table>
-
     </div>
 
-
     <footer style="text-align: center; margin-top: 20px; font-size: 14px;">
-        Copyright © 2025 PPDB Online Dinas Pendidikan Pematangsiantar.
+        Copyright © 2025 PPDB SMPN Maju Jaya.
     </footer>
 </body>
 

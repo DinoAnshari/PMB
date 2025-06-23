@@ -46,7 +46,24 @@ Route::prefix('dashboard')->group(function () {
     Route::get('/jalur-prestasi/show', function () {
         return view('back.superadmin.daftar-jalur.prestasi.show');
     })->name('jalur-prestasi.show');
-
+    Route::get('/jalur-prestasi/prestasi-lulus-pdf', function () {
+        return view('back.superadmin.daftar-jalur.prestasi.siswa_lulus');
+    })->name('prestasi-lulus-pdf.index');
+    Route::get('/jalur-prestasi/prestasi-tidak-lulus-pdf', function () {
+        return view('back.superadmin.daftar-jalur.prestasi.siswa_tidak_lulus');
+    })->name('prestasi-tidak-lulus-pdf.index');
+    Route::get('/jalur-afirmasi', function () {
+        return view('back.superadmin.daftar-jalur.afirmasi.index');
+    })->name('jalur-afirmasi.index');
+    Route::get('/jalur-afirmasi/show', function () {
+        return view('back.superadmin.daftar-jalur.Afirmasi.show');
+    })->name('jalur-Afirmasi.show');
+    Route::get('/jalur-afirmasi/afirmasi-lulus-pdf', function () {
+        return view('back.superadmin.daftar-jalur.afirmasi.siswa_lulus');
+    })->name('afirmasi-lulus-pdf.index');
+    Route::get('/jalur-afirmasi/afirmasi-tidak-lulus-pdf', function () {
+        return view('back.superadmin.daftar-jalur.afirmasi.siswa_tidak_lulus');
+    })->name('afirmasi-tidak-lulus-pdf.index');
 });
 
 
