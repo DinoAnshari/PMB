@@ -101,5 +101,5 @@
     @include('back.superadmin.faqs.modal.create')
     @include('back.superadmin.faqs.modal.edit')
     @include('back.superadmin.faqs.modal.delete')
-@endpush
-@endsection
+    @endpush
+    @endsection

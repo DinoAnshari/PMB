@@ -124,6 +124,15 @@ Route::prefix('dashboard')->group(function () {
     Route::get('/pemeriksa-prestasi/show', function () {
         return view('back.pemeriksa.prestasi.show');
     })->name('pemeriksa-prestasi.show');
+
+     // Route dashboard khusus untuk role pemeriksa  
+    // Menampilkan halaman dashboard statis dari folder views/back/admin/
+    Route::get('/index_siswa', function () {
+        return view('back.siswa.index');
+    })->name('dashboard.index_siswa');
+    Route::get('/biodata', function () {
+        return view('back.siswa.biodata.index');
+    })->name('biodata.index');
 });
 
 
