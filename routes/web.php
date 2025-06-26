@@ -125,7 +125,7 @@ Route::prefix('dashboard')->group(function () {
         return view('back.pemeriksa.prestasi.show');
     })->name('pemeriksa-prestasi.show');
 
-     // Route dashboard khusus untuk role siswa  
+    // Route dashboard khusus untuk role siswa  
     // Menampilkan halaman dashboard statis dari folder views/back/siswa/
     Route::get('/index_siswa', function () {
         return view('back.siswa.index');
@@ -163,6 +163,21 @@ Route::prefix('dashboard')->group(function () {
         return view('back.siswa.daftar-jalur.afirmasi.kartu_pendaftaran');
     })->name('siswa.jalur-afirmasi.kartu-pendaftaran.index');
 
+    Route::get('/siswa/jalur-domisili', function () {
+        return view('back.siswa.daftar-jalur.domisili.index');
+    })->name('siswa.jalur-domisili.index');
+
+    Route::get('/siswa/jalur-domisili/create', function () {
+        return view('back.siswa.daftar-jalur.domisili.create');
+    })->name('siswa.jalur-domisili.create');
+
+    Route::get('/siswa/jalur-domisili/edit', function () {
+        return view('back.siswa.daftar-jalur.domisili.edit');
+    })->name('siswa.jalur-domisili.edit');
+
+    Route::get('/siswa/jalur-domisili/kartu-pendaftaran', function () {
+        return view('back.siswa.daftar-jalur.domisili.kartu_pendaftaran');
+    })->name('siswa.jalur-domisili.kartu-pendaftaran.index');
 });
 
 
