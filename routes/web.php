@@ -102,7 +102,7 @@ Route::prefix('dashboard')->group(function () {
     })->name('statistik.index');
 
     // Route dashboard khusus untuk role pemeriksa  
-    // Menampilkan halaman dashboard statis dari folder views/back/admin/
+    // Menampilkan halaman dashboard statis dari folder views/back/pemeriksa/
     Route::get('/pemeriksa-afirmasi', function () {
         return view('back.pemeriksa.afirmasi.index');
     })->name('pemeriksa-afirmasi.index');
@@ -125,14 +125,44 @@ Route::prefix('dashboard')->group(function () {
         return view('back.pemeriksa.prestasi.show');
     })->name('pemeriksa-prestasi.show');
 
-     // Route dashboard khusus untuk role pemeriksa  
-    // Menampilkan halaman dashboard statis dari folder views/back/admin/
+     // Route dashboard khusus untuk role siswa  
+    // Menampilkan halaman dashboard statis dari folder views/back/siswa/
     Route::get('/index_siswa', function () {
         return view('back.siswa.index');
     })->name('dashboard.index_siswa');
     Route::get('/biodata', function () {
         return view('back.siswa.biodata.index');
     })->name('biodata.index');
+    Route::get('/edit-profile', function () {
+        return view('back.siswa.profile.index');
+    })->name('edit-profile.index');
+
+    Route::get('/siswa/jalur-prestasi', function () {
+        return view('back.siswa.daftar-jalur.prestasi.index');
+    })->name('siswa.jalur-prestasi.index');
+    Route::get('/siswa/jalur-prestasi/create', function () {
+        return view('back.siswa.daftar-jalur.prestasi.create');
+    })->name('siswa.jalur-prestasi.create');
+    Route::get('/siswa/jalur-prestasi/edit', function () {
+        return view('back.siswa.daftar-jalur.prestasi.edit');
+    })->name('siswa.jalur-prestasi.edit');
+    Route::get('/siswa/jalur-prestasi/kartu-pendaftaran', function () {
+        return view('back.siswa.daftar-jalur.prestasi.kartu_pendaftaran');
+    })->name('siswa.jalur-prestasi.kartu-pendaftaran.index');
+
+    Route::get('/siswa/jalur-afirmasi', function () {
+        return view('back.siswa.daftar-jalur.afirmasi.index');
+    })->name('siswa.jalur-afirmasi.index');
+    Route::get('/siswa/jalur-afirmasi/create', function () {
+        return view('back.siswa.daftar-jalur.afirmasi.create');
+    })->name('siswa.jalur-afirmasi.create');
+    Route::get('/siswa/jalur-afirmasi/edit', function () {
+        return view('back.siswa.daftar-jalur.afirmasi.edit');
+    })->name('siswa.jalur-afirmasi.edit');
+    Route::get('/siswa/jalur-afirmasi/kartu-pendaftaran', function () {
+        return view('back.siswa.daftar-jalur.afirmasi.kartu_pendaftaran');
+    })->name('siswa.jalur-afirmasi.kartu-pendaftaran.index');
+
 });
 
 
