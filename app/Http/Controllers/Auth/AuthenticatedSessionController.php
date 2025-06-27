@@ -12,7 +12,7 @@ use Illuminate\View\View;
 class AuthenticatedSessionController extends Controller
 {
     /**
-     * Display the login view.
+     * Tampilkan halaman login.
      */
     public function create(): View
     {
@@ -20,26 +20,74 @@ class AuthenticatedSessionController extends Controller
     }
 
     /**
-     * Handle an incoming authentication request.
+     * Tangani permintaan login dari user.
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
+        $credentials = [
+            'email' => $request->input('email'),
+            'password' => $request->input('login.password'),
+        ];
+
+        if (!Auth::attempt($credentials, $request->boolean('remember'))) {
+            return back()->withErrors([
+                'email' => trans('auth.failed'),
+            ])->onlyInput('email');
+        }
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        $user = auth()->user();
+        $sekolah = $user->sekolah->nama_sekolah ?? '';
+
+        // Role: Super Admin
+        if ($user->hasRole('super admin')) {
+            return redirect()->intended(route('dashboard.index_super_admin', absolute: false));
+        }
+
+        // Pemeriksa
+        if ($user->hasRole("pemeriksa domisili $sekolah")) {
+            return redirect()->intended(route('dashboard.index_pemeriksa_domisili', absolute: false));
+        }
+
+        if ($user->hasRole("pemeriksa prestasi $sekolah")) {
+            return redirect()->intended(route('dashboard.index_pemeriksa_prestasi', absolute: false));
+        }
+
+        if ($user->hasRole("pemeriksa afirmasi $sekolah")) {
+            return redirect()->intended(route('dashboard.index_pemeriksa_afirmasi', absolute: false));
+        }
+
+        // Admin
+        if ($user->hasRole("admin domisili $sekolah")) {
+            return redirect()->intended(route('dashboard.index_admin_domisili', absolute: false));
+        }
+
+        if ($user->hasRole("admin prestasi $sekolah")) {
+            return redirect()->intended(route('dashboard.index_admin_prestasi', absolute: false));
+        }
+
+        if ($user->hasRole("admin afirmasi $sekolah")) {
+            return redirect()->intended(route('dashboard.index_admin_afirmasi', absolute: false));
+        }
+
+        // Siswa
+        if ($user->hasRole('siswa')) {
+            return redirect()->intended(route('dashboard.index_siswa', absolute: false));
+        }
+
+        // Jika tidak cocok role apa pun, kembali ke login
+        return redirect()->intended(route('/login', absolute: false));
     }
 
     /**
-     * Destroy an authenticated session.
+     * Logout dan akhiri session.
      */
     public function destroy(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
 
         return redirect('/');

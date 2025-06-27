@@ -1,13 +1,13 @@
 <header class="page-header row">
   <div class="logo-wrapper d-flex align-items-center col-auto">
     <a href="#">
-        <h3 style="color: black;">PPDB</h3>
-        <img class="dark-logo img-fluid" src="{{ asset('back/assets/images/logo/logo-dark.png') }}" alt="logo" />
+      <h3 style="color: black;">PPDB</h3>
+      <img class="dark-logo img-fluid" src="{{ asset('back/assets/images/logo/logo-dark.png') }}" alt="logo" />
     </a>
     <a class="close-btn toggle-sidebar" href="javascript:void(0)">
-        <svg class="svg-color">
-            <use href="{{ asset('back/assets/svg/iconly-sprite.svg#Category') }}"></use>
-        </svg>
+      <svg class="svg-color">
+        <use href="{{ asset('back/assets/svg/iconly-sprite.svg#Category') }}"></use>
+      </svg>
     </a>
   </div>
 
@@ -40,12 +40,13 @@
         <li class="profile-nav custom-dropdown">
           <div class="user-wrap">
             <div class="user-img">
-              <img src="{{ asset('back/assets/images/profile.png') }}" alt="user" />
+              <img src="{{ auth()->user()->biodata ? asset('storage/' . auth()->user()->biodata->pas_foto) : asset('back/assets/images/profile.png') }}" alt="user" />
             </div>
+
             <div class="user-content">
-              <h6>Nama User</h6>
+              <h6>{{ auth()->user()->name }}</h6>
               <p class="mb-0">
-                Role User
+                {{ auth()->user()->getRoleNames()->first() }}
                 <i class="fa-solid fa-chevron-down"></i>
               </p>
             </div>
@@ -59,14 +60,21 @@
                 <a class="ms-2" href="#">Account</a>
               </li>
 
+              <!-- Logout -->
               <li class="d-flex">
                 <svg class="svg-color">
                   <use href="{{ asset('back/assets/svg/iconly-sprite.svg#Login') }}"></use>
                 </svg>
-                <a class="ms-2" href="#">Log Out</a>
+                <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                  @csrf
+                  <button type="submit" class="ms-2" style="background: none; border: none; color: inherit; cursor: pointer;">
+                    Log Out
+                  </button>
+                </form>
               </li>
             </ul>
           </div>
+
         </li>
       </ul>
     </div>
