@@ -8,15 +8,15 @@
             </div>
             <div class="modal-body">
                 <div class="modal-toggle-wrapper">
-                    <form class="row g-3" action="#" method="POST">
-                        <!-- CSRF token dihapus untuk versi statis -->
+                    <form class="row g-3" action="{{ route('faqs.store') }}" method="POST">
+                        @csrf
                         <div class="col-md-12">
-                            <label class="form-label" for="question">Pertanyaan</label>
-                            <input class="form-control" id="question" name="question" type="text" placeholder="Masukkan pertanyaan" required>
+                            <label class="form-label" for="pertanyaan">Pertanyaan</label>
+                            <input class="form-control" id="pertanyaan" name="pertanyaan" type="text" placeholder="Masukkan pertanyaan" required>
                         </div>
                         <div class="col-md-12">
-                            <label class="form-label" for="answer">Jawaban</label>
-                            <textarea class="form-control" id="answer" name="answer" rows="4" placeholder="Masukkan jawaban" required></textarea>
+                            <label class="form-label" for="jawaban">Jawaban</label>
+                            <textarea class="form-control" id="jawaban" name="jawaban" rows="4" placeholder="Masukkan jawaban" required></textarea>
                         </div>
                         <input type="hidden" name="is_active" value="0">
                         <div class="col-md-12 form-check">

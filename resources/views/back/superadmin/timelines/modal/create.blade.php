@@ -8,24 +8,26 @@
             </div>
             <div class="modal-body">
                 <div class="modal-toggle-wrapper">
-                    <form class="row g-3">
+                    <form class="row g-3" action="{{ route('timelines.store') }}" method="POST">
+                        @csrf
+                        
                         <div class="col-md-12">
                             <label class="form-label" for="tanggal">Tanggal</label>
-                            <input class="form-control" id="tanggal" type="text" placeholder="Masukkan rentang tanggal, contoh: 26-27 April 2025" required>
+                            <input class="form-control" id="tanggal" name="tanggal" type="text" placeholder="Masukkan rentang tanggal, contoh: 26-27 April 2025" required>
                         </div>
-
+                        
                         <div class="col-md-12">
                             <label class="form-label" for="judul">Judul</label>
-                            <input class="form-control" id="judul" type="text" placeholder="Masukkan judul kegiatan" required>
+                            <input class="form-control" id="judul" name="judul" type="text" placeholder="Masukkan judul kegiatan" required>
                         </div>
-
+                        
                         <div class="col-md-12">
                             <label class="form-label" for="deskripsi">Deskripsi</label>
-                            <textarea class="form-control" id="deskripsi" rows="4" placeholder="Masukkan deskripsi kegiatan" required></textarea>
+                            <textarea class="form-control" id="deskripsi" name="deskripsi" rows="4" placeholder="Masukkan deskripsi kegiatan" required></textarea>
                         </div>
-
+                        
                         <div class="col-12">
-                            <button class="btn btn-primary" type="button">Simpan</button>
+                            <button class="btn btn-primary" type="submit">Simpan</button>
                             <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Batal</button>
                         </div>
                     </form>

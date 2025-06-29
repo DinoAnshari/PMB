@@ -8,22 +8,25 @@
             </div>
             <div class="modal-body">
                 <div class="modal-toggle-wrapper">
-                    <form class="row g-3" id="edit_timeline_form">
+                    <form class="row g-3" id="edit_timeline_form" method="POST">
+                        @csrf
+                        @method('PUT')
+                        
                         <div class="col-md-12">
                             <label class="form-label" for="edit_tanggal">Tanggal</label>
-                            <input class="form-control" id="edit_tanggal" type="text" placeholder="Masukkan rentang tanggal, contoh: 26-27 April 2025" required>
+                            <input class="form-control" id="edit_tanggal" name="tanggal" type="text" placeholder="Masukkan rentang tanggal, contoh: 26-27 April 2025" required>
                         </div>
                         <div class="col-md-12">
                             <label class="form-label" for="edit_judul">Judul</label>
-                            <input class="form-control" id="edit_judul" type="text" placeholder="Masukkan judul kegiatan" required>
+                            <input class="form-control" id="edit_judul" name="judul" type="text" placeholder="Masukkan judul kegiatan" required>
                         </div>
                         <div class="col-md-12">
                             <label class="form-label" for="edit_deskripsi">Deskripsi</label>
-                            <textarea class="form-control" id="edit_deskripsi" rows="4" placeholder="Masukkan deskripsi kegiatan" required></textarea>
+                            <textarea class="form-control" id="edit_deskripsi" name="deskripsi" rows="4" placeholder="Masukkan deskripsi kegiatan" required></textarea>
                         </div>
 
                         <div class="col-12">
-                            <button class="btn btn-warning" type="button">Update</button>
+                            <button class="btn btn-warning" type="submit">Update</button>
                             <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Batal</button>
                         </div>
                     </form>

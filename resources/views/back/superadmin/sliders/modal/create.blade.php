@@ -8,12 +8,12 @@
             </div>
             <div class="modal-body">
                 <div class="modal-toggle-wrapper">
-                    <form class="row g-3" action="#" method="POST" enctype="multipart/form-data">
-                      
+                    <form class="row g-3" action="{{ route('sliders.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
 
                         <div class="col-md-12">
-                            <label class="form-label" for="title">Judul</label>
-                            <input class="form-control" id="title" name="title" type="text" placeholder="Masukkan judul">
+                            <label class="form-label" for="judul">Judul</label>
+                            <input class="form-control" id="judul" name="judul" type="text" placeholder="Masukkan judul">
                         </div>
 
                         <div class="col-md-12">
@@ -22,18 +22,18 @@
                         </div>
 
                         <div class="col-md-12">
-                            <label class="form-label" for="description">Deskripsi</label>
-                            <textarea class="form-control" id="description" name="description" rows="4" placeholder="Masukkan deskripsi"></textarea>
+                            <label class="form-label" for="deskripsi">Deskripsi</label>
+                            <textarea class="form-control" id="deskripsi" name="deskripsi" rows="4" placeholder="Masukkan deskripsi"></textarea>
                         </div>
 
                         <div class="col-md-12">
-                            <label class="form-label" for="number">Nomor Urut</label>
-                            <input class="form-control" id="number" name="number" type="text" placeholder="Masukkan nomor urut (opsional)">
+                            <label class="form-label" for="nomor">Nomor Urut</label>
+                            <input class="form-control" id="nomor" name="nomor" type="text" placeholder="Masukkan nomor urut (opsional)">
                         </div>
 
                         <div class="col-md-12">
-                            <label class="form-label" for="image">Gambar</label>
-                            <input class="form-control" id="image" name="image" type="file" required>
+                            <label class="form-label" for="gambar">Gambar</label>
+                            <input class="form-control" id="gambar" name="gambar" type="file" required>
                             <small class="text-muted">Gambar wajib diunggah saat membuat slider</small>
                         </div>
 

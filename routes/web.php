@@ -1,6 +1,11 @@
 <?php
 
 use App\Http\Controllers\Back\DashboardController;
+use App\Http\Controllers\Back\FaqController;
+use App\Http\Controllers\Back\SekolahController;
+use App\Http\Controllers\Back\SliderController;
+use App\Http\Controllers\Back\TimelineController;
+use App\Http\Controllers\Back\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -10,6 +15,11 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified', 'role:super admin'])->prefix('/dashboard')->group(function () {
     Route::get('/index_super_admin', [DashboardController::class, 'superadmin'])->name('dashboard.index_super_admin');
     Route::get('/chart-data', [DashboardController::class, 'getChartData'])->name('chart-data.index');
+    Route::resource('/sekolah', SekolahController::class);
+    Route::resource('/users', UserController::class);
+    Route::resource('/faqs', FaqController::class);
+    Route::resource('/sliders', SliderController::class);
+    Route::resource('/timelines', TimelineController::class);
 });
 Route::middleware(['auth', 'verified', 'role:siswa'])->prefix('/dashboard')->group(function () {});
 Route::middleware(['auth', 'verified', 'role.sekolah:pemeriksa afirmasi'])->prefix('/dashboard')->group(function () {});

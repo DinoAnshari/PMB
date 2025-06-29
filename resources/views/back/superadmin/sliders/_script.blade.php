@@ -1,50 +1,63 @@
 <script>
-	$(document).ready(function () {
-		// Handling delete Slider
-		$(document).on("click", ".delete-slider-modal", function () {
-			const id = $(this).data("id");
-			const deleteURL = "{{ route('sliders.destroy', ':id') }}".replace(':id', id);
+    $(document).ready(function () {
 
-			// Set the action attribute of the form in the modal
-			$("#delete_slider_form").attr("action", deleteURL);
-		});
+        /**
+         * Handle klik tombol hapus slider
+         * - Mengambil ID dari elemen
+         * - Menyusun URL delete berdasarkan route Laravel
+         * - Menyisipkan URL ke dalam atribut action form hapus
+         */
+        $(document).on("click", ".delete-slider-modal", function () {
+            const id = $(this).data("id");
+            const deleteURL = "{{ route('sliders.destroy', ':id') }}".replace(':id', id);
 
-		// Handling edit Slider modal
-		$(document).on("click", ".edit-slider-modal", function () {
-			const id = $(this).data("id");
-			const showURL = "{{ route('sliders.show', ':id') }}".replace(":id", id);
-			const updateURL = "{{ route('sliders.update', ':id') }}".replace(":id", id);
+            $("#delete_slider_form").attr("action", deleteURL);
+        });
 
-			console.log(`Fetching Slider for editing with ID: ${id}`);
+        /**
+         * Handle klik tombol edit slider
+         * - Mengambil data slider via AJAX
+         * - Menyusun URL update berdasarkan ID
+         * - Menampilkan data slider dalam modal edit
+         */
+        $(document).on("click", ".edit-slider-modal", function () {
+            const id = $(this).data("id");
+            const showURL = "{{ route('sliders.show', ':id') }}".replace(":id", id);
+            const updateURL = "{{ route('sliders.update', ':id') }}".replace(":id", id);
 
-			$.ajax({
-				url: showURL,
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				success: (res) => {
-					console.log("Edit response received:", res);
+            console.log(`Mengambil data Slider dengan ID: ${id}`);
 
-					// Populate modal fields with Slider data
-					$("#edit_title").val(res.data.title);
-					$("#edit_subtitle").val(res.data.subtitle);
-					$("#edit_description").val(res.data.description);
-					$("#edit_number").val(res.data.number);
+            $.ajax({
+                url: showURL,
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                success: (res) => {
+                    console.log("Respons berhasil diterima:", res);
 
-					// Optional: display current image
-					if (res.data.image) {
-						$("#edit_image_preview").attr("src", "/storage/sliders/" + res.data.image);
-					}
+                    // Isi form edit sesuai data dari server
+                    $("#edit_judul").val(res.data.judul);
+                    $("#edit_subtitle").val(res.data.subtitle);
+                    $("#edit_deskripsi").val(res.data.deskripsi);
+                    $("#edit_nomor").val(res.data.nomor);
 
-					// Set the form action to update route for the specific Slider
-					$("#edit_slider_form").attr("action", updateURL);
-				},
-				error: (err) => {
-					console.error("Edit error occurred:", err);
-					alert("Terjadi kesalahan saat mengambil data Slider. Silakan cek konsol.");
-				},
-			});
-		});
-	});
+                    // Tampilkan gambar jika ada
+                    if (res.data.gambar) {
+                        $("#edit_image_preview").attr("src", "/storage/sliders/" + res.data.gambar);
+                    } else {
+                        $("#edit_image_preview").attr("src", "#");
+                    }
+
+                    // Set action form update
+                    $("#edit_slider_form").attr("action", updateURL);
+                },
+                error: (err) => {
+                    console.error("Terjadi kesalahan saat mengambil data slider:", err);
+                    alert("Gagal mengambil data slider. Silakan periksa koneksi atau cek konsol.");
+                },
+            });
+        });
+
+    });
 </script>

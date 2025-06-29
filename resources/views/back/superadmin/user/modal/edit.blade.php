@@ -8,10 +8,9 @@
             </div>
             <div class="modal-body">
                 <div class="modal-toggle-wrapper">
-                    <form class="row g-3" id="edit_user_form" method="POST" action="#">
-                        <!-- Dummy CSRF and PUT method -->
-                        <input type="hidden" name="_token" value="">
-                        <input type="hidden" name="_method" value="PUT">
+                    <form class="row g-3" id="edit_user_form" method="POST">
+                        @csrf
+                        @method('PUT')
 
                         <div class="col-md-12">
                             <label class="form-label" for="edit_name">Nama</label>
@@ -27,30 +26,29 @@
                             <label class="form-label" for="edit_password">Password (Kosongkan jika tidak diubah)</label>
                             <input class="form-control" id="edit_password" name="password" type="password" placeholder="Masukkan password baru (jika ingin mengubah)">
                         </div>
-
                         <div class="col-md-12">
                             <label class="form-label" for="password_confirmation">Konfirmasi Password (Kosongkan jika tidak diubah)</label>
-                            <input class="form-control" id="password_confirmation" name="password_confirmation" type="password" placeholder="Konfirmasi password">
+                            <input class="form-control" id="password_confirmation" name="password_confirmation" type="password" placeholder="Konfirmasi password" >
                         </div>
-
                         <div class="col-md-12">
                             <label class="form-label" for="edit_sekolah_id">Sekolah</label>
                             <select class="form-select" id="edit_sekolah_id" name="sekolah_id" required>
                                 <option value="">-- Pilih Sekolah --</option>
-                                <option value="1">SMPN 1 Maju Jaya</option>
-                                <option value="2">SMPN 2 Maju Jaya</option>
-                                <option value="3">SMPN 3 Maju Jaya</option>
+                                {{-- Akan diisi dari JavaScript --}}
                             </select>
                         </div>
 
                         <div class="col-md-12">
                             <label class="form-label" for="edit_roles">Role</label>
                             <select class="form-select" id="edit_roles" name="role" required>
-                                <option value="admin">Admin</option>
-                                <option value="petugas">Petugas</option>
-                                <option value="operator">Operator</option>
+                                @foreach ($roles as $role)
+                                <option value="{{ $role }}" {{ old('role', $user->roles->first()->name ?? '') == $role ? 'selected' : '' }}>
+                                    {{ ucfirst($role) }}
+                                </option>
+                                @endforeach
                             </select>
                         </div>
+
 
                         <div class="col-12">
                             <button class="btn btn-warning" type="submit">Update</button>

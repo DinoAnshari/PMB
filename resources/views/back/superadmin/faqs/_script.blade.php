@@ -1,44 +1,57 @@
 <script>
-	$(document).ready(function () {
-		// Handling delete FAQ
-		$(document).on("click", ".delete-faq-modal", function () {
-			const id = $(this).data("id");
-			const deleteURL = "{{ route('faqs.destroy', ':id') }}".replace(':id', id);
+    $(document).ready(function () {
 
-			// Set the action attribute of the form in the modal
-			$("#delete_faq_form").attr("action", deleteURL);
-		});
+        /**
+         * Handle klik tombol hapus FAQ
+         * - Mengambil ID dari data-* attribute
+         * - Mengatur action form modal hapus berdasarkan route
+         */
+        $(document).on("click", ".delete-faq-modal", function () {
+            const id = $(this).data("id");
+            const deleteURL = "{{ route('faqs.destroy', ':id') }}".replace(':id', id);
 
-		// Handling edit FAQ modal
-		$(document).on("click", ".edit-faq-modal", function () {
-			const id = $(this).data("id");
-			const showURL = "{{ route('faqs.show', ':id') }}".replace(":id", id);
-			const updateURL = "{{ route('faqs.update', ':id') }}".replace(":id", id);
+            // Setel atribut action pada form hapus FAQ
+            $("#delete_faq_form").attr("action", deleteURL);
+        });
 
-			console.log(`Fetching FAQ for editing with ID: ${id}`);
+        /**
+         * Handle klik tombol edit FAQ
+         * - Mengambil data FAQ berdasarkan ID via AJAX
+         * - Menampilkan data ke dalam form modal edit
+         * - Mengatur action form agar mengarah ke route update
+         */
+        $(document).on("click", ".edit-faq-modal", function () {
+            const id = $(this).data("id");
+            const showURL = "{{ route('faqs.show', ':id') }}".replace(":id", id);
+            const updateURL = "{{ route('faqs.update', ':id') }}".replace(":id", id);
 
-			$.ajax({
-				url: showURL,
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				success: (res) => {
-					console.log("Edit response received:", res);
+            // Log ID untuk debugging
+            console.log(`Fetching FAQ for editing with ID: ${id}`);
 
-					// Populate modal fields with FAQ data
-					$("#edit_question").val(res.data.question);
-					$("#edit_answer").val(res.data.answer);
-					$("#edit_is_active").prop('checked', res.data.is_active);
+            $.ajax({
+                url: showURL,
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                success: (res) => {
+                    // Log respon untuk debugging
+                    console.log("Edit response received:", res);
 
-					// Set the form action to update route for the specific FAQ
-					$("#edit_faq_form").attr("action", updateURL);
-				},
-				error: (err) => {
-					console.error("Edit error occurred:", err);
-					alert("Terjadi kesalahan saat mengambil data FAQ. Silakan cek konsol.");
-				},
-			});
-		});
-	});
+                    // Isi nilai input modal edit dengan data dari server
+                    $("#edit_pertanyaan").val(res.data.pertanyaan);
+                    $("#edit_jawaban").val(res.data.jawaban);
+                    $("#edit_is_active").prop("checked", res.data.is_active);
+
+                    // Setel action form edit agar sesuai dengan route update
+                    $("#edit_faq_form").attr("action", updateURL);
+                },
+                error: (err) => {
+                    console.error("Terjadi kesalahan saat mengambil data FAQ:", err);
+                    alert("Terjadi kesalahan saat mengambil data FAQ. Silakan cek konsol.");
+                },
+            });
+        });
+
+    });
 </script>

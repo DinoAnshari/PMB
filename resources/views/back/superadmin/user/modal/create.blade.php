@@ -8,9 +8,9 @@
             </div>
             <div class="modal-body">
                 <div class="modal-toggle-wrapper">
-                    <form class="row g-3" id="create_user_form" method="POST" action="#">
-                        <input type="hidden" name="_token" value="">
-
+                    <form class="row g-3" id="create_user_form" method="POST" action="{{ route('users.store') }}">
+                        @csrf
+                        
                         <div class="col-md-12">
                             <label class="form-label" for="name">Nama</label>
                             <input class="form-control" id="name" name="name" type="text" placeholder="Masukkan nama" required>
@@ -35,19 +35,18 @@
                             <label class="form-label" for="sekolah_id">Sekolah</label>
                             <select class="form-select" id="sekolah_id" name="sekolah_id" required>
                                 <option value="">-- Pilih Sekolah --</option>
-                                <option value="1">SMPN 1 Maju Jaya</option>
-                                <option value="2">SMPN 2 Maju Jaya</option>
-                                <option value="3">SMPN 3 Maju Jaya</option>
+                                @foreach ($schools as $sekolah)
+                                    <option value="{{ $sekolah->id }}">{{ $sekolah->nama_sekolah }}</option>
+                                @endforeach
                             </select>
                         </div>
 
                         <div class="col-md-12">
                             <label class="form-label" for="role">Role</label>
                             <select class="form-select" id="role" name="role" required>
-                                <option value="admin">Admin</option>
-                                <option value="petugas">Petugas</option>
-                                <option value="operator">Operator</option>
-                                <option value="operator">Pengawas</option>
+                                @foreach ($roles as $role)
+                                    <option value="{{ $role }}">{{ ucfirst($role) }}</option>
+                                @endforeach
                             </select>
                         </div>
 

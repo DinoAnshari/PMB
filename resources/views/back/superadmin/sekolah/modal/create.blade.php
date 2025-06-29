@@ -1,4 +1,5 @@
-<div class="modal fade sekolah_create_modal" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdrop" aria-hidden="true">
+<div class="modal fade sekolah_create_modal" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdrop" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content dark-sign-up">
             <div class="modal-header">
@@ -7,7 +8,8 @@
             </div>
             <div class="modal-body">
                 <div class="modal-toggle-wrapper">
-                    <form class="row g-3" action="#" method="POST">
+                    <form class="row g-3" action="{{ route('sekolah.store') }}" method="POST">
+                        @csrf
                         <div class="col-md-12">
                             <label class="form-label" for="nama_sekolah">Nama Sekolah</label>
                             <input class="form-control" id="nama_sekolah" name="nama_sekolah" type="text" placeholder="Masukkan nama sekolah" required>
@@ -17,12 +19,10 @@
                             <textarea class="form-control" id="alamat_sekolah" name="alamat_sekolah" rows="3" placeholder="Masukkan alamat sekolah" required></textarea>
                         </div>
 
-                        <!-- Tombol Deteksi Lokasi -->
                         <div class="col-md-12">
                             <button type="button" id="deteksiLokasi" class="btn btn-warning">Deteksi Lokasi Saya</button>
                         </div>
 
-                        <!-- Latitude dan Longitude -->
                         <div class="col-md-6">
                             <label class="form-label" for="latitude">Latitude</label>
                             <input class="form-control" id="latitude" name="latitude" type="text" placeholder="Latitude" readonly>
@@ -42,8 +42,7 @@
         </div>
     </div>
 </div>
-
-<!-- Script Deteksi Lokasi -->
+@push('js')
 <script>
     document.getElementById("deteksiLokasi").addEventListener("click", function () {
         if (navigator.geolocation) {
@@ -61,3 +60,4 @@
         }
     });
 </script>
+@endpush

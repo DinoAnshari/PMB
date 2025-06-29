@@ -40,27 +40,29 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($schools as $index => $sekolah)
                                     <tr>
-                                        <td>1</td>
-                                        <td>SMPN 1 Maju Jaya</td>
-                                        <td>Jl. Merdeka No. 123</td>
-                                        <td>-6.123456</td>
-                                        <td>106.654321</td>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $sekolah->nama_sekolah }}</td>
+                                        <td>{{ $sekolah->alamat_sekolah }}</td>
+                                        <td>{{ $sekolah->latitude }}</td>
+                                        <td>{{ $sekolah->longitude }}</td>
                                         <td>
                                             <ul class="action">
                                                 <li class="edit">
-                                                    <a href="#" class="edit-sekolah-modal" data-bs-toggle="modal" data-bs-target=".sekolah_edit_modal" title="Ubah Sekolah">
+                                                    <a href="#" data-id="{{ $sekolah->id }}" class="edit-sekolah-modal" data-bs-toggle="modal" data-bs-target=".sekolah_edit_modal" title="Ubah Sekolah">
                                                         <i class="icon-pencil-alt"></i>
                                                     </a>
                                                 </li>
                                                 <li class="delete">
-                                                    <a href="#" class="delete-sekolah-modal" data-bs-toggle="modal" data-bs-target=".sekolah_delete_modal" title="Hapus Sekolah">
+                                                    <a href="#" class="delete-sekolah-modal" data-id="{{ $sekolah->id }}" data-bs-toggle="modal" data-bs-target=".sekolah_delete_modal" title="Hapus Sekolah">
                                                         <i class="icon-trash"></i>
                                                     </a>
                                                 </li>
                                             </ul>
                                         </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                                 <tfoot>
                                     <tr>
@@ -84,7 +86,11 @@
 @push('modal')
 @include('back.superadmin.sekolah.modal.create')
 @include('back.superadmin.sekolah.modal.edit')
- @include('back.superadmin.sekolah.modal.delete')
+@include('back.superadmin.sekolah.modal.delete')
+@endpush
+
+@push('js')
+@include('back.superadmin.sekolah._script')
 @endpush
 
 @endsection

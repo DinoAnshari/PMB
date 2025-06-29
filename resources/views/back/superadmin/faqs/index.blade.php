@@ -12,14 +12,13 @@
                 </div>
                 <div class="col-sm-6 col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#"><i class="iconly-Home icli svg-color"></i></a></li>
+                        <li class="breadcrumb-item"><a href="{{ url('dashboard/index_super_admin') }}"><i class="iconly-Home icli svg-color"></i></a></li>
                         <li class="breadcrumb-item">FAQ</li>
                     </ol>
                 </div>
             </div>
         </div>
     </div>
-
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
@@ -40,46 +39,34 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($faqs as $index => $faq)
                                     <tr>
-                                        <td>1</td>
-                                        <td>Apa itu PPDB?</td>
-                                        <td>PPDB adalah Penerimaan Peserta Didik Baru yang dilakukan secara online...</td>
-                                        <td><span class="badge bg-success">Aktif</span></td>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $faq->pertanyaan }}</td>
+                                        <td>{{ Str::limit(strip_tags($faq->jawaban), 100) }}</td>
+                                        <td>
+                                            @if($faq->is_active)
+                                            <span class="badge bg-success">Aktif</span>
+                                            @else
+                                            <span class="badge bg-secondary">Nonaktif</span>
+                                            @endif
+                                        </td>
                                         <td>
                                             <ul class="action">
                                                 <li class="edit">
-                                                    <a href="#" data-id="1" class="edit-faq-modal" data-bs-toggle="modal" data-bs-target=".faq_edit_modal" title="Ubah FAQ">
+                                                    <a href="#" data-id="{{ $faq->id }}" class="edit-faq-modal" data-bs-toggle="modal" data-bs-target=".faq_edit_modal" title="Ubah FAQ">
                                                         <i class="icon-pencil-alt"></i>
                                                     </a>
                                                 </li>
                                                 <li class="delete">
-                                                    <a href="#" class="delete-faq-modal" data-id="1" data-bs-toggle="modal" data-bs-target=".faq_delete_modal" title="Hapus FAQ">
+                                                    <a href="#" class="delete-faq-modal" data-id="{{ $faq->id }}" data-bs-toggle="modal" data-bs-target=".faq_delete_modal" title="Hapus FAQ">
                                                         <i class="icon-trash"></i>
                                                     </a>
                                                 </li>
                                             </ul>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Bagaimana cara mendaftar?</td>
-                                        <td>Untuk mendaftar, silakan klik menu Daftar dan isi semua data yang diperlukan...</td>
-                                        <td><span class="badge bg-secondary">Nonaktif</span></td>
-                                        <td>
-                                            <ul class="action">
-                                                <li class="edit">
-                                                    <a href="#" data-id="2" class="edit-faq-modal" data-bs-toggle="modal" data-bs-target=".faq_edit_modal" title="Ubah FAQ">
-                                                        <i class="icon-pencil-alt"></i>
-                                                    </a>
-                                                </li>
-                                                <li class="delete">
-                                                    <a href="#" class="delete-faq-modal" data-id="2" data-bs-toggle="modal" data-bs-target=".faq_delete_modal" title="Hapus FAQ">
-                                                        <i class="icon-trash"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
+                                    @endforeach
                                 </tbody>
                                 <tfoot>
                                     <tr>
@@ -97,9 +84,17 @@
             </div>
         </div>
     </div>
-    @push('modal')
-    @include('back.superadmin.faqs.modal.create')
-    @include('back.superadmin.faqs.modal.edit')
-    @include('back.superadmin.faqs.modal.delete')
-    @endpush
-    @endsection
+</div>
+
+@push('modal')
+@include('back.superadmin.faqs.modal.create')
+@include('back.superadmin.faqs.modal.edit')
+@include('back.superadmin.faqs.modal.delete')
+@endpush
+
+
+@push('js')
+@include('back.superadmin.faqs._script')
+@endpush
+
+@endsection

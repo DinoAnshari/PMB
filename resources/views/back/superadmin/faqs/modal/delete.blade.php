@@ -10,7 +10,7 @@
                 <p><strong id="delete_faq_question"></strong></p>
                 <form id="delete_faq_form" method="POST">
                     @csrf
-                    @method('DELETE') {{-- Penting untuk method DELETE --}}
+                    @method('DELETE')
                     <div class="col-12">
                         <button class="btn btn-danger" type="submit">Hapus</button>
                         <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Batal</button>
