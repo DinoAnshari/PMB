@@ -9,6 +9,8 @@
             <div class="modal-body">
                 <div class="modal-toggle-wrapper">
                     <form class="row g-3" id="edit_jalur_form" method="POST">
+                        @csrf
+                        @method('PUT')
                         <div class="col-md-12">
                             <label class="form-label" for="edit_nama_jalur">Nama Jalur</label>
                             <input class="form-control" id="edit_nama_jalur" name="nama" type="text" placeholder="Masukkan nama jalur" required>

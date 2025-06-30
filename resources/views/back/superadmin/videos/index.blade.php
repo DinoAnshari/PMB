@@ -12,7 +12,7 @@
                 </div>
                 <div class="col-sm-6 col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#"><i class="iconly-Home icli svg-color"></i></a></li>
+                        <li class="breadcrumb-item"><a href="{{ url('dashboard') }}"><i class="iconly-Home icli svg-color"></i></a></li>
                         <li class="breadcrumb-item">Video</li>
                     </ol>
                 </div>
@@ -20,6 +20,7 @@
         </div>
     </div>
 
+    <!-- Container-fluid starts-->
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
@@ -41,31 +42,33 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($videos as $index => $video)
                                     <tr>
-                                        <td>1</td>
-                                        <td>Contoh Judul Video</td>
-                                        <td>Deskripsi video yang singkat dan padat untuk tampilan statis.</td>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $video->title }}</td>
+                                        <td>{{ Str::limit($video->deskripsi, 100) }}</td>
                                         <td>
-                                            <img src="https://via.placeholder.com/100x60.png?text=Gambar" alt="video" width="100">
+                                            <img src="{{ asset('storage/videos/' . $video->image) }}" alt="video" width="100">
                                         </td>
                                         <td>
-                                            <a href="https://youtu.be/dQw4w9WgXcQ" target="_blank">https://youtu.be/dQw4w9WgXcQ</a>
+                                            <a href="{{ $video->video_url }}" target="_blank">{{ $video->video_url }}</a>
                                         </td>
                                         <td>
                                             <ul class="action">
                                                 <li class="edit">
-                                                    <a href="#" class="edit-video-modal" data-bs-toggle="modal" data-bs-target=".video_edit_modal" title="Ubah Video">
+                                                    <a href="#" data-id="{{ $video->id }}" class="edit-video-modal" data-bs-toggle="modal" data-bs-target=".video_edit_modal" title="Ubah Video">
                                                         <i class="icon-pencil-alt"></i>
                                                     </a>
                                                 </li>
                                                 <li class="delete">
-                                                    <a href="#" class="delete-video-modal" data-bs-toggle="modal" data-bs-target=".video_delete_modal" title="Hapus Video">
+                                                    <a href="#" class="delete-video-modal" data-id="{{ $video->id }}" data-bs-toggle="modal" data-bs-target=".video_delete_modal" title="Hapus Video">
                                                         <i class="icon-trash"></i>
                                                     </a>
                                                 </li>
                                             </ul>
                                         </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                                 <tfoot>
                                     <tr>
@@ -86,10 +89,14 @@
     </div>
 </div>
 
-
 @push('modal')
 @include('back.superadmin.videos.modal.create')
 @include('back.superadmin.videos.modal.edit')
 @include('back.superadmin.videos.modal.delete')
 @endpush
+
+@push('js')
+@include('back.superadmin.videos._script')
+@endpush
+
 @endsection

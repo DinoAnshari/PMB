@@ -8,7 +8,9 @@
             </div>
             <div class="modal-body">
                 <div class="modal-toggle-wrapper">
-                    <form class="row g-3" action="#" method="POST" enctype="multipart/form-data">
+                    <form class="row g-3" action="{{ route('videos.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+
                         <div class="col-md-12">
                             <label class="form-label" for="title">Judul Video</label>
                             <input class="form-control" id="title" name="title" type="text" placeholder="Masukkan judul video" required>

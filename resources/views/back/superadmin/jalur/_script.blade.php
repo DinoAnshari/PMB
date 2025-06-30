@@ -1,46 +1,57 @@
 <script>
-	$(document).ready(function () {
-		// Handling delete jalur
-		$(document).on("click", ".delete-jalur-modal", function () {
-			const id = $(this).data("id");
-			const deleteURL = "{{ route('jalur-pendaftaran.destroy', ':id') }}".replace(':id', id);
+    $(document).ready(function () {
 
-			// Set the action attribute of the form in the modal
-			$("#delete_jalur_form").attr("action", deleteURL);
-		});
+        /**
+         * Handle klik tombol hapus jalur pendaftaran
+         * - Ambil ID dari tombol yang diklik
+         * - Susun URL berdasarkan route Laravel
+         * - Set action pada form hapus
+         */
+        $(document).on("click", ".delete-jalur-modal", function () {
+            const id = $(this).data("id");
+            const deleteURL = "{{ route('jalur-pendaftaran.destroy', ':id') }}".replace(':id', id);
 
-		// Handling edit jalur modal
-		$(document).on("click", ".edit-jalur-modal", function () {
-			const id = $(this).data("id");
-			let url = "{{ route('jalur-pendaftaran.show', ':paramID') }}".replace(":paramID", id);
+            // Set URL ke dalam atribut action form hapus
+            $("#delete_jalur_form").attr("action", deleteURL);
+        });
 
-			// Construct the update URL
-			let updateURL = "{{ route('jalur-pendaftaran.update', ':paramID') }}".replace(":paramID", id);
+        /**
+         * Handle klik tombol edit jalur pendaftaran
+         * - Ambil ID dari tombol
+         * - Ambil data jalur via AJAX
+         * - Tampilkan data ke dalam form edit
+         * - Atur action form untuk update
+         */
+        $(document).on("click", ".edit-jalur-modal", function () {
+            const id = $(this).data("id");
+            const showURL = "{{ route('jalur-pendaftaran.show', ':id') }}".replace(':id', id);
+            const updateURL = "{{ route('jalur-pendaftaran.update', ':id') }}".replace(':id', id);
 
-			console.log(`Fetching jalur for editing with ID: ${id}`);
+            console.log(`Mengambil data jalur dengan ID: ${id}`);
 
-			$.ajax({
-				url: url,
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				success: (res) => {
-					console.log("Edit response received:", res);
+            $.ajax({
+                url: showURL,
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                success: (res) => {
+                    console.log("Data jalur berhasil diambil:", res);
 
-					// Populate modal fields with jalur data
-					$("#edit_nama_jalur").val(res.data.nama);
-					$("#edit_tanggal_mulai").val(res.data.tanggal_mulai);
-					$("#edit_tanggal_selesai").val(res.data.tanggal_selesai);
+                    // Isi nilai ke dalam field edit modal
+                    $("#edit_nama_jalur").val(res.data.nama);
+                    $("#edit_tanggal_mulai").val(res.data.tanggal_mulai);
+                    $("#edit_tanggal_selesai").val(res.data.tanggal_selesai);
 
-					// Set the form action to update route for the specific jalur
-					$("#edit_jalur_form").attr("action", updateURL);
-				},
-				error: (err) => {
-					console.error("Edit error occurred:", err);
-					alert("Terjadi kesalahan. Silakan cek konsol untuk detail.");
-				},
-			});
-		});
-	});
+                    // Set form action ke URL update
+                    $("#edit_jalur_form").attr("action", updateURL);
+                },
+                error: (err) => {
+                    console.error("Terjadi kesalahan saat mengambil data jalur:", err);
+                    alert("Terjadi kesalahan saat mengambil data jalur. Silakan cek konsol.");
+                },
+            });
+        });
+
+    });
 </script>

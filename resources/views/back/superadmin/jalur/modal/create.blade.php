@@ -8,7 +8,8 @@
             </div>
             <div class="modal-body">
                 <div class="modal-toggle-wrapper">
-                    <form class="row g-3" action="#" method="POST">
+                    <form class="row g-3" action="{{ route('jalur-pendaftaran.store') }}" method="POST">
+                        @csrf
                         <div class="col-md-12">
                             <label class="form-label" for="nama">Nama Jalur</label>
                             <input class="form-control" id="nama" name="nama" type="text" placeholder="Masukkan nama jalur" required>

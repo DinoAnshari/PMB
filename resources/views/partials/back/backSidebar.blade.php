@@ -39,9 +39,20 @@
           <li><a href="{{ route('faqs.index') }}">Data FAQS</a></li>
           <li><a href="{{ route('sliders.index') }}">Data Sliders</a></li>
           <li><a href="{{ route('timelines.index') }}">Data Timelines</a></li>
+          <li><a href="{{ route('videos.index') }}">Data Videos</a></li>
+          <li><a href="{{ route('setting.edit') }}">Data Setting</a></li>
       </li>
     </ul>
     </li>
+    <li class="sidebar-list {{ request()->is('dashboard/jalur-pendaftaran*') ? 'active' : '' }}">
+        <i class="fa-solid fa-thumbtack"></i>
+        <a class="sidebar-link" href="{{ url('dashboard/jalur-pendaftaran') }}">
+          <svg class="stroke-icon">
+            <use href="{{ asset('back/assets/svg/iconly-sprite.svg#Pie') }}"></use>
+          </svg>
+          <h6 class="f-w-600">Jalur Pendaftaran</h6>
+        </a>
+      </li>
     @endif
     </ul>
   </div>

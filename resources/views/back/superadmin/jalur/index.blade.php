@@ -12,7 +12,7 @@
                 </div>
                 <div class="col-sm-6 col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#"><i class="iconly-Home icli svg-color"></i></a></li>
+                        <li class="breadcrumb-item"><a href="{{ url('dashboard/index_super_admin') }}"><i class="iconly-Home icli svg-color"></i></a></li>
                         <li class="breadcrumb-item">Jalur Pendaftaran</li>
                     </ol>
                 </div>
@@ -39,46 +39,28 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($jalurLists as $index => $jalur)
                                     <tr>
-                                        <td>1</td>
-                                        <td>Zonasi</td>
-                                        <td>2025-06-10</td>
-                                        <td>2025-06-15</td>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ ucfirst($jalur->nama) }}</td>
+                                        <td>{{ $jalur->tanggal_mulai }}</td>
+                                        <td>{{ $jalur->tanggal_selesai }}</td>
                                         <td>
                                             <ul class="action">
                                                 <li class="edit">
-                                                    <a href="#" class="edit-jalur-modal" data-bs-toggle="modal" data-bs-target=".jalur_edit_modal" title="Ubah Jalur">
+                                                    <a href="#" data-id="{{ $jalur->id }}" class="edit-jalur-modal" data-bs-toggle="modal" data-bs-target=".jalur_edit_modal" title="Ubah Jalur">
                                                         <i class="icon-pencil-alt"></i>
                                                     </a>
                                                 </li>
                                                 <li class="delete">
-                                                    <a href="#" class="delete-jalur-modal" data-bs-toggle="modal" data-bs-target=".jalur_delete_modal" title="Hapus Jalur">
+                                                    <a href="#" class="delete-jalur-modal" data-id="{{ $jalur->id }}" data-bs-toggle="modal" data-bs-target=".jalur_delete_modal" title="Hapus Jalur">
                                                         <i class="icon-trash"></i>
                                                     </a>
                                                 </li>
                                             </ul>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Afirmasi</td>
-                                        <td>2025-06-16</td>
-                                        <td>2025-06-20</td>
-                                        <td>
-                                            <ul class="action">
-                                                <li class="edit">
-                                                    <a href="#" class="edit-jalur-modal" data-bs-toggle="modal" data-bs-target=".jalur_edit_modal" title="Ubah Jalur">
-                                                        <i class="icon-pencil-alt"></i>
-                                                    </a>
-                                                </li>
-                                                <li class="delete">
-                                                    <a href="#" class="delete-jalur-modal" data-bs-toggle="modal" data-bs-target=".jalur_delete_modal" title="Hapus Jalur">
-                                                        <i class="icon-trash"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
+                                    @endforeach
                                 </tbody>
                                 <tfoot>
                                     <tr>
@@ -95,13 +77,17 @@
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
 </div>
 
 @push('modal')
 @include('back.superadmin.jalur.modal.create')
 @include('back.superadmin.jalur.modal.edit')
 @include('back.superadmin.jalur.modal.delete')
+@endpush
+
+@push('js')
+@include('back.superadmin.jalur._script')
 @endpush
 
 @endsection

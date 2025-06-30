@@ -1,49 +1,61 @@
 <script>
-	$(document).ready(function () {
-		// Handling delete Video
-		$(document).on("click", ".delete-video-modal", function () {
-			const id = $(this).data("id");
-			const deleteURL = "{{ route('videos.destroy', ':id') }}".replace(':id', id);
+    $(document).ready(function () {
 
-			// Set the action attribute of the form in the modal
-			$("#delete_video_form").attr("action", deleteURL);
-		});
+        /**
+         * Handle klik tombol hapus video
+         * - Ambil ID dari tombol yang diklik
+         * - Susun URL berdasarkan route Laravel
+         * - Set action pada form hapus
+         */
+        $(document).on("click", ".delete-video-modal", function () {
+            const id = $(this).data("id");
+            const deleteURL = "{{ route('videos.destroy', ':id') }}".replace(':id', id);
 
-		// Handling edit Video modal
-		$(document).on("click", ".edit-video-modal", function () {
-			const id = $(this).data("id");
-			const showURL = "{{ route('videos.show', ':id') }}".replace(":id", id);
-			const updateURL = "{{ route('videos.update', ':id') }}".replace(":id", id);
+            $("#delete_video_form").attr("action", deleteURL);
+        });
 
-			console.log(`Fetching Video for editing with ID: ${id}`);
+        /**
+         * Handle klik tombol edit video
+         * - Ambil ID dari tombol
+         * - Ambil data video via AJAX
+         * - Tampilkan datanya ke dalam form edit
+         * - Atur action form untuk update
+         */
+        $(document).on("click", ".edit-video-modal", function () {
+            const id = $(this).data("id");
+            const showURL = "{{ route('videos.show', ':id') }}".replace(":id", id);
+            const updateURL = "{{ route('videos.update', ':id') }}".replace(":id", id);
 
-			$.ajax({
-				url: showURL,
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				success: (res) => {
-					console.log("Edit response received:", res);
+            console.log(`Mengambil data video dengan ID: ${id}`);
 
-					// Populate modal fields with Video data
-					$("#edit_title").val(res.data.title);
-					$("#edit_deskripsi").val(res.data.deskripsi);
-					$("#edit_video_url").val(res.data.video_url);
+            $.ajax({
+                url: showURL,
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                success: (res) => {
+                    console.log("Data video berhasil diambil:", res);
 
-					// Optional: display current image
-					if (res.data.image) {
-						$("#edit_image_preview").attr("src", "/storage/videos/" + res.data.image);
-					}
+                    // Isi nilai ke dalam field edit modal
+                    $("#edit_title").val(res.data.title);
+                    $("#edit_deskripsi").val(res.data.deskripsi);
+                    $("#edit_video_url").val(res.data.video_url);
 
-					// Set the form action to update route for the specific Video
-					$("#edit_video_form").attr("action", updateURL);
-				},
-				error: (err) => {
-					console.error("Edit error occurred:", err);
-					alert("Terjadi kesalahan saat mengambil data Video. Silakan cek konsol.");
-				},
-			});
-		});
-	});
+                    // Tampilkan gambar saat ini (jika ada)
+                    if (res.data.image) {
+                        $("#edit_image_preview").attr("src", "/storage/videos/" + res.data.image);
+                    }
+
+                    // Set form action ke URL update
+                    $("#edit_video_form").attr("action", updateURL);
+                },
+                error: (err) => {
+                    console.error("Terjadi kesalahan saat mengambil data video:", err);
+                    alert("Terjadi kesalahan saat mengambil data video. Silakan cek konsol.");
+                },
+            });
+        });
+
+    });
 </script>

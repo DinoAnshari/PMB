@@ -1,6 +1,6 @@
 <div class="modal fade video_edit_modal" id="editVideoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="editVideoModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg"> 
+    <div class="modal-dialog modal-lg">
         <div class="modal-content dark-sign-up">
             <div class="modal-header">
                 <h3 class="modal-title fs-5" id="editVideoModalLabel">Edit Video</h3>
@@ -9,7 +9,8 @@
             <div class="modal-body">
                 <div class="modal-toggle-wrapper">
                     <form class="row g-3" id="edit_video_form" method="POST" enctype="multipart/form-data">
-
+                        @csrf
+                        @method('PUT')
                         <div class="col-md-12">
                             <label class="form-label" for="edit_title">Judul Video</label>
                             <input class="form-control" id="edit_title" name="title" type="text" placeholder="Masukkan judul video">
