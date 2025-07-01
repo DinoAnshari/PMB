@@ -8,15 +8,17 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-sm-6 col-12">
-                    <h2>Data Prestasi Andi Saputra</h2>
+                    <h2>Data Prestasi {{ $achievementTrack->user->name }}</h2>
                 </div>
                 <div class="col-sm-6 col-12">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="#"><i class="iconly-Home icli svg-color"></i></a>
+                            <a href="{{ url('dashboard/index_super_admin') }}">
+                                <i class="iconly-Home icli svg-color"></i>
+                            </a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="#">Prestasi</a>
+                            <a href="{{ url('dashboard/prestasi') }}">Prestasi</a>
                         </li>
                         <li class="breadcrumb-item">Detail Siswa</li>
                     </ol>
@@ -24,7 +26,6 @@
             </div>
         </div>
     </div>
-
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
@@ -40,148 +41,100 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php $no = 1; @endphp
                                     <tr>
-                                        <td>1</td>
+                                        <td>{{ $no++ }}</td>
                                         <td>SKL/Ijazah</td>
-                                        <td><a href="#" target="_blank">Lihat SKL/Ijazah</a></td>
+                                        <td>
+                                            @if($achievementTrack->skl_ijazah)
+                                            <a href="{{ asset('storage/' . $achievementTrack->skl_ijazah) }}" target="_blank">Lihat SKL/Ijazah</a>
+                                            @else
+                                            Tidak Ada
+                                            @endif
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td>2</td>
+                                        <td>{{ $no++ }}</td>
                                         <td>Kartu Keluarga</td>
-                                        <td>Tidak Ada</td>
+                                        <td>
+                                            @if($achievementTrack->kartu_keluarga)
+                                            <a href="{{ asset('storage/' . $achievementTrack->kartu_keluarga) }}" target="_blank">Lihat Kartu Keluarga</a>
+                                            @else
+                                            Tidak Ada
+                                            @endif
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td>3</td>
+                                        <td>{{ $no++ }}</td>
                                         <td>Rata-Rata Keseluruhan</td>
-                                        <td>87.3</td>
+                                        <td>{{ $achievementTrack->rata_rata_keseluruhan ?? 'Tidak Ada' }}</td>
                                     </tr>
+                                    @foreach([6] as $kelas)
+                                    @foreach([1, 2] as $semester)
+                                    <tr>
+                                        <td>{{ $no++ }}</td>
+                                        <td>Rapot Kelas {{ $kelas }} Semester {{ $semester }}</td>
+                                        <td>
+                                            @if($achievementTrack["rapot_kelas{$kelas}_semester{$semester}"])
+                                            <a href="{{ asset('storage/' . $achievementTrack["rapot_kelas{$kelas}_semester{$semester}"]) }}" target="_blank">Lihat Rapot</a>
+                                            @else
+                                            Tidak Ada
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    @foreach(['b_indo', 'matematika', 'ipa', 'b_inggris', 'pai'] as $mapel)
+                                    <tr>
+                                        <td>{{ $no++ }}</td>
+                                        <td>Nilai {{ ucfirst(str_replace('_', ' ', $mapel)) }} Kelas {{ $kelas }} Semester {{ $semester }}</td>
+                                        <td>{{ $achievementTrack["nilai_{$mapel}_kelas{$kelas}_semester{$semester}"] ?? 'Tidak Ada' }}</td>
+                                    </tr>
+                                    @endforeach
+                                    <tr>
+                                        <td>{{ $no++ }}</td>
+                                        <td>Rata-Rata Kelas {{ $kelas }} Semester {{ $semester }}</td>
+                                        <td>{{ $achievementTrack["rata_rata_kelas{$kelas}_semester{$semester}"] ?? 'Tidak Ada' }}</td>
+                                    </tr>
+                                    @endforeach
+                                    @endforeach
 
-                                    <!-- Rapot & Nilai Kelas 6 Semester 1 -->
+                                    @foreach(['akademik', 'non_akademik'] as $kategori)
+                                    @foreach([1, 2] as $tingkat)
                                     <tr>
-                                        <td>4</td>
-                                        <td>Rapot Kelas 6 Semester 1</td>
-                                        <td><a href="#" target="_blank">Lihat Rapot</a></td>
+                                        <td>{{ $no++ }}</td>
+                                        <td>Sertifikat {{ ucfirst($kategori) }} Kab/Kota {{ $tingkat }}</td>
+                                        <td>{{ $achievementTrack["sertifikat_{$kategori}_kabkota_{$tingkat}"] ?? 'Tidak Ada' }}</td>
                                     </tr>
                                     <tr>
-                                        <td>5</td>
-                                        <td>Nilai B Indo Kelas 6 Semester 1</td>
-                                        <td>90</td>
+                                        <td>{{ $no++ }}</td>
+                                        <td>Nilai {{ ucfirst($kategori) }} Kab/Kota {{ $tingkat }}</td>
+                                        <td>{{ $achievementTrack["nilai_{$kategori}_kabkota_{$tingkat}"] ?? 'Tidak Ada' }}</td>
+                                    </tr>
+                                    @endforeach
+                                    @foreach(['provinsi', 'nasional', 'internasional'] as $tingkat)
+                                    <tr>
+                                        <td>{{ $no++ }}</td>
+                                        <td>Sertifikat {{ ucfirst($kategori) }} {{ ucfirst($tingkat) }} 1</td>
+                                        <td>{{ $achievementTrack["sertifikat_{$kategori}_{$tingkat}_1"] ?? 'Tidak Ada' }}</td>
                                     </tr>
                                     <tr>
-                                        <td>6</td>
-                                        <td>Nilai Matematika Kelas 6 Semester 1</td>
-                                        <td>88</td>
+                                        <td>{{ $no++ }}</td>
+                                        <td>Nilai {{ ucfirst($kategori) }} {{ ucfirst($tingkat) }} 1</td>
+                                        <td>{{ $achievementTrack["nilai_{$kategori}_{$tingkat}_1"] ?? 'Tidak Ada' }}</td>
                                     </tr>
+                                    @endforeach
+                                    @endforeach
                                     <tr>
-                                        <td>7</td>
-                                        <td>Nilai IPA Kelas 6 Semester 1</td>
-                                        <td>89</td>
-                                    </tr>
-                                    <tr>
-                                        <td>8</td>
-                                        <td>Nilai B Inggris Kelas 6 Semester 1</td>
-                                        <td>85</td>
-                                    </tr>
-                                    <tr>
-                                        <td>9</td>
-                                        <td>Nilai PAI Kelas 6 Semester 1</td>
-                                        <td>91</td>
-                                    </tr>
-                                    <tr>
-                                        <td>10</td>
-                                        <td>Rata-Rata Kelas 6 Semester 1</td>
-                                        <td>88.6</td>
-                                    </tr>
-
-                                    <!-- Rapot & Nilai Kelas 6 Semester 2 -->
-                                    <tr>
-                                        <td>11</td>
-                                        <td>Rapot Kelas 6 Semester 2</td>
-                                        <td><a href="#" target="_blank">Lihat Rapot</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>12</td>
-                                        <td>Nilai B Indo Kelas 6 Semester 2</td>
-                                        <td>92</td>
-                                    </tr>
-                                    <tr>
-                                        <td>13</td>
-                                        <td>Nilai Matematika Kelas 6 Semester 2</td>
-                                        <td>91</td>
-                                    </tr>
-                                    <tr>
-                                        <td>14</td>
-                                        <td>Nilai IPA Kelas 6 Semester 2</td>
-                                        <td>93</td>
-                                    </tr>
-                                    <tr>
-                                        <td>15</td>
-                                        <td>Nilai B Inggris Kelas 6 Semester 2</td>
-                                        <td>87</td>
-                                    </tr>
-                                    <tr>
-                                        <td>16</td>
-                                        <td>Nilai PAI Kelas 6 Semester 2</td>
-                                        <td>90</td>
-                                    </tr>
-                                    <tr>
-                                        <td>17</td>
-                                        <td>Rata-Rata Kelas 6 Semester 2</td>
-                                        <td>90.6</td>
-                                    </tr>
-
-
-                                    <!-- Sertifikat Akademik -->
-                                    <tr>
-                                        <td>11</td>
-                                        <td>Sertifikat Akademik Kab/Kota 1</td>
-                                        <td><a href="#" target="_blank">Lihat Sertifikat</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>12</td>
-                                        <td>Nilai Akademik Kab/Kota 1</td>
-                                        <td>92</td>
-                                    </tr>
-                                    <tr>
-                                        <td>13</td>
-                                        <td>Sertifikat Akademik Provinsi 1</td>
-                                        <td><a href="#" target="_blank">Lihat Sertifikat</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>14</td>
-                                        <td>Nilai Akademik Provinsi 1</td>
-                                        <td>89</td>
-                                    </tr>
-
-                                    <!-- Sertifikat Non-Akademik -->
-                                    <tr>
-                                        <td>15</td>
-                                        <td>Sertifikat Non Akademik Kab/Kota 1</td>
-                                        <td>Tidak Ada</td>
-                                    </tr>
-                                    <tr>
-                                        <td>16</td>
-                                        <td>Nilai Non Akademik Kab/Kota 1</td>
-                                        <td>Tidak Ada</td>
-                                    </tr>
-                                    <tr>
-                                        <td>17</td>
-                                        <td>Sertifikat Non Akademik Nasional 1</td>
-                                        <td><a href="#" target="_blank">Lihat Sertifikat</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>18</td>
-                                        <td>Nilai Non Akademik Nasional 1</td>
-                                        <td>85</td>
-                                    </tr>
-
-                                    <!-- Total -->
-                                    <tr>
-                                        <td>19</td>
+                                        <td>{{ $no++ }}</td>
                                         <td>Total Nilai Sertifikat</td>
-                                        <td>266</td>
+                                        <td>{{ $achievementTrack->total_nilai_sertifikat ?? 'Tidak Ada' }}</td>
                                     </tr>
+                                    @if(!$achievementTrack)
+                                    <tr>
+                                        <td colspan="3" class="text-center">Belum ada data prestasi.</td>
+                                    </tr>
+                                    @endif
                                 </tbody>
+
                                 <tfoot>
                                     <tr>
                                         <th>No</th>
@@ -198,7 +151,6 @@
     </div>
 </div>
 
-<!-- Script -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 <script>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Back\AchievementController;
 use App\Http\Controllers\Back\AdmissionTrackController;
 use App\Http\Controllers\Back\DashboardController;
 use App\Http\Controllers\Back\FaqController;
@@ -31,6 +32,20 @@ Route::middleware(['auth', 'verified', 'role:super admin'])->prefix('/dashboard'
     Route::get('/siswa', [StudentActionController::class, 'index'])->name('siswa.index');
     Route::delete('/siswa/bulk-delete', [StudentActionController::class, 'bulkDelete'])->name('siswa.bulkDelete');
     Route::get('/siswa/reset-password/{id}', [StudentActionController::class, 'resetPasswordSiswa'])->name('siswa.resetPassword');
+
+    Route::prefix('prestasi')->name('prestasi.')->group(function () {
+        Route::get('/', [AchievementController::class, 'index'])->name('index');
+        Route::post('{id}/update-status', [AchievementController::class, 'updateStatusPrestasi'])->name('update_status');
+        Route::get('{id}', [AchievementController::class, 'show'])->name('show');
+
+        // Export PDF
+        Route::get('lulus/pdf', [AchievementController::class, 'downloadPdfLulus'])->name('lulus_pdf');
+        Route::get('tidak-lulus/pdf', [AchievementController::class, 'downloadPdfTidakLulus'])->name('tidak_lulus_pdf');
+
+        // Export Excel
+        Route::get('lulus/excel', [AchievementController::class, 'downloadExcelPrestasiLulus'])->name('lulus_excel');
+        Route::get('tidak-lulus/excel', [AchievementController::class, 'downloadExcelPrestasiTidakLulus'])->name('tidak_lulus_excel');
+    });
 });
 Route::middleware(['auth', 'verified', 'role:siswa'])->prefix('/dashboard')->group(function () {});
 Route::middleware(['auth', 'verified', 'role.sekolah:pemeriksa afirmasi'])->prefix('/dashboard')->group(function () {});

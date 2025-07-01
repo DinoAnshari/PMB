@@ -62,6 +62,15 @@
         <h6 class="f-w-600">Reset Password</h6>
       </a>
     </li>
+    <li class="sidebar-list {{ request()->is('dashboard/prestasi*') ? 'active' : '' }}">
+      <i class="fa-solid fa-thumbtack"></i>
+      <a class="sidebar-link" href="{{ url('dashboard/jalur-prestasi') }}">
+        <svg class="stroke-icon">
+          <use href="{{ asset('back/assets/svg/iconly-sprite.svg#Bookmark') }}"></use>
+        </svg>
+        <h6 class="f-w-600">Jalur Prestasi</h6>
+      </a>
+    </li>
     @endif
     </ul>
   </div>

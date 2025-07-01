@@ -57,8 +57,22 @@
 
 <body>
     <div class="container">
+        @php
+        $manualPath = public_path('images/header.png');
+
+        $fileExists = file_exists($manualPath);
+        $imageData = $fileExists ? base64_encode(file_get_contents($manualPath)) : null;
+        $type = pathinfo($manualPath, PATHINFO_EXTENSION);
+
+
+        @endphp
+
         <div class="header">
-            <img src="images/logo/header.png" class="logo" height="150" alt="Logo Header">
+            @if ($imageData)
+            <img src="data:image/{{ $type }};base64,{{ $imageData }}" class="logo" height="150">
+            @else
+            <p>Gambar tidak ditemukan.</p>
+            @endif
         </div>
 
         <h3 style="background-color: rgb(30, 161, 179); color: white; padding: 5px;">Daftar Siswa Jalur Prestasi (Lulus)</h3>
@@ -72,26 +86,17 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach ($achievementTracks as $index => $item)
                 <tr>
-                    <td>1</td>
-                    <td>Andi Saputra</td>
-                    <td>1234567890</td>
-                    <td>SMP Negeri 1</td>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ $item->user->name ?? '-' }}</td>
+                    <td>{{ $item->user->biodata->nisn ?? '-' }}</td>
+                    <td>{{ $item->user->sekolah->nama_sekolah ?? '-' }}</td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Siti Rahma</td>
-                    <td>0987654321</td>
-                    <td>SMP Negeri 2</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Budi Santoso</td>
-                    <td>1122334455</td>
-                    <td>SMP Negeri 3</td>
-                </tr>
+                @endforeach
             </tbody>
         </table>
+
     </div>
 
     <footer style="text-align: center; margin-top: 20px; font-size: 14px;">
