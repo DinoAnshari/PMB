@@ -45,14 +45,23 @@
     </ul>
     </li>
     <li class="sidebar-list {{ request()->is('dashboard/jalur-pendaftaran*') ? 'active' : '' }}">
-        <i class="fa-solid fa-thumbtack"></i>
-        <a class="sidebar-link" href="{{ url('dashboard/jalur-pendaftaran') }}">
-          <svg class="stroke-icon">
-            <use href="{{ asset('back/assets/svg/iconly-sprite.svg#Pie') }}"></use>
-          </svg>
-          <h6 class="f-w-600">Jalur Pendaftaran</h6>
-        </a>
-      </li>
+      <i class="fa-solid fa-thumbtack"></i>
+      <a class="sidebar-link" href="{{ url('dashboard/jalur-pendaftaran') }}">
+        <svg class="stroke-icon">
+          <use href="{{ asset('back/assets/svg/iconly-sprite.svg#Pie') }}"></use>
+        </svg>
+        <h6 class="f-w-600">Jalur Pendaftaran</h6>
+      </a>
+    </li>
+    <li class="sidebar-list {{ request()->is('dashboard/siswa*') ? 'active' : '' }}">
+      <i class="fa-solid fa-thumbtack"></i>
+      <a class="sidebar-link" href="{{ url('dashboard/siswa') }}">
+        <svg class="stroke-icon">
+          <use href="{{ asset('back/assets/svg/iconly-sprite.svg#Profile') }}"></use>
+        </svg>
+        <h6 class="f-w-600">Reset Password</h6>
+      </a>
+    </li>
     @endif
     </ul>
   </div>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Back\FaqController;
 use App\Http\Controllers\Back\SekolahController;
 use App\Http\Controllers\Back\SettingController;
 use App\Http\Controllers\Back\SliderController;
+use App\Http\Controllers\Back\StudentActionController;
 use App\Http\Controllers\Back\TimelineController;
 use App\Http\Controllers\Back\UserController;
 use App\Http\Controllers\Back\VideoController;
@@ -27,6 +28,9 @@ Route::middleware(['auth', 'verified', 'role:super admin'])->prefix('/dashboard'
     Route::get('/setting', [SettingController::class, 'edit'])->name('setting.edit');
     Route::put('/setting', [SettingController::class, 'update'])->name('setting.update');
     Route::resource('/jalur-pendaftaran', AdmissionTrackController::class);
+    Route::get('/siswa', [StudentActionController::class, 'index'])->name('siswa.index');
+    Route::delete('/siswa/bulk-delete', [StudentActionController::class, 'bulkDelete'])->name('siswa.bulkDelete');
+    Route::get('/siswa/reset-password/{id}', [StudentActionController::class, 'resetPasswordSiswa'])->name('siswa.resetPassword');
 });
 Route::middleware(['auth', 'verified', 'role:siswa'])->prefix('/dashboard')->group(function () {});
 Route::middleware(['auth', 'verified', 'role.sekolah:pemeriksa afirmasi'])->prefix('/dashboard')->group(function () {});
