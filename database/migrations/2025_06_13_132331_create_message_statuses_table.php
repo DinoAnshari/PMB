@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('sekolah')->nullable();
             $table->string('status')->default('pending');
             $table->text('response')->nullable();
+            $table->unsignedBigInteger('jalur_id')->nullable();
+            $table->string('jalur_type')->nullable();
             $table->timestamps();
         });
     }

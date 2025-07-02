@@ -3,6 +3,7 @@
 use App\Http\Controllers\Back\AchievementController;
 use App\Http\Controllers\Back\AdmissionTrackController;
 use App\Http\Controllers\Back\AffirmationController;
+use App\Http\Controllers\Back\BroadcastController;
 use App\Http\Controllers\Back\DashboardController;
 use App\Http\Controllers\Back\DomicileController;
 use App\Http\Controllers\Back\FaqController;
@@ -73,6 +74,10 @@ Route::middleware(['auth', 'verified', 'role:super admin'])->prefix('/dashboard'
         // Export Excel
         Route::get('lulus/excel', [DomicileController::class, 'downloadExcelDomicileLulus'])->name('lulus_excel');
         Route::get('tidak-lulus/excel', [DomicileController::class, 'downloadExcelDomicileTidakLulus'])->name('tidak_lulus_excel');
+    });
+    Route::prefix('broadcast')->name('broadcast.')->middleware(['auth'])->group(function () {
+        Route::get('{jalur}/{status}', [BroadcastController::class, 'index'])->name('{jalur}.{status}');
+        Route::post('{jalur}/{status}/kirim', [BroadcastController::class, 'kirimPesan'])->name('{jalur}.{status}.kirim');
     });
 });
 Route::middleware(['auth', 'verified', 'role:siswa'])->prefix('/dashboard')->group(function () {});

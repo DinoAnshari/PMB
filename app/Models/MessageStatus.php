@@ -16,6 +16,8 @@ class MessageStatus extends Model
         'sekolah',
         'status',
         'response',
+        'jalur_id',
+        'jalur_type',
     ];
     public function user()
     {
