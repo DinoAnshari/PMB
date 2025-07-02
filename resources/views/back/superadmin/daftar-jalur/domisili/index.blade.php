@@ -11,7 +11,7 @@
                 </div>
                 <div class="col-sm-6 col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#"><i class="iconly-Home icli svg-color"></i></a></li>
+                        <li class="breadcrumb-item"><a href="{{ url('dashboard/index_super_admin') }}"><i class="iconly-Home icli svg-color"></i></a></li>
                         <li class="breadcrumb-item">Daftar jalur Domisili</li>
                     </ol>
                 </div>
@@ -24,20 +24,18 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header pb-0 card-no-border d-flex gap-2">
-                        {{-- Export PDF --}}
-                        <a href="#" target="_blank" class="btn btn-primary">
+                        <a href="{{ route('domisili.lulus_pdf') }}" target="_blank" class="btn btn-primary">
                             <i class="iconly-Download icli"></i> PDF Lulus
                         </a>
-                        <a href="#" target="_blank" class="btn btn-danger">
+                        <a href="{{ route('domisili.tidak_lulus_pdf') }}" target="_blank" class="btn btn-danger">
                             <i class="iconly-Download icli"></i> PDF Tidak Lulus
                         </a>
 
-                        {{-- Export Excel --}}
-                        <a href="#" class="btn btn-success">
-                            <i class="iconly-Download icli"></i> Excel Lulus (All)
+                        <a href="{{ route('domisili.lulus_excel') }}" class="btn btn-success">
+                            <i class="iconly-Download icli"></i> Excel Lulus 
                         </a>
-                        <a href="#" class="btn btn-warning">
-                            <i class="iconly-Download icli"></i> Excel Tidak Lulus (All)
+                        <a href="{{ route('domisili.tidak_lulus_excel') }}" class="btn btn-warning">
+                            <i class="iconly-Download icli"></i> Excel Tidak Lulus
                         </a>
                     </div>
 
@@ -56,66 +54,58 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($domicileTracks as $index => $domisili)
                                     <tr>
-                                        <td>1</td>
-                                        <td>Andi Saputra</td>
-                                        <td>0.75 km</td>
-                                        <td><a href="#" target="_blank">Lihat KK</a></td>
-                                        <td><a href="#" target="_blank">Lihat SKL/Ijazah</a></td>
-                                        <td><span class="badge badge-success">Lulus</span></td>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $domisili->user->name ?? '-' }}</td>
+                                        <td>{{ number_format($domisili->jarak_km, 2) }} km</td>
+                                        <td>
+                                            @if($domisili->kartu_keluarga)
+                                            <a href="{{ asset('storage/' . $domisili->kartu_keluarga) }}" target="_blank">Lihat KK</a>
+                                            @else
+                                            Tidak Ada
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($domisili->skl_ijazah)
+                                            <a href="{{ asset('storage/' . $domisili->skl_ijazah) }}" target="_blank">Lihat SKL/Ijazah</a>
+                                            @else
+                                            Tidak Ada
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($domisili->statusPendaftaran)
+                                            <span class="badge {{ $domisili->statusPendaftaran->status == 'Lulus' ? 'badge-success' : 'badge-danger' }}">
+                                                {{ $domisili->statusPendaftaran->status }}
+                                            </span>
+                                            @else
+                                            <span class="badge badge-secondary">Belum Ditentukan</span>
+                                            @endif
+                                        </td>
                                         <td>
                                             <div class="d-flex justify-content-start align-items-center gap-2">
-                                                <a href="#" class="btn btn-sm btn-primary" title="Lihat Sekolah">
+                                                <a href="{{ route('domisili.show', $domisili->id) }}" class="btn btn-sm btn-primary" title="Lihat Sekolah">
                                                     <i class="iconly-Category icli"></i>
                                                 </a>
 
-                                                <a href="#" target="_blank" title="Detail Sekolah" class="btn btn-sm btn-primary">
+                                                <a href="{{ route('#', $domisili->id) }}" target="_blank" title="Detail Sekolah" class="btn btn-sm btn-primary">
                                                     <i class="iconly-Paper icli"></i>
                                                 </a>
 
-                                                <form action="#" method="POST" class="d-flex align-items-center gap-2">
+                                                <form action="{{ route('domisili.update_status', $domisili->id) }}" method="POST" class="d-flex align-items-center gap-2">
                                                     @csrf
                                                     @method('POST')
                                                     <select name="status" class="form-control form-control-sm w-auto">
-                                                        <option value="Lulus" selected>Lulus</option>
-                                                        <option value="Tidak Lulus">Tidak Lulus</option>
+                                                        <option value="Lulus" {{ $domisili->statusPendaftaran?->status == 'Lulus' ? 'selected' : '' }}>Lulus</option>
+                                                        <option value="Tidak Lulus" {{ $domisili->statusPendaftaran?->status == 'Tidak Lulus' ? 'selected' : '' }}>Tidak Lulus</option>
                                                     </select>
                                                     <button type="submit" class="btn btn-sm btn-primary">Apply</button>
                                                 </form>
                                             </div>
+
                                         </td>
                                     </tr>
-
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Siti Nurhaliza</td>
-                                        <td>1.25 km</td>
-                                        <td>Tidak Ada</td>
-                                        <td><a href="#" target="_blank">Lihat SKL/Ijazah</a></td>
-                                        <td><span class="badge badge-danger">Tidak Lulus</span></td>
-                                        <td>
-                                            <div class="d-flex justify-content-start align-items-center gap-2">
-                                                <a href="#" class="btn btn-sm btn-primary" title="Lihat Sekolah">
-                                                    <i class="iconly-Category icli"></i>
-                                                </a>
-
-                                                <a href="#" target="_blank" title="Detail Sekolah" class="btn btn-sm btn-primary">
-                                                    <i class="iconly-Paper icli"></i>
-                                                </a>
-
-                                                <form action="#" method="POST" class="d-flex align-items-center gap-2">
-                                                    @csrf
-                                                    @method('POST')
-                                                    <select name="status" class="form-control form-control-sm w-auto">
-                                                        <option value="Lulus">Lulus</option>
-                                                        <option value="Tidak Lulus" selected>Tidak Lulus</option>
-                                                    </select>
-                                                    <button type="submit" class="btn btn-sm btn-primary">Apply</button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>
-
+                                    @endforeach
                                 </tbody>
                                 <tfoot>
                                     <tr>

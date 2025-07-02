@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Back\AchievementController;
 use App\Http\Controllers\Back\AdmissionTrackController;
+use App\Http\Controllers\Back\AffirmationController;
 use App\Http\Controllers\Back\DashboardController;
+use App\Http\Controllers\Back\DomicileController;
 use App\Http\Controllers\Back\FaqController;
 use App\Http\Controllers\Back\SekolahController;
 use App\Http\Controllers\Back\SettingController;
@@ -45,6 +47,32 @@ Route::middleware(['auth', 'verified', 'role:super admin'])->prefix('/dashboard'
         // Export Excel
         Route::get('lulus/excel', [AchievementController::class, 'downloadExcelPrestasiLulus'])->name('lulus_excel');
         Route::get('tidak-lulus/excel', [AchievementController::class, 'downloadExcelPrestasiTidakLulus'])->name('tidak_lulus_excel');
+    });
+    Route::prefix('afirmasi')->name('afirmasi.')->group(function () {
+        Route::get('/', [AffirmationController::class, 'index'])->name('index');
+        Route::post('{id}/update-status', [AffirmationController::class, 'updateStatusAfirmasi'])->name('update_status');
+        Route::get('{id}', [AffirmationController::class, 'show'])->name('show');
+
+        // Export PDF
+        Route::get('lulus/pdf', [AffirmationController::class, 'downloadPdfLulus'])->name('lulus_pdf');
+        Route::get('tidak-lulus/pdf', [AffirmationController::class, 'downloadPdfTidakLulus'])->name('tidak_lulus_pdf');
+
+        // Export Excel
+        Route::get('lulus/excel', [AffirmationController::class, 'downloadExcelAfirmasiLulus'])->name('lulus_excel');
+        Route::get('tidak-lulus/excel', [AffirmationController::class, 'downloadExcelAfirmasiTidakLulus'])->name('tidak_lulus_excel');
+    });
+    Route::prefix('domisili')->name('domisili.')->group(function () {
+        Route::get('/', [DomicileController::class, 'index'])->name('index');
+        Route::post('{id}/update-status', [DomicileController::class, 'updateStatusDomicile'])->name('update_status');
+        Route::get('{id}', [DomicileController::class, 'show'])->name('show');
+
+        // Export PDF
+        Route::get('lulus/pdf', [DomicileController::class, 'downloadPdfLulus'])->name('lulus_pdf');
+        Route::get('tidak-lulus/pdf', [DomicileController::class, 'downloadPdfTidakLulus'])->name('tidak_lulus_pdf');
+
+        // Export Excel
+        Route::get('lulus/excel', [DomicileController::class, 'downloadExcelDomicileLulus'])->name('lulus_excel');
+        Route::get('tidak-lulus/excel', [DomicileController::class, 'downloadExcelDomicileTidakLulus'])->name('tidak_lulus_excel');
     });
 });
 Route::middleware(['auth', 'verified', 'role:siswa'])->prefix('/dashboard')->group(function () {});

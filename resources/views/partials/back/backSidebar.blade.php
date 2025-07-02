@@ -64,11 +64,29 @@
     </li>
     <li class="sidebar-list {{ request()->is('dashboard/prestasi*') ? 'active' : '' }}">
       <i class="fa-solid fa-thumbtack"></i>
-      <a class="sidebar-link" href="{{ url('dashboard/jalur-prestasi') }}">
+      <a class="sidebar-link" href="{{ url('dashboard/prestasi') }}">
         <svg class="stroke-icon">
           <use href="{{ asset('back/assets/svg/iconly-sprite.svg#Bookmark') }}"></use>
         </svg>
         <h6 class="f-w-600">Jalur Prestasi</h6>
+      </a>
+    </li>
+    <li class="sidebar-list {{ request()->is('dashboard/afirmasi*', 'dashboard/show-afirmasi*') ? 'active' : '' }}">
+      <i class="fa-solid fa-thumbtack"></i>
+      <a class="sidebar-link" href="{{ url('dashboard/afirmasi') }}">
+        <svg class="stroke-icon">
+          <use href="{{ asset('back/assets/svg/iconly-sprite.svg#Bookmark') }}"></use>
+        </svg>
+        <h6 class="f-w-600">Jalur Afirmasi</h6>
+      </a>
+    </li>
+    <li class="sidebar-list {{ request()->is('dashboard/domisili*', 'dashboard/show-domisili*') ? 'active' : '' }}">
+      <i class="fa-solid fa-thumbtack"></i>
+      <a class="sidebar-link" href="{{ url('dashboard/domisili') }}">
+        <svg class="stroke-icon">
+          <use href="{{ asset('back/assets/svg/iconly-sprite.svg#Bookmark') }}"></use>
+        </svg>
+        <h6 class="f-w-600">Jalur Domisili</h6>
       </a>
     </li>
     @endif
