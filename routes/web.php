@@ -87,5 +87,7 @@ Route::middleware(['auth', 'verified', 'role.sekolah:pemeriksa prestasi'])->pref
 
 Route::middleware(['auth', 'verified', 'role.sekolah:admin afirmasi'])->prefix('/dashboard')->group(function () {});
 Route::middleware(['auth', 'verified', 'role.sekolah:admin domisili'])->prefix('/dashboard')->group(function () {});
-Route::middleware(['auth', 'verified', 'role.sekolah:admin prestasi'])->prefix('/dashboard')->group(function () {});
+Route::middleware(['auth', 'verified', 'role.sekolah:admin prestasi'])->prefix('/dashboard')->group(function () {
+    Route::get('/index_admin_prestasi', [DashboardController::class, 'indexAdminPrestasi'])->name('dashboard.index_admin_prestasi');
+});
 require __DIR__ . '/auth.php';

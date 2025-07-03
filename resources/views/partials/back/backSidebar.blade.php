@@ -104,7 +104,7 @@
         <li><a href="{{ route('broadcast.{jalur}.{status}', ['jalur' => 'domisili', 'status' => 'lulus']) }}">Broadcast Domisili</a></li>
       </ul>
     </li>
-    <li class="sidebar-list {{ request()->is('dashboard/broadcast/*/tidak-lulus') ? 'active' : '' }}">
+    <li class="sidebar-list {{ request()->is('dashboard/broadcast/*/tidak lulus') ? 'active' : '' }}">
       <i class="fa-solid fa-thumbtack"></i>
       <a class="sidebar-link" href="javascript:void(0)">
         <svg class="stroke-icon">
@@ -114,9 +114,9 @@
         <i class="iconly-Arrow-Right-2 icli"></i>
       </a>
       <ul class="sidebar-submenu">
-        <li><a href="{{ route('broadcast.{jalur}.{status}', ['jalur' => 'prestasi', 'status' => 'tidak-lulus']) }}">Broadcast Prestasi</a></li>
-        <li><a href="{{ route('broadcast.{jalur}.{status}', ['jalur' => 'afirmasi', 'status' => 'tidak-lulus']) }}">Broadcast Afirmasi</a></li>
-        <li><a href="{{ route('broadcast.{jalur}.{status}', ['jalur' => 'domisili', 'status' => 'tidak-lulus']) }}">Broadcast Domisili</a></li>
+        <li><a href="{{ route('broadcast.{jalur}.{status}', ['jalur' => 'prestasi', 'status' => 'tidak lulus']) }}">Broadcast Prestasi</a></li>
+        <li><a href="{{ route('broadcast.{jalur}.{status}', ['jalur' => 'afirmasi', 'status' => 'tidak lulus']) }}">Broadcast Afirmasi</a></li>
+        <li><a href="{{ route('broadcast.{jalur}.{status}', ['jalur' => 'domisili', 'status' => 'tidak lulus']) }}">Broadcast Domisili</a></li>
       </ul>
     </li>
 

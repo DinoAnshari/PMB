@@ -90,7 +90,7 @@
                                                     <i class="iconly-Category icli"></i>
                                                 </a>
 
-                                                <a href="{{ route('#') }}" target="_blank" title="Detail Prestasi" class="btn btn-sm btn-primary">
+                                                <a href="#" target="_blank" title="Detail Prestasi" class="btn btn-sm btn-primary">
                                                     <i class="iconly-Paper icli"></i>
                                                 </a>
 

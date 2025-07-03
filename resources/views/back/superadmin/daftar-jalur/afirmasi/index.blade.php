@@ -94,11 +94,11 @@
                                                     <i class="iconly-Category icli"></i>
                                                 </a>
 
-                                                <a href="{{ route('#', $afirmasi->id) }}" target="_blank" title="Detail Sekolah" class="btn btn-sm btn-primary">
+                                                <a href="#" target="_blank" title="Detail Sekolah" class="btn btn-sm btn-primary">
                                                     <i class="iconly-Paper icli"></i>
                                                 </a>
 
-                                                <form action="{{ route('afrimasi.update_status', $afirmasi->id) }}" method="POST" class="d-flex align-items-center gap-2">
+                                                <form action="{{ route('afirmasi.update_status', $afirmasi->id) }}" method="POST" class="d-flex align-items-center gap-2">
                                                     @csrf
                                                     @method('POST')
                                                     <select name="status" class="form-control form-control-sm w-auto">

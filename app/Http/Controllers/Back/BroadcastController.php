@@ -35,7 +35,9 @@ class BroadcastController extends Controller
 
         $tracks = $trackModel::with(['user.biodata', 'user.sekolah'])
             ->whereHas('statusPendaftaran', fn($q) => $q->where('status', $status))
-            ->when(!$user->hasRole('super admin'), fn($query) =>
+            ->when(
+                !$user->hasRole('super admin'),
+                fn($query) =>
                 $query->whereHas('user', fn($q) => $q->where('sekolah_id', $user->sekolah_id))
             )
             ->get();
@@ -68,18 +70,22 @@ class BroadcastController extends Controller
 
         $tracks = $trackModel::with(['user.biodata.parent', 'user.sekolah'])
             ->whereHas('statusPendaftaran', fn($q) => $q->where('status', $status))
-            ->when(!$user->hasRole('super admin'), fn($query) =>
+            ->when(
+                !$user->hasRole('super admin'),
+                fn($query) =>
                 $query->whereHas('user', fn($q) => $q->where('sekolah_id', $user->sekolah_id))
             )
             ->get();
 
-        $this->dispatchPesan($tracks, $jalur, $status === 'Lulus');
+        $this->dispatchPesan($tracks, $jalur, $status === 'lulus');
 
-        return redirect()->route("broadcast.{$jalur}." . strtolower(str_replace(' ', '', $status)))
-            ->with([
-                'success' => "Pesan berhasil dikirim ke seluruh siswa yang " . strtolower($status) . ".",
-                'type' => 'bootstrap-toast',
-            ]);
+        return redirect()->route('broadcast.{jalur}.{status}', [
+            'jalur' => $jalur,
+            'status' => $status,
+        ])->with([
+            'success' => "Pesan berhasil dikirim ke seluruh siswa yang " . strtolower($status) . ".",
+            'type' => 'bootstrap-toast',
+        ]);
     }
 
     /**

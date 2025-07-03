@@ -11,29 +11,32 @@
                 </div>
                 <div class="col-sm-6 col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#"><i class="iconly-Home icli svg-color"></i></a></li>
+                        <li class="breadcrumb-item"><a href="{{ url('dashboard/index_admin_prestasi') }}"><i class="iconly-Home icli svg-color"></i></a></li>
                         <li class="breadcrumb-item">Broadcast Afirmasi</li>
                     </ol>
                 </div>
             </div>
         </div>
     </div>
-
     <div class="container-fluid">
-        {{-- <div class="alert alert-success">Pesan berhasil dikirim.</div> --}}
+        @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
 
         <div class="card mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Kirim Pesan Broadcast ke Siswa Afirmasi yang Lulus</h5>
                 <button type="button"
                     class="btn btn-primary sweet-broadcast"
-                    data-url="#"
+                    data-url="{{ route('broadcast.{jalur}.{status}.kirim', ['jalur' => 'afirmasi', 'status' => 'Lulus']) }}"
                     data-title="Kirim Pesan Broadcast?"
                     data-text="Yakin ingin broadcast ke semua siswa afirmasi yang lulus?">
                     <i class="iconly-Send icli"></i> Kirim Pesan Broadcast
                 </button>
             </div>
         </div>
+
+
 
         <div class="card">
             <div class="card-header">
@@ -53,30 +56,24 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($pesanStatuses as $i => $pesan)
                             <tr>
-                                <td>1</td>
-                                <td>Andi Saputra</td>
-                                <td>08123456789</td>
-                                <td>SMPN 1 Contoh</td>
-                                <td><span class="badge badge-success">Delivered</span></td>
-                                <td>23/06/2025 10:45</td>
+                                <td>{{ $i + 1 }}</td>
+                                <td>{{ $pesan->nama_siswa }}</td>
+                                <td>{{ $pesan->no_hp }}</td>
+                                <td>{{ $pesan->sekolah }}</td>
+                                <td>
+                                    <span class="badge 
+                @if($pesan->status == 'sent') badge-info
+                @elseif($pesan->status == 'delivered') badge-success
+                @elseif($pesan->status == 'failed') badge-danger
+                @else badge-secondary @endif">
+                                        {{ ucfirst($pesan->status) }}
+                                    </span>
+                                </td>
+                                <td>{{ $pesan->updated_at->format('d/m/Y H:i') }}</td>
                             </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Budi Santoso</td>
-                                <td>08234567890</td>
-                                <td>SMPN 2 Contoh</td>
-                                <td><span class="badge badge-danger">Failed</span></td>
-                                <td>23/06/2025 10:50</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Citra Ayu</td>
-                                <td>08345678901</td>
-                                <td>SMPN 3 Contoh</td>
-                                <td><span class="badge badge-info">Sent</span></td>
-                                <td>23/06/2025 11:00</td>
-                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
