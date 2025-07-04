@@ -120,6 +120,7 @@
       </ul>
     </li>
     @endif
+
     @php
     $sekolah = auth()->user()->sekolah->nama_sekolah ?? '';
     @endphp
@@ -175,6 +176,153 @@
           <use href="{{ asset('back/assets/svg/iconly-sprite.svg#Chart') }}"></use>
         </svg>
         <h6 class="f-w-600">Statistik Data</h6>
+      </a>
+    </li>
+    @endif
+
+    @if(auth()->user() && auth()->user()->hasRole("admin afirmasi $sekolah"))
+    <li class="sidebar-list {{ request()->is('dashboard/index_admin_afirmasi*') ? 'active' : '' }}">
+      <i class="fa-solid fa-thumbtack"></i>
+      <a class="sidebar-link" href="{{ url('dashboard/index_admin_afirmasi') }}">
+        <svg class="stroke-icon">
+          <use href="{{ asset('back/assets/svg/iconly-sprite.svg#Bookmark') }}"></use>
+        </svg>
+        <h6>Data Afirmasi</h6>
+      </a>
+    </li>
+    <li class="sidebar-list {{ request()->is('dashboard/broadcast/*/lulus') ? 'active' : '' }}">
+      <i class="fa-solid fa-thumbtack"></i>
+      <a class="sidebar-link" href="javascript:void(0)">
+        <svg class="stroke-icon">
+          <use href="{{ asset('back/assets/svg/iconly-sprite.svg#Document') }}"></use>
+        </svg>
+        <h6>Broadcast Lulus</h6>
+        <i class="iconly-Arrow-Right-2 icli"></i>
+      </a>
+      <ul class="sidebar-submenu">
+        <li><a href="{{ route('broadcast.{jalur}.{status}', ['jalur' => 'afirmasi', 'status' => 'lulus']) }}">Broadcast afirmasi</a></li>
+      </ul>
+    </li>
+    <li class="sidebar-list {{ request()->is('dashboard/broadcast/*/tidak lulus') ? 'active' : '' }}">
+      <i class="fa-solid fa-thumbtack"></i>
+      <a class="sidebar-link" href="javascript:void(0)">
+        <svg class="stroke-icon">
+          <use href="{{ asset('back/assets/svg/iconly-sprite.svg#Document') }}"></use>
+        </svg>
+        <h6>Broadcast Tidak Lulus</h6>
+        <i class="iconly-Arrow-Right-2 icli"></i>
+      </a>
+      <ul class="sidebar-submenu">
+        <li><a href="{{ route('broadcast.{jalur}.{status}', ['jalur' => 'afirmasi', 'status' => 'tidak lulus']) }}">Broadcast afirmasi</a></li>
+      </ul>
+    </li>
+    <li class="sidebar-list {{ request()->is('dashboard/siswa*') ? 'active' : '' }}">
+      <i class="fa-solid fa-thumbtack"></i>
+      <a class="sidebar-link" href="{{ url('dashboard/siswa') }}">
+        <svg class="stroke-icon">
+          <use href="{{ asset('back/assets/svg/iconly-sprite.svg#Profile') }}"></use>
+        </svg>
+        <h6 class="f-w-600">Reset Password</h6>
+      </a>
+    </li>
+    <li class="sidebar-list {{ request()->is('dashboard/statistik-data*') ? 'active' : '' }}">
+      <i class="fa-solid fa-thumbtack"></i>
+      <a class="sidebar-link" href="{{ url('dashboard/statistik-data') }}">
+        <svg class="stroke-icon">
+          <use href="{{ asset('back/assets/svg/iconly-sprite.svg#Chart') }}"></use>
+        </svg>
+        <h6 class="f-w-600">Statistik Data</h6>
+      </a>
+    </li>
+    @endif
+
+    @if(auth()->user() && auth()->user()->hasRole("admin domisili $sekolah"))
+    <li class="sidebar-list {{ request()->is('dashboard/index_admin_domisili*') ? 'active' : '' }}">
+      <i class="fa-solid fa-thumbtack"></i>
+      <a class="sidebar-link" href="{{ url('dashboard/index_admin_domisili') }}">
+        <svg class="stroke-icon">
+          <use href="{{ asset('back/assets/svg/iconly-sprite.svg#Bookmark') }}"></use>
+        </svg>
+        <h6>Data Domisili</h6>
+      </a>
+    </li>
+    <li class="sidebar-list {{ request()->is('dashboard/broadcast/*/lulus') ? 'active' : '' }}">
+      <i class="fa-solid fa-thumbtack"></i>
+      <a class="sidebar-link" href="javascript:void(0)">
+        <svg class="stroke-icon">
+          <use href="{{ asset('back/assets/svg/iconly-sprite.svg#Document') }}"></use>
+        </svg>
+        <h6>Broadcast Lulus</h6>
+        <i class="iconly-Arrow-Right-2 icli"></i>
+      </a>
+      <ul class="sidebar-submenu">
+        <li><a href="{{ route('broadcast.{jalur}.{status}', ['jalur' => 'domisili', 'status' => 'lulus']) }}">Broadcast domisili</a></li>
+      </ul>
+    </li>
+    <li class="sidebar-list {{ request()->is('dashboard/broadcast/*/tidak lulus') ? 'active' : '' }}">
+      <i class="fa-solid fa-thumbtack"></i>
+      <a class="sidebar-link" href="javascript:void(0)">
+        <svg class="stroke-icon">
+          <use href="{{ asset('back/assets/svg/iconly-sprite.svg#Document') }}"></use>
+        </svg>
+        <h6>Broadcast Tidak Lulus</h6>
+        <i class="iconly-Arrow-Right-2 icli"></i>
+      </a>
+      <ul class="sidebar-submenu">
+        <li><a href="{{ route('broadcast.{jalur}.{status}', ['jalur' => 'domisili', 'status' => 'tidak lulus']) }}">Broadcast domisili</a></li>
+      </ul>
+    </li>
+    <li class="sidebar-list {{ request()->is('dashboard/siswa*') ? 'active' : '' }}">
+      <i class="fa-solid fa-thumbtack"></i>
+      <a class="sidebar-link" href="{{ url('dashboard/siswa') }}">
+        <svg class="stroke-icon">
+          <use href="{{ asset('back/assets/svg/iconly-sprite.svg#Profile') }}"></use>
+        </svg>
+        <h6 class="f-w-600">Reset Password</h6>
+      </a>
+    </li>
+    <li class="sidebar-list {{ request()->is('dashboard/statistik-data*') ? 'active' : '' }}">
+      <i class="fa-solid fa-thumbtack"></i>
+      <a class="sidebar-link" href="{{ url('dashboard/statistik-data') }}">
+        <svg class="stroke-icon">
+          <use href="{{ asset('back/assets/svg/iconly-sprite.svg#Chart') }}"></use>
+        </svg>
+        <h6 class="f-w-600">Statistik Data</h6>
+      </a>
+    </li>
+    @endif
+
+    @if(auth()->user() && auth()->user()->hasRole("pemeriksa prestasi $sekolah"))
+    <li class="sidebar-list {{ request()->is('dashboard/index_pemeriksa_prestasi*') || request()->is('dashboard/prestasi*') ? 'active' : '' }}">
+      <i class="fa-solid fa-thumbtack"></i>
+      <a class="sidebar-link" href="{{ url('dashboard/index_pemeriksa_prestasi') }}">
+        <svg class="stroke-icon">
+          <use href="{{ asset('back/assets/svg/iconly-sprite.svg#Bookmark') }}"></use>
+        </svg>
+        <h6>Data Prestasi</h6>
+      </a>
+    </li>
+    @endif
+    @if(auth()->user() && auth()->user()->hasRole("pemeriksa afirmasi $sekolah"))
+    <li class="sidebar-list {{ request()->is('dashboard/index_pemeriksa_afirmasi*') || request()->is('dashboard/afirmasi*') ? 'active' : '' }}">
+      <i class="fa-solid fa-thumbtack"></i>
+      <a class="sidebar-link" href="{{ route('dashboard.index_pemeriksa_afirmasi') }}">
+        <svg class="stroke-icon">
+          <use href="{{ asset('back/assets/svg/iconly-sprite.svg#Bookmark') }}"></use>
+        </svg>
+        <h6>Data Afirmasi</h6>
+      </a>
+    </li>
+
+    @endif
+    @if(auth()->user() && auth()->user()->hasRole("pemeriksa domisili $sekolah"))
+    <li class="sidebar-list {{ request()->is('dashboard/index_pemeriksa_domisili*') || request()->is('dashboard/domisili*') ? 'active' : '' }}">
+      <i class="fa-solid fa-thumbtack"></i>
+      <a class="sidebar-link" href="{{ url('dashboard/index_pemeriksa_domisili') }}">
+        <svg class="stroke-icon">
+          <use href="{{ asset('back/assets/svg/iconly-sprite.svg#Bookmark') }}"></use>
+        </svg>
+        <h6>Data Domisili</h6>
       </a>
     </li>
     @endif

@@ -7,6 +7,7 @@ use App\Http\Controllers\Back\BroadcastController;
 use App\Http\Controllers\Back\DashboardController;
 use App\Http\Controllers\Back\DomicileController;
 use App\Http\Controllers\Back\FaqController;
+use App\Http\Controllers\Back\PemeriksaController;
 use App\Http\Controllers\Back\SekolahController;
 use App\Http\Controllers\Back\SettingController;
 use App\Http\Controllers\Back\SliderController;
@@ -75,10 +76,6 @@ Route::middleware(['auth', 'verified', 'role:super admin'])->prefix('/dashboard'
     });
 });
 Route::middleware(['auth', 'verified', 'role:siswa'])->prefix('/dashboard')->group(function () {});
-Route::middleware(['auth', 'verified', 'role.sekolah:pemeriksa afirmasi'])->prefix('/dashboard')->group(function () {});
-Route::middleware(['auth', 'verified', 'role.sekolah:pemeriksa domisili'])->prefix('/dashboard')->group(function () {});
-Route::middleware(['auth', 'verified', 'role.sekolah:pemeriksa prestasi'])->prefix('/dashboard')->group(function () {});
-
 
 Route::middleware(['auth', 'verified', 'role.sekolah:admin prestasi'])->prefix('/dashboard')->group(function () {
     Route::get('/index_admin_prestasi', [DashboardController::class, 'indexAdminPrestasi'])->name('dashboard.index_admin_prestasi');
@@ -147,6 +144,30 @@ Route::middleware(['auth', 'verified', 'role.sekolah:admin prestasi,admin afirma
         Route::get('/admin-chart-data', [DashboardController::class, 'getChartDataAdmin'])->name('admin-chart-data.index');
     });
 
+Route::middleware(['auth', 'verified', 'role.sekolah:pemeriksa prestasi,pemeriksa afirmasi,pemeriksa domisili'])
+    ->prefix('/dashboard')
+    ->group(function () {
 
+        // Jalur Prestasi
+        Route::get('/index_pemeriksa_prestasi', [PemeriksaController::class, 'indexPrestasi'])->name('dashboard.index_pemeriksa_prestasi');
+        Route::prefix('prestasi')->name('prestasi.')->group(function () {
+            Route::get('/{id}', [PemeriksaController::class, 'showPrestasi'])->name('show-pemeriksa');
+            Route::post('/{id}/update', [PemeriksaController::class, 'updatePrestasi'])->name('update-berkas');
+        });
+
+        // Jalur Afirmasi
+        Route::get('/index_pemeriksa_afirmasi', [PemeriksaController::class, 'indexAfirmasi'])->name('dashboard.index_pemeriksa_afirmasi');
+        Route::prefix('afirmasi')->name('afirmasi.')->group(function () {
+            Route::get('/{id}', [PemeriksaController::class, 'showAfirmasi'])->name('show-pemeriksa');
+            Route::post('/{id}/update', [PemeriksaController::class, 'updateAfirmasi'])->name('update-berkas');
+        });
+
+        // Jalur Domisili
+        Route::get('/index_pemeriksa_domisili', [PemeriksaController::class, 'indexDomisili'])->name('dashboard.index_pemeriksa_domisili');
+        Route::prefix('domisili')->name('domisili.')->group(function () {
+            Route::get('/{id}', [PemeriksaController::class, 'showDomisili'])->name('show-pemeriksa');
+            Route::post('/{id}/update', [PemeriksaController::class, 'updateDomisili'])->name('update-berkas');
+        });
+    });
 
 require __DIR__ . '/auth.php';

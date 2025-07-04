@@ -19,10 +19,9 @@
         </div>
     </div>
 </div>
-<!-- Container-fluid starts-->
 <div class="container-fluid default-dashboard">
     <div class="row">
-        <div class="col-12"> <!-- Menggunakan col-12 untuk memaksimalkan lebar kolom -->
+        <div class="col-12">
             <div class="card earning-card">
                 <div class="card-header pb-0 card-no-border">
                     <div class="header-top">
@@ -118,6 +117,4 @@
         </div>
     </div>
 </div>
-
-
 @endsection

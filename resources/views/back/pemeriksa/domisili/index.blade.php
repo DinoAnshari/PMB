@@ -11,14 +11,13 @@
                 </div>
                 <div class="col-sm-6 col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#"><i class="iconly-Home icli svg-color"></i></a></li>
+                        <li class="breadcrumb-item"><a href="{{ url('dashboard/index_pemeriksa_domisili') }}"><i class="iconly-Home icli svg-color"></i></a></li>
                         <li class="breadcrumb-item">Daftar Jalur Domisili</li>
                     </ol>
                 </div>
             </div>
         </div>
     </div>
-
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
@@ -42,58 +41,58 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($domicileTracks as $index => $domisili)
                                     <tr>
-                                        <td>1</td>
-                                        <td>Ahmad Yusuf</td>
-                                        <td>SMPN 1 Maju Jaya</td>
-                                        <td><a href="#">Lihat KK</a></td>
-                                        <td><a href="#">Lihat SKL/Ijazah</a></td>
-                                        <td>0.87 km</td>
-                                        <td><span class="badge badge-success">Lulus Berkas</span></td>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $domisili->user->name ?? '-' }}</td>
+                                        <td>{{ $domisili->user->sekolah->nama_sekolah ?? '-' }}</td>
+                                        <td>
+                                            @if($domisili->kartu_keluarga)
+                                            <a href="{{ asset('storage/' . $domisili->kartu_keluarga) }}" target="_blank">Lihat KK</a>
+                                            @else
+                                            Tidak Ada
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($domisili->skl_ijazah)
+                                            <a href="{{ asset('storage/' . $domisili->skl_ijazah) }}" target="_blank">Lihat SKL/Ijazah</a>
+                                            @else
+                                            Tidak Ada
+                                            @endif
+                                        </td>
+                                        <td>{{ number_format($domisili->jarak_km, 2) }} km</td>
+                                        <td>
+                                            @if ($domisili->statusBerkas)
+                                            <span class="badge {{ $domisili->statusBerkas->status == 'Lulus Berkas' ? 'badge-success' : 'badge-danger' }}">
+                                                {{ $domisili->statusBerkas->status }}
+                                            </span>
+                                            @else
+                                            <span class="badge badge-secondary">Belum Ditentukan</span>
+                                            @endif
+                                        </td>
                                         <td>
                                             <div class="d-flex justify-content-start align-items-center gap-2">
-                                                <a href="#" class="btn btn-sm btn-primary" title="Lihat Sekolah">
+                                                <a href="{{ route('domisili.show-pemeriksa', $domisili->id) }}" class="btn btn-sm btn-primary" title="Lihat Sekolah">
                                                     <i class="iconly-Category icli"></i>
                                                 </a>
-                                                <a href="#" class="btn btn-sm btn-primary" target="_blank" title="Detail Sekolah">
+
+                                                <a href="#" target="_blank" title="Detail Sekolah" class="btn btn-sm btn-primary">
                                                     <i class="iconly-Paper icli"></i>
                                                 </a>
-                                                <form action="#" method="POST" class="d-flex align-items-center gap-2">
+
+                                                <form action="{{ route('domisili.update-berkas', $domisili->id) }}" method="POST" class="d-flex align-items-center gap-2">
+                                                    @csrf
+                                                    @method('POST')
                                                     <select name="status" class="form-control form-control-sm w-auto">
-                                                        <option value="Lulus Berkas" selected>Lulus Berkas</option>
-                                                        <option value="Tidak Lulus Berkas">Tidak Lulus Berkas</option>
+                                                        <option value="Lulus Berkas" {{ $domisili->statusBerkas?->status == 'Lulus Berkas' ? 'selected' : '' }}>Lulus Berkas</option>
+                                                        <option value="Tidak Lulus Berkas" {{ $domisili->statusBerkas?->status == 'Tidak Lulus Berkas' ? 'selected' : '' }}>Tidak Lulus Berkas</option>
                                                     </select>
                                                     <button type="submit" class="btn btn-sm btn-primary">Apply</button>
                                                 </form>
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Siti Aminah</td>
-                                        <td>SMPN 2 Maju Jaya</td>
-                                        <td><a href="#">Lihat KK</a></td>
-                                        <td><a href="#">Lihat SKL/Ijazah</a></td>
-                                        <td>1.42 km</td>
-                                        <td><span class="badge badge-danger">Tidak Lulus Berkas</span></td>
-                                        <td>
-                                            <div class="d-flex justify-content-start align-items-center gap-2">
-                                                <a href="#" class="btn btn-sm btn-primary" title="Lihat Sekolah">
-                                                    <i class="iconly-Category icli"></i>
-                                                </a>
-                                                <a href="#" class="btn btn-sm btn-primary" target="_blank" title="Detail Sekolah">
-                                                    <i class="iconly-Paper icli"></i>
-                                                </a>
-                                                <form action="#" method="POST" class="d-flex align-items-center gap-2">
-                                                    <select name="status" class="form-control form-control-sm w-auto">
-                                                        <option value="Lulus Berkas">Lulus Berkas</option>
-                                                        <option value="Tidak Lulus Berkas" selected>Tidak Lulus Berkas</option>
-                                                    </select>
-                                                    <button type="submit" class="btn btn-sm btn-primary">Apply</button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    @endforeach
                                 </tbody>
                                 <tfoot>
                                     <tr>
@@ -114,6 +113,6 @@
             </div>
         </div>
     </div>
-
 </div>
+
 @endsection

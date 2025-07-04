@@ -11,16 +11,13 @@
                 </div>
                 <div class="col-sm-6 col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="#"><i class="iconly-Home icli svg-color"></i></a>
-                        </li>
+                        <li class="breadcrumb-item"><a href="{{ url('dashboard/index_pemeriksa_prestasi') }}"><i class="iconly-Home icli svg-color"></i></a></li>
                         <li class="breadcrumb-item">Daftar Jalur Prestasi</li>
                     </ol>
                 </div>
             </div>
         </div>
     </div>
-
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
@@ -43,60 +40,51 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($achievementTracks as $index => $prestasi)
                                     <tr>
-                                        <td>1</td>
-                                        <td>Aulia Rahman</td>
-                                        <td>SMPN 6 Pematangsiantar</td>
-                                        <td><a href="#" target="_blank">Lihat SKL/Ijazah</a></td>
-                                        <td>89.75</td>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $prestasi->user->name ?? '-' }}</td>
+                                        <td>{{ $prestasi->user->sekolah->nama_sekolah ?? '-' }}</td>
                                         <td>
-                                            <span class="badge badge-success">Lulus Berkas</span>
+                                            @if($prestasi->skl_ijazah)
+                                            <a href="{{ asset('storage/' . $prestasi->skl_ijazah) }}" target="_blank">Lihat SKL/Ijazah</a>
+                                            @else
+                                            Tidak Ada
+                                            @endif
+                                        </td>
+                                        <td>{{ $prestasi->rata_rata_keseluruhan ?? 'Tidak Ada' }}</td>
+                                        <td>
+                                            @if ($prestasi->statusBerkas)
+                                            <span class="badge {{ $prestasi->statusBerkas->status == 'Lulus Berkas' ? 'badge-success' : 'badge-danger' }}">
+                                                {{ $prestasi->statusBerkas->status }}
+                                            </span>
+                                            @else
+                                            <span class="badge badge-secondary">Belum Ditentukan</span>
+                                            @endif
                                         </td>
                                         <td>
                                             <div class="d-flex justify-content-start align-items-center gap-2">
-                                                <a href="#" class="btn btn-sm btn-primary" title="Lihat Prestasi">
+                                                <a href="{{ route('prestasi.show-pemeriksa', $prestasi->id) }}" class="btn btn-sm btn-primary" title="Lihat Prestasi">
                                                     <i class="iconly-Category icli"></i>
                                                 </a>
-                                                <a href="#" class="btn btn-sm btn-primary" target="_blank" title="Detail Prestasi">
+
+                                                <a href="#" target="_blank" title="Detail Prestasi" class="btn btn-sm btn-primary">
                                                     <i class="iconly-Paper icli"></i>
                                                 </a>
-                                                <form method="POST" class="d-flex align-items-center gap-2">
+
+                                                <form action="{{ route('prestasi.update-berkas', $prestasi->id) }}" method="POST" class="d-flex align-items-center gap-2">
+                                                    @csrf
+                                                    @method('POST')
                                                     <select name="status" class="form-control form-control-sm w-auto">
-                                                        <option value="Lulus Berkas" selected>Lulus Berkas</option>
-                                                        <option value="Tidak Lulus Berkas">Tidak Lulus Berkas</option>
+                                                        <option value="Lulus Berkas" {{ $prestasi->statusBerkas?->status == 'Lulus Berkas' ? 'selected' : '' }}>Lulus Berkas</option>
+                                                        <option value="Tidak Lulus Berkas" {{ $prestasi->statusBerkas?->status == 'Tidak Lulus Berkas' ? 'selected' : '' }}>Tidak Lulus Berkas</option>
                                                     </select>
                                                     <button type="submit" class="btn btn-sm btn-primary">Apply</button>
                                                 </form>
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Sinta Maharani</td>
-                                        <td>SMPN 2 Pematangsiantar</td>
-                                        <td><span class="text-danger">Tidak Ada</span></td>
-                                        <td>86.50</td>
-                                        <td>
-                                            <span class="badge badge-danger">Tidak Lulus Berkas</span>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex justify-content-start align-items-center gap-2">
-                                                <a href="#" class="btn btn-sm btn-primary" title="Lihat Prestasi">
-                                                    <i class="iconly-Category icli"></i>
-                                                </a>
-                                                <a href="#" class="btn btn-sm btn-primary" target="_blank" title="Detail Prestasi">
-                                                    <i class="iconly-Paper icli"></i>
-                                                </a>
-                                                <form method="POST" class="d-flex align-items-center gap-2">
-                                                    <select name="status" class="form-control form-control-sm w-auto">
-                                                        <option value="Lulus Berkas">Lulus Berkas</option>
-                                                        <option value="Tidak Lulus Berkas" selected>Tidak Lulus Berkas</option>
-                                                    </select>
-                                                    <button type="submit" class="btn btn-sm btn-primary">Apply</button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    @endforeach
                                 </tbody>
                                 <tfoot>
                                     <tr>
@@ -115,6 +103,7 @@
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
 </div>
+
 @endsection

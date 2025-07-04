@@ -11,13 +11,14 @@
                 </div>
                 <div class="col-sm-6 col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#"><i class="iconly-Home icli svg-color"></i></a></li>
+                        <li class="breadcrumb-item"><a href="{{ url('dashboard/index_pemeriksa_afirmasi') }}"><i class="iconly-Home icli svg-color"></i></a></li>
                         <li class="breadcrumb-item">Daftar Jalur Afirmasi</li>
                     </ol>
                 </div>
             </div>
         </div>
     </div>
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
@@ -41,58 +42,64 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($affirmationTracks as $index => $afirmasi)
                                     <tr>
-                                        <td>1</td>
-                                        <td>Rina Maharani</td>
-                                        <td>SMPN 1 Maju Jaya</td>
-                                        <td><a href="#" target="_blank">Lihat KK</a></td>
-                                        <td><a href="#" target="_blank">Lihat SKL/Ijazah</a></td>
-                                        <td><a href="#" target="_blank">Lihat Dok.</a></td>
-                                        <td><span class="badge badge-success">Lulus Berkas</span></td>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $afirmasi->user->name ?? '-' }}</td>
+                                        <td>{{ $afirmasi->user->sekolah->nama_sekolah ?? '-' }}</td>
+                                        <td>
+                                            @if($afirmasi->kartu_keluarga)
+                                            <a href="{{ asset('storage/' . $afirmasi->kartu_keluarga) }}" target="_blank">Lihat KK</a>
+                                            @else
+                                            Tidak Ada
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($afirmasi->skl_ijazah)
+                                            <a href="{{ asset('storage/' . $afirmasi->skl_ijazah) }}" target="_blank">Lihat SKL/Ijazah</a>
+                                            @else
+                                            Tidak Ada
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($afirmasi->dokumen_pendukung)
+                                            <a href="{{ asset('storage/' . $afirmasi->dokumen_pendukung) }}" target="_blank">Lihat Dok.</a>
+                                            @else
+                                            Tidak Ada
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($afirmasi->statusBerkas)
+                                            <span class="badge {{ $afirmasi->statusBerkas->status == 'Lulus Berkas' ? 'badge-success' : 'badge-danger' }}">
+                                                {{ $afirmasi->statusBerkas->status }}
+                                            </span>
+                                            @else
+                                            <span class="badge badge-secondary">Belum Ditentukan</span>
+                                            @endif
+                                        </td>
                                         <td>
                                             <div class="d-flex justify-content-start align-items-center gap-2">
-                                                <a href="#" class="btn btn-sm btn-primary" title="Lihat Sekolah">
+                                                <a href="{{ route('afirmasi.show-pemeriksa', $afirmasi->id) }}" class="btn btn-sm btn-primary" title="Lihat Sekolah">
                                                     <i class="iconly-Category icli"></i>
                                                 </a>
+
                                                 <a href="#" target="_blank" title="Detail Sekolah" class="btn btn-sm btn-primary">
                                                     <i class="iconly-Paper icli"></i>
                                                 </a>
-                                                <form action="#" method="POST" class="d-flex align-items-center gap-2">
+
+                                                <form action="{{ route('afirmasi.update-berkas', $afirmasi->id) }}" method="POST" class="d-flex align-items-center gap-2">
+                                                    @csrf
+                                                    @method('POST')
                                                     <select name="status" class="form-control form-control-sm w-auto">
-                                                        <option value="Lulus Berkas" selected>Lulus Berkas</option>
-                                                        <option value="Tidak Lulus Berkas">Tidak Lulus Berkas</option>
+                                                        <option value="Lulus Berkas" {{ $afirmasi->statusBerkas?->status == 'Lulus Berkas' ? 'selected' : '' }}>Lulus Berkas</option>
+                                                        <option value="Tidak Lulus Berkas" {{ $afirmasi->statusBerkas?->status == 'Tidak Lulus Berkas' ? 'selected' : '' }}>Tidak Lulus Berkas</option>
                                                     </select>
                                                     <button type="submit" class="btn btn-sm btn-primary">Apply</button>
                                                 </form>
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Ahmad Fauzi</td>
-                                        <td>SMPN 3 Maju Jaya</td>
-                                        <td><a href="#" target="_blank">Lihat KK</a></td>
-                                        <td>Tidak Ada</td>
-                                        <td>Tidak Ada</td>
-                                        <td><span class="badge badge-danger">Tidak Lulus Berkas</span></td>
-                                        <td>
-                                            <div class="d-flex justify-content-start align-items-center gap-2">
-                                                <a href="#" class="btn btn-sm btn-primary" title="Lihat Sekolah">
-                                                    <i class="iconly-Category icli"></i>
-                                                </a>
-                                                <a href="#" target="_blank" title="Detail Sekolah" class="btn btn-sm btn-primary">
-                                                    <i class="iconly-Paper icli"></i>
-                                                </a>
-                                                <form action="#" method="POST" class="d-flex align-items-center gap-2">
-                                                    <select name="status" class="form-control form-control-sm w-auto">
-                                                        <option value="Lulus Berkas">Lulus Berkas</option>
-                                                        <option value="Tidak Lulus Berkas" selected>Tidak Lulus Berkas</option>
-                                                    </select>
-                                                    <button type="submit" class="btn btn-sm btn-primary">Apply</button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    @endforeach
                                 </tbody>
                                 <tfoot>
                                     <tr>
