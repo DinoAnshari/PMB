@@ -162,7 +162,7 @@ class DashboardController extends Controller
             $query->where('sekolah_id', $user->sekolah_id);
         })->count();
 
-        return view('back.admin.index', compact(
+        return view('back.admin.statistik.index', compact(
             'totalAchievementTracks',
             'totalAffirmationTracks',
             'totalDomicileTracks'

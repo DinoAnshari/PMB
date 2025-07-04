@@ -8,17 +8,24 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RolePerSekolah
 {
-    public function handle(Request $request, Closure $next, $role): Response
+    public function handle(Request $request, Closure $next, ...$roles): Response
     {
         $user = auth()->user();
         $sekolah = $user->sekolah->nama_sekolah ?? '';
 
-        $roleFull = "$role $sekolah";
-
-        if (!$user->hasRole($roleFull) && !$user->hasRole('super admin')) {
-            abort(403, 'Unauthorized');
+        // Izinkan super admin
+        if ($user->hasRole('super admin')) {
+            return $next($request);
         }
 
-        return $next($request);
+        // Cek apakah user punya salah satu role yang dikombinasikan dengan nama sekolah
+        foreach ($roles as $role) {
+            $roleFull = "{$role} {$sekolah}";
+            if ($user->hasRole($roleFull)) {
+                return $next($request);
+            }
+        }
+
+        abort(403, 'Unauthorized');
     }
 }
