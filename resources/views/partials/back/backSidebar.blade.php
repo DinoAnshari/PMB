@@ -326,6 +326,26 @@
       </a>
     </li>
     @endif
+    @if(auth()->user() && auth()->user()->hasRole('siswa'))
+    <li class="sidebar-list {{ request()->is('dashboard/index_siswa*') ? 'active' : '' }}">
+      <i class="fa-solid fa-thumbtack"></i>
+      <a class="sidebar-link" href="{{ url('dashboard/index_siswa') }}">
+        <svg class="stroke-icon">
+          <use href="{{ asset('back/assets/svg/iconly-sprite.svg#Home-dashboard') }}"></use>
+        </svg>
+        <h6>Dashboards</h6>
+      </a>
+    </li>
+    <li class="sidebar-list {{ request()->is('dashboard/biodata*') ? 'active' : '' }}">
+        <i class="fa-solid fa-thumbtack"></i>
+        <a class="sidebar-link" href="{{ url('dashboard/biodata') }}">
+          <svg class="stroke-icon">
+            <use href="{{ asset('back/assets/svg/iconly-sprite.svg#Profile') }}"></use>
+          </svg>
+          <h6>Biodata</h6>
+        </a>
+      </li>
+    @endif
     </ul>
   </div>
   <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>

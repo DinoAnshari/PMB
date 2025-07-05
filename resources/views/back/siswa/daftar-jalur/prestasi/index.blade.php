@@ -12,7 +12,7 @@
                 </div>
                 <div class="col-sm-6 col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#"><i class="iconly-Home icli svg-color"></i></a></li>
+                        <li class="breadcrumb-item"><a href="{{ url('dashboard/index_siswa') }}"><i class="iconly-Home icli svg-color"></i></a></li>
                         <li class="breadcrumb-item">Prestasi</li>
                     </ol>
                 </div>
@@ -24,14 +24,16 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
+                    @if(!$prestasi)
                     <div class="card-header pb-0 card-no-border">
-                        <a href="#" class="btn btn-primary">Isi Data Prestasi</a>
+                        <a href="{{ route('prestasi.create') }}" class="btn btn-primary">Isi Data Prestasi</a>
                     </div>
+                    @else
                     <div class="card-header pb-0 card-no-border">
-                        <a href="#" class="btn btn-warning">Edit Data Prestasi</a>
+                        <a href="{{ route('prestasi.edit', $prestasi->id) }}" class="btn btn-warning">Edit Data Prestasi</a>
                         <a href="#" target="_blank" class="btn btn-success">Cetak Kartu</a>
                     </div>
-
+                    @endif
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="display" id="basic-6">
@@ -43,104 +45,90 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @if($prestasi)
+                                    @php $no = 1; @endphp
                                     <tr>
-                                        <td>1</td>
+                                        <td>{{ $no++ }}</td>
                                         <td>SKL/Ijazah</td>
-                                        <td><a href="#" target="_blank">Lihat SKL/Ijazah</a></td>
+                                        <td><a href="{{ asset('storage/' . $prestasi->skl_ijazah) }}" target="_blank">Lihat SKL/Ijazah</a></td>
                                     </tr>
                                     <tr>
-                                        <td>2</td>
+                                        <td>{{ $no++ }}</td>
                                         <td>Kartu Keluarga</td>
-                                        <td><a href="#" target="_blank">Lihat Kartu Keluarga</a></td>
+                                        <td><a href="{{ asset('storage/' . $prestasi->kartu_keluarga) }}" target="_blank">Lihat Kartu Keluarga</a></td>
                                     </tr>
+                                    @foreach(['kelas6_semester1', 'kelas6_semester2'] as $semester)
                                     <tr>
-                                        <td>3</td>
-                                        <td>Nilai Semester (Kelas5 semester1)</td>
+                                        <td>{{ $no++ }}</td>
+                                        <td>Nilai Semester ({{ str_replace('_', ' ', ucfirst($semester)) }})</td>
                                         <td>
-                                            Bahasa Indonesia: 85, Matematika: 90, IPA: 88, Bahasa Inggris: 80, PAI: 92
+                                            Bahasa Indonesia: {{ $prestasi->{'nilai_b_indo_' . $semester} }},
+                                            Matematika: {{ $prestasi->{'nilai_matematika_' . $semester} }},
+                                            IPA: {{ $prestasi->{'nilai_ipa_' . $semester} }},
+                                            Bahasa Inggris: {{ $prestasi->{'nilai_b_inggris_' . $semester} }},
+                                            Pendidikan agama dan budi pekerti/pai: {{ $prestasi->{'nilai_pai_' . $semester} }}
                                         </td>
                                     </tr>
+                                    @endforeach
                                     <tr>
-                                        <td>4</td>
-                                        <td>Nilai Semester (Kelas5 semester2)</td>
-                                        <td>
-                                            Bahasa Indonesia: 86, Matematika: 89, IPA: 87, Bahasa Inggris: 81, PAI: 91
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td>Nilai Semester (Kelas6 semester1)</td>
-                                        <td>
-                                            Bahasa Indonesia: 87, Matematika: 88, IPA: 89, Bahasa Inggris: 82, PAI: 93
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>6</td>
-                                        <td>Nilai Semester (Kelas6 semester2)</td>
-                                        <td>
-                                            Bahasa Indonesia: 88, Matematika: 90, IPA: 90, Bahasa Inggris: 83, PAI: 94
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>7</td>
-                                        <td>Rapot Kelas 5 Semester 1</td>
-                                        <td>
-                                            <a href="#" target="_blank">Lihat Rapot Kelas 5 Semester 1</a><br>
-                                            Rata-Rata: 88
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>8</td>
-                                        <td>Rapot Kelas 5 Semester 2</td>
-                                        <td>
-                                            <a href="#" target="_blank">Lihat Rapot Kelas 5 Semester 2</a><br>
-                                            Rata-Rata: 87
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>9</td>
+                                        <td>{{ $no++ }}</td>
                                         <td>Rapot Kelas 6 Semester 1</td>
                                         <td>
-                                            <a href="#" target="_blank">Lihat Rapot Kelas 6 Semester 1</a><br>
-                                            Rata-Rata: 89
+                                            <a href="{{ asset('storage/' . $prestasi->rapot_kelas6_semester1) }}" target="_blank">Lihat Rapot Kelas 6 Semester 1</a><br>
+                                            Rata-Rata: {{ $prestasi->rata_rata_kelas6_semester1 }}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>10</td>
+                                        <td>{{ $no++ }}</td>
                                         <td>Rapot Kelas 6 Semester 2</td>
                                         <td>
-                                            <a href="#" target="_blank">Lihat Rapot Kelas 6 Semester 2</a><br>
-                                            Rata-Rata: 90
+                                            <a href="{{ asset('storage/' . $prestasi->rapot_kelas6_semester2) }}" target="_blank">Lihat Rapot Kelas 6 Semester 2</a><br>
+                                            Rata-Rata: {{ $prestasi->rata_rata_kelas6_semester2 }}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>11</td>
+                                        <td>{{ $no++ }}</td>
                                         <td>Rata-Rata Keseluruhan</td>
-                                        <td>88.5</td>
+                                        <td>{{ $prestasi->rata_rata_keseluruhan }}</td>
                                     </tr>
 
+                                    @foreach(['kabkota_1', 'kabkota_2', 'provinsi_1', 'nasional_1', 'internasional_1'] as $level)
+                                    @if($prestasi->{'sertifikat_akademik_' . $level})
                                     <tr>
-                                        <td>12</td>
-                                        <td>Sertifikat Akademik (Kabkota 1)</td>
+                                        <td>{{ $no++ }}</td>
+                                        <td>Sertifikat Akademik ({{ ucfirst(str_replace('_', ' ', $level)) }})</td>
                                         <td>
-                                            <a href="#" target="_blank">Lihat Sertifikat</a><br>
-                                            Nilai: 10
+                                            <a href="{{ asset('storage/' . $prestasi->{'sertifikat_akademik_' . $level}) }}" target="_blank">Lihat Sertifikat</a><br>
+                                            Nilai: {{ $prestasi->{'nilai_akademik_' . $level} }}
                                         </td>
                                     </tr>
+                                    @endif
+                                    @endforeach
+
+                                    @foreach(['kabkota_1', 'kabkota_2', 'provinsi_1', 'nasional_1', 'internasional_1'] as $level)
+                                    @if($prestasi->{'sertifikat_non_akademik_' . $level})
                                     <tr>
-                                        <td>13</td>
-                                        <td>Sertifikat Non-Akademik (Kabkota 1)</td>
+                                        <td>{{ $no++ }}</td>
+                                        <td>Sertifikat Non-Akademik ({{ ucfirst(str_replace('_', ' ', $level)) }})</td>
                                         <td>
-                                            <a href="#" target="_blank">Lihat Sertifikat</a><br>
-                                            Nilai: 9
+                                            <a href="{{ asset('storage/' . $prestasi->{'sertifikat_non_akademik_' . $level}) }}" target="_blank">Lihat Sertifikat</a><br>
+                                            Nilai: {{ $prestasi->{'nilai_non_akademik_' . $level} }}
                                         </td>
                                     </tr>
+                                    @endif
+                                    @endforeach
                                     <tr>
-                                        <td>14</td>
+                                        <td>{{ $no++ }}</td>
                                         <td>Total Nilai Sertifikat</td>
-                                        <td>19</td>
+                                        <td>{{ $prestasi->total_nilai_sertifikat }}</td>
                                     </tr>
+                                    @else
+                                    <tr>
+                                        <td colspan="3" class="text-center">Belum ada data prestasi.</td>
+                                    </tr>
+                                    @endif
                                 </tbody>
+
                                 <tfoot>
                                     <tr>
                                         <th>No</th>
@@ -157,9 +145,9 @@
     </div>
 </div>
 
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+
 <script>
     $(document).ready(function() {
         $("#basic-6").DataTable({
@@ -171,4 +159,6 @@
         });
     });
 </script>
+
+
 @endsection

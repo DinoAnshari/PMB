@@ -12,7 +12,7 @@
                 </div>
                 <div class="col-sm-6 col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#"><i class="iconly-Home icli svg-color"></i></a></li>
+                        <li class="breadcrumb-item"><a href="{{ url('dashboard/index_siswa') }}"><i class="iconly-Home icli svg-color"></i></a></li>
                         <li class="breadcrumb-item">Biodata</li>
                     </ol>
                 </div>
@@ -24,12 +24,15 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
+                    @if(!$biodata)
                     <div class="card-header pb-0 card-no-border">
                         <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target=".biodata_create_modal">Isi Biodata</button>
                     </div>
+                    @else
                     <div class="card-header pb-0 card-no-border">
-                        <button class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target=".biodata_edit_modal">Edit Biodata</button>
+                        <button class="btn btn-warning edit-biodata-modal" type="button" data-bs-toggle="modal" data-bs-target=".biodata_edit_modal" data-id="{{ $biodata->id }}">Edit Biodata</button>
                     </div>
+                    @endif
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="display" id="basic-6">
@@ -41,132 +44,144 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @if($biodata)
+                                    @php $no = 1; @endphp
+                                    @if($biodata->pas_foto)
                                     <tr>
-                                        <td>1</td>
+                                        <td>{{ $no++ }}</td>
                                         <td>Pas Foto</td>
-                                        <td><img src="{{ asset('storage/foto_siswa_dummy.jpg') }}" width="120" alt="Pas Foto"></td>
+                                        <td><img src="{{ asset('storage/' . $biodata->pas_foto) }}" width="120" alt="Pas Foto"></td>
                                     </tr>
+                                    @endif
                                     <tr>
-                                        <td>2</td>
+                                        <td>{{ $no++ }}</td>
                                         <td>NISN</td>
-                                        <td>1234567890</td>
+                                        <td>{{ $biodata->nisn }}</td>
                                     </tr>
                                     <tr>
-                                        <td>3</td>
+                                        <td>{{ $no++ }}</td>
                                         <td>NIK</td>
-                                        <td>3275123456789000</td>
+                                        <td>{{ $biodata->nik }}</td>
                                     </tr>
                                     <tr>
-                                        <td>4</td>
+                                        <td>{{ $no++ }}</td>
                                         <td>No KK</td>
-                                        <td>3275001234567890</td>
+                                        <td>{{ $biodata->no_kk }}</td>
                                     </tr>
                                     <tr>
-                                        <td>5</td>
+                                        <td>{{ $no++ }}</td>
                                         <td>Jenis Kelamin</td>
-                                        <td>Laki-laki</td>
+                                        <td>{{ $biodata->jenis_kelamin }}</td>
                                     </tr>
                                     <tr>
-                                        <td>6</td>
+                                        <td>{{ $no++ }}</td>
                                         <td>Tempat, Tanggal Lahir</td>
-                                        <td>Maju Jaya, 12 Januari 2012</td>
+                                        <td>{{ $biodata->tempat_lahir }}, {{ $biodata->tanggal_lahir }}</td>
                                     </tr>
                                     <tr>
-                                        <td>7</td>
+                                        <td>{{ $no++ }}</td>
                                         <td>Agama</td>
-                                        <td>Islam</td>
+                                        <td>{{ $biodata->agama }}</td>
                                     </tr>
                                     <tr>
-                                        <td>8</td>
+                                        <td>{{ $no++ }}</td>
                                         <td>Alamat</td>
-                                        <td>Jl. Merdeka No. 10, Maju Jaya</td>
+                                        <td>{{ $biodata->alamat }}</td>
                                     </tr>
                                     <tr>
-                                        <td>9</td>
+                                        <td>{{ $no++ }}</td>
                                         <td>Tinggal dengan</td>
-                                        <td>Orang Tua</td>
+                                        <td>{{ $biodata->tinggal_dengan }}</td>
                                     </tr>
                                     <tr>
-                                        <td>10</td>
+                                        <td>{{ $no++ }}</td>
                                         <td>Asal Sekolah</td>
-                                        <td>SDN 01 Maju Jaya</td>
+                                        <td>{{ $biodata->asal_sekolah }}</td>
                                     </tr>
                                     <tr>
-                                        <td>11</td>
+                                        <td>{{ $no++ }}</td>
                                         <td>Alamat Asal Sekolah</td>
-                                        <td>Jl. Pendidikan No. 5</td>
+                                        <td>{{ $biodata->alamat_asal_sekolah }}</td>
                                     </tr>
                                     <tr>
-                                        <td>12</td>
+                                        <td>{{ $no++ }}</td>
                                         <td>Kecamatan</td>
-                                        <td>Maju Utara</td>
+                                        <td>{{ $biodata->kecamatan }}</td>
                                     </tr>
                                     <tr>
-                                        <td>13</td>
+                                        <td>{{ $no++ }}</td>
                                         <td>Kelurahan</td>
-                                        <td>Martoba</td>
+                                        <td>{{ $biodata->kelurahan }}</td>
                                     </tr>
+                                    
 
-                                    <!-- Data Orang Tua -->
+                                    @if($biodata->parent)
                                     <tr>
                                         <td colspan="3" class="table-secondary fw-bold">Data Orang Tua</td>
                                     </tr>
                                     <tr>
-                                        <td>14</td>
+                                        <td>{{ $no++ }}</td>
                                         <td>Nama Ayah</td>
-                                        <td>Ahmad Sulaiman</td>
+                                        <td>{{ $biodata->parent->nama_ayah }}</td>
                                     </tr>
                                     <tr>
-                                        <td>15</td>
+                                        <td>{{ $no++ }}</td>
                                         <td>Pekerjaan Ayah</td>
-                                        <td>Karyawan Swasta</td>
+                                        <td>{{ $biodata->parent->pekerjaan_ayah }}</td>
                                     </tr>
                                     <tr>
-                                        <td>16</td>
+                                        <td>{{ $no++ }}</td>
                                         <td>Nama Ibu</td>
-                                        <td>Siti Mariam</td>
+                                        <td>{{ $biodata->parent->nama_ibu }}</td>
                                     </tr>
                                     <tr>
-                                        <td>17</td>
+                                        <td>{{ $no++ }}</td>
                                         <td>Pekerjaan Ibu</td>
-                                        <td>Ibu Rumah Tangga</td>
+                                        <td>{{ $biodata->parent->pekerjaan_ibu }}</td>
                                     </tr>
                                     <tr>
-                                        <td>18</td>
+                                        <td>{{ $no++ }}</td>
                                         <td>No HP</td>
-                                        <td>081234567890</td>
+                                        <td>{{ $biodata->parent->no_hp }}</td>
                                     </tr>
                                     <tr>
-                                        <td>19</td>
+                                        <td>{{ $no++ }}</td>
                                         <td>Alamat Orang Tua</td>
-                                        <td>Jl. Merdeka No. 10, Maju Jaya</td>
+                                        <td>{{ $biodata->parent->alamat }}</td>
                                     </tr>
-
-                                    <!-- Data Wali -->
+                                    @endif
+                                    @if($biodata->guardian)
                                     <tr>
                                         <td colspan="3" class="table-secondary fw-bold">Data Wali</td>
                                     </tr>
                                     <tr>
-                                        <td>20</td>
+                                        <td>{{ $no++ }}</td>
                                         <td>Nama Wali</td>
-                                        <td>Pak Budi</td>
+                                        <td>{{ $biodata->guardian->nama_wali }}</td>
                                     </tr>
                                     <tr>
-                                        <td>21</td>
+                                        <td>{{ $no++ }}</td>
                                         <td>Pekerjaan Wali</td>
-                                        <td>PNS</td>
+                                        <td>{{ $biodata->guardian->pekerjaan_wali }}</td>
                                     </tr>
                                     <tr>
-                                        <td>22</td>
+                                        <td>{{ $no++ }}</td>
                                         <td>No HP</td>
-                                        <td>082112345678</td>
+                                        <td>{{ $biodata->guardian->no_hp }}</td>
                                     </tr>
                                     <tr>
-                                        <td>23</td>
+                                        <td>{{ $no++ }}</td>
                                         <td>Alamat Wali</td>
-                                        <td>Jl. Kemerdekaan No. 7</td>
+                                        <td>{{ $biodata->guardian->alamat }}</td>
                                     </tr>
+                                    @endif
+                                    @else
+                                    <tr>
+                                        <td colspan="3" class="text-center">Belum ada data biodata.</td>
+                                    </tr>
+                                    @endif
                                 </tbody>
+
                                 <tfoot>
                                     <tr>
                                         <th>No</th>
@@ -182,14 +197,13 @@
         </div>
     </div>
 </div>
-
 @push('modal')
 @include('back.siswa.biodata.modal.create')
 @include('back.siswa.biodata.modal.edit')
 @endpush
 
 @push('js')
-
+@include('back.siswa.biodata._script')
 @endpush
 
 @endsection

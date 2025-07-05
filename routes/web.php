@@ -10,6 +10,9 @@ use App\Http\Controllers\Back\FaqController;
 use App\Http\Controllers\Back\PemeriksaController;
 use App\Http\Controllers\Back\SekolahController;
 use App\Http\Controllers\Back\SettingController;
+use App\Http\Controllers\Back\Siswa\BiodataController;
+use App\Http\Controllers\Back\Siswa\DashboardSiswaController;
+use App\Http\Controllers\Back\Siswa\JalurPrestasiController;
 use App\Http\Controllers\Back\SliderController;
 use App\Http\Controllers\Back\StudentActionController;
 use App\Http\Controllers\Back\TimelineController;
@@ -75,7 +78,6 @@ Route::middleware(['auth', 'verified', 'role:super admin'])->prefix('/dashboard'
         Route::get('tidak-lulus/excel', [DomicileController::class, 'downloadExcelDomicileTidakLulus'])->name('tidak_lulus_excel');
     });
 });
-Route::middleware(['auth', 'verified', 'role:siswa'])->prefix('/dashboard')->group(function () {});
 
 Route::middleware(['auth', 'verified', 'role.sekolah:admin prestasi'])->prefix('/dashboard')->group(function () {
     Route::get('/index_admin_prestasi', [DashboardController::class, 'indexAdminPrestasi'])->name('dashboard.index_admin_prestasi');
@@ -169,5 +171,10 @@ Route::middleware(['auth', 'verified', 'role.sekolah:pemeriksa prestasi,pemeriks
             Route::post('/{id}/update', [PemeriksaController::class, 'updateDomisili'])->name('update-berkas');
         });
     });
+Route::middleware(['auth', 'verified', 'role:siswa'])->prefix('/dashboard')->group(function () {
+    Route::get('/index_siswa', [DashboardSiswaController::class, 'index'])->name('dashboard.index_siswa');
+    Route::resource('/biodata', BiodataController::class);
+    Route::resource('/prestasi', JalurPrestasiController::class)->middleware('jalur.aktif');
+});
 
 require __DIR__ . '/auth.php';

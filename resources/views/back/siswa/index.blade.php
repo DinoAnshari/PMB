@@ -8,11 +8,11 @@
     <div class="page-title">
         <div class="row">
             <div class="col-sm-6 col-12">
-                <h2>Selamat Datang Siswa PPDB</h2>
+                <h2>Selamat Datang {{ auth()->user()->name }}</h2>
             </div>
             <div class="col-sm-6 col-12">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#"><i class="iconly-Home icli svg-color"></i></a></li>
+                    <li class="breadcrumb-item"><a href="{{ url('dashboard/index_siswa') }}"><i class="iconly-Home icli svg-color"></i></a></li>
                     <li class="breadcrumb-item">Dashboard </li>
                     <li class="breadcrumb-item active">Index</li>
                 </ol>
@@ -20,7 +20,6 @@
         </div>
     </div>
 </div>
-
 <div class="container-fluid">
     <div class="row">
         <div class="col-xl-6">
@@ -32,31 +31,24 @@
                 <div class="card-body">
                     <ul class="square-timeline">
                         <ul class="timeline">
+                            @forelse($timelines as $timeline)
                             <li class="timeline-event">
                                 <label class="timeline-event-icon"></label>
                                 <div class="timeline-event-wrapper">
-                                    <p class="timeline-thumbnail">1 Juli 2025</p>
-                                    <h5>Pendaftaran Dibuka</h5>
-                                    <p class="pt-3 mb-4">Calon peserta didik dapat mulai mendaftar secara online.</p>
+                                    <p class="timeline-thumbnail">{{ $timeline->tanggal}}</p>
+                                    <h5>{{ $timeline->judul }}</h5>
+                                    <p class="pt-3 mb-4">{{ $timeline->deskripsi }}</p>
                                 </div>
                             </li>
+                            @empty
                             <li class="timeline-event">
-                                <label class="timeline-event-icon"></label>
                                 <div class="timeline-event-wrapper">
-                                    <p class="timeline-thumbnail">10 Juli 2025</p>
-                                    <h5>Seleksi Berkas</h5>
-                                    <p class="pt-3 mb-4">Panitia akan memverifikasi dokumen yang diunggah.</p>
+                                    <p class="text-center">Tidak ada timeline tersedia.</p>
                                 </div>
                             </li>
-                            <li class="timeline-event">
-                                <label class="timeline-event-icon"></label>
-                                <div class="timeline-event-wrapper">
-                                    <p class="timeline-thumbnail">15 Juli 2025</p>
-                                    <h5>Pengumuman Hasil</h5>
-                                    <p class="pt-3 mb-4">Hasil seleksi diumumkan di halaman resmi PPDB.</p>
-                                </div>
-                            </li>
+                            @endforelse
                         </ul>
+
                     </ul>
                 </div>
             </div>
@@ -80,43 +72,26 @@
                 <div class="card-body">
                     <div class="accordion dark-accordion" id="simpleaccordion">
                         <div class="accordion" id="simpleaccordion">
+                            @if($faqs->isEmpty())
+                            <p>Tidak ada pertanyaan yang tersedia saat ini.</p>
+                            @else
+                            @foreach($faqs as $index => $faq)
                             <div class="accordion-item">
-                                <h2 class="accordion-header" id="heading1">
-                                    <button class="accordion-button collapsed accordion-light-primary text-primary active" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
-                                        Bagaimana cara mendaftar? <i class="iconly-Arrow-Down-2 icli ms-auto icon"></i>
+                                <h2 class="accordion-header" id="heading{{ $faq->id }}">
+                                    <button class="accordion-button collapsed accordion-light-primary text-primary @if($index == 0) active @endif" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $faq->id }}" aria-expanded="{{ $index == 0 ? 'true' : 'false' }}" aria-controls="collapse{{ $faq->id }}">
+                                        {{ $faq->question }} <i class="iconly-Arrow-Down-2 icli ms-auto icon"></i>
                                     </button>
                                 </h2>
-                                <div class="accordion-collapse collapse show" id="collapse1" aria-labelledby="heading1" data-bs-parent="#simpleaccordion">
+                                <div class="accordion-collapse collapse @if($index == 0) show @endif" id="collapse{{ $faq->id }}" aria-labelledby="heading{{ $faq->id }}" data-bs-parent="#simpleaccordion">
                                     <div class="accordion-body">
-                                        <p>Silakan klik menu "Daftar Sekarang" dan isi seluruh formulir yang tersedia dengan data yang valid.</p>
+                                        <p>{{ $faq->answer }}</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="heading2">
-                                    <button class="accordion-button collapsed accordion-light-primary text-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
-                                        Apakah pendaftaran gratis? <i class="iconly-Arrow-Down-2 icli ms-auto icon"></i>
-                                    </button>
-                                </h2>
-                                <div class="accordion-collapse collapse" id="collapse2" aria-labelledby="heading2" data-bs-parent="#simpleaccordion">
-                                    <div class="accordion-body">
-                                        <p>Ya, seluruh proses pendaftaran PPDB ini tidak dipungut biaya apapun.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="heading3">
-                                    <button class="accordion-button collapsed accordion-light-primary text-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
-                                        Dokumen apa saja yang harus disiapkan? <i class="iconly-Arrow-Down-2 icli ms-auto icon"></i>
-                                    </button>
-                                </h2>
-                                <div class="accordion-collapse collapse" id="collapse3" aria-labelledby="heading3" data-bs-parent="#simpleaccordion">
-                                    <div class="accordion-body">
-                                        <p>SKL/Ijazah, Kartu Keluarga, dan dokumen pendukung lain sesuai jalur yang dipilih.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> 
+                            @endforeach
+                            @endif
+
+                        </div>
                     </div>
                 </div>
             </div>
