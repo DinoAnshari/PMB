@@ -337,16 +337,72 @@
       </a>
     </li>
     <li class="sidebar-list {{ request()->is('dashboard/biodata*') ? 'active' : '' }}">
-        <i class="fa-solid fa-thumbtack"></i>
-        <a class="sidebar-link" href="{{ url('dashboard/biodata') }}">
-          <svg class="stroke-icon">
-            <use href="{{ asset('back/assets/svg/iconly-sprite.svg#Profile') }}"></use>
-          </svg>
-          <h6>Biodata</h6>
-        </a>
-      </li>
+      <i class="fa-solid fa-thumbtack"></i>
+      <a class="sidebar-link" href="{{ url('dashboard/biodata') }}">
+        <svg class="stroke-icon">
+          <use href="{{ asset('back/assets/svg/iconly-sprite.svg#Profile') }}"></use>
+        </svg>
+        <h6>Biodata</h6>
+      </a>
+    </li>
+    @foreach($jalurList as $jalur)
+    <li class="sidebar-list {{ request()->is('dashboard/' . $jalur->nama . '*') ? 'active' : '' }}">
+      <i class="fa-solid fa-thumbtack"></i>
+      <a class="sidebar-link" href="#" onclick="checkJalur(event, '{{ url('dashboard/' . $jalur->nama) }}', '{{ strtolower($jalur->nama) }}')">
+        <svg class="stroke-icon">
+          <use href="{{ asset('back/assets/svg/iconly-sprite.svg#Activity') }}"></use>
+        </svg>
+        <h6>Jalur {{ ucfirst($jalur->nama) }}</h6>
+      </a>
+    </li>
+    @endforeach
     @endif
     </ul>
   </div>
   <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
 </aside>
+<script>
+  function checkJalur(event, url, jalur) {
+    event.preventDefault();
+
+    fetch("/check-biodata")
+      .then(response => response.json())
+      .then(data => {
+        if (!data.hasBiodata) {
+          showToast("Silakan lengkapi biodata terlebih dahulu!", "danger");
+          return;
+        }
+
+        const jalurMap = {
+          'prestasi': data.hasPrestasi,
+          'afirmasi': data.hasAfirmasi,
+          'domisili': data.hasDomisili
+        };
+
+        if (data.hasAnyJalur) {
+          if (jalurMap[jalur]) {
+            window.location.href = url;
+          } else {
+            showToast("Hanya boleh mendaftar di 1 jalur!", "warning");
+          }
+          return;
+        }
+
+        window.location.href = url;
+      })
+      .catch(error => {
+        console.error('Error checking jalur:', error);
+      });
+  }
+
+  function showToast(message, type = 'danger') {
+    const toastEl = document.getElementById("liveToast");
+    const toastBody = document.getElementById("toastMessage");
+
+    toastBody.innerHTML = message;
+    toastEl.className = `toast align-items-center text-white bg-${type} border-0 show`;
+
+    const toast = new bootstrap.Toast(toastEl);
+    toast.show();
+  }
+</script>

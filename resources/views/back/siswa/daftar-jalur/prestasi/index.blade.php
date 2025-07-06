@@ -26,12 +26,12 @@
                 <div class="card">
                     @if(!$prestasi)
                     <div class="card-header pb-0 card-no-border">
-                        <a href="{{ route('prestasi.create') }}" class="btn btn-primary">Isi Data Prestasi</a>
+                        <a href="{{ route('prestasi-siswa.create') }}" class="btn btn-primary">Isi Data Prestasi</a>
                     </div>
                     @else
                     <div class="card-header pb-0 card-no-border">
-                        <a href="{{ route('prestasi.edit', $prestasi->id) }}" class="btn btn-warning">Edit Data Prestasi</a>
-                        <a href="#" target="_blank" class="btn btn-success">Cetak Kartu</a>
+                        <a href="{{ route('prestasi-siswa.edit', $prestasi->id) }}" class="btn btn-warning">Edit Data Prestasi</a>
+                         <a href="{{ route('jalur-prestasi.cetak-kartu', $prestasi->id) }}" target="_blank" class="btn btn-success">Cetak Kartu</a>
                     </div>
                     @endif
                     <div class="card-body">

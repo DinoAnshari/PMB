@@ -18,6 +18,7 @@ use App\Http\Controllers\Back\StudentActionController;
 use App\Http\Controllers\Back\TimelineController;
 use App\Http\Controllers\Back\UserController;
 use App\Http\Controllers\Back\VideoController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -174,7 +175,26 @@ Route::middleware(['auth', 'verified', 'role.sekolah:pemeriksa prestasi,pemeriks
 Route::middleware(['auth', 'verified', 'role:siswa'])->prefix('/dashboard')->group(function () {
     Route::get('/index_siswa', [DashboardSiswaController::class, 'index'])->name('dashboard.index_siswa');
     Route::resource('/biodata', BiodataController::class);
-    Route::resource('/prestasi', JalurPrestasiController::class)->middleware('jalur.aktif');
+    Route::get('/prestasi', [JalurPrestasiController::class, 'index'])->name('prestasi-siswa.index')->middleware('jalur.aktif');
+    Route::get('/prestasi-siswa/create', [JalurPrestasiController::class, 'create'])->name('prestasi-siswa.create');
+    Route::post('/prestasi-siswa/store', [JalurPrestasiController::class, 'store'])->name('prestasi-siswa.store');
+    Route::get('/prestasi-siswa/{id}/edit', [JalurPrestasiController::class, 'edit'])->name('prestasi-siswa.edit');
+    Route::put('/prestasi-siswa/{id}', [JalurPrestasiController::class, 'update'])->name('prestasi-siswa.update');
 });
-
+Route::middleware(['auth', 'verified'])->prefix('/dashboard')->group(function () {
+    Route::get('/jalur-prestasi/{id}/cetak-kartu', [JalurPrestasiController::class, 'cetakKartu'])->name('jalur-prestasi.cetak-kartu');
+});
+Route::get('/check-biodata', function () {
+    $user = Auth::user();
+    return response()->json([
+        'hasBiodata' => $user->biodata()->exists(),
+        'hasPrestasi' => $user->prestasi()->exists(),
+        'hasAfirmasi' => $user->afirmasi()->exists(),
+        'hasDomisili' => $user->domisili()->exists(),
+        'hasAnyJalur' => $user->prestasi()->exists() ||
+            $user->afirmasi()->exists() ||
+            $user->pindah()->exists() ||
+            $user->domisili()->exists(),
+    ]);
+})->middleware('auth');
 require __DIR__ . '/auth.php';

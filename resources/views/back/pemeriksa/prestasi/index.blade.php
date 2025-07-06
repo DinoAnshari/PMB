@@ -68,7 +68,7 @@
                                                     <i class="iconly-Category icli"></i>
                                                 </a>
 
-                                                <a href="#" target="_blank" title="Detail Prestasi" class="btn btn-sm btn-primary">
+                                                <a href="{{ route('jalur-prestasi.cetak-kartu', $prestasi->id) }}" target="_blank" title="Detail Prestasi" class="btn btn-sm btn-primary">
                                                     <i class="iconly-Paper icli"></i>
                                                 </a>
 

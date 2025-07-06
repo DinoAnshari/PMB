@@ -115,10 +115,10 @@ class JalurPrestasiController extends Controller
 
             AchievementTrack::create($data);
 
-            return redirect()->route('prestasi.index')->with(['success' => 'Data prestasi berhasil disimpan!.', 'type' => 'bootstrap-toast']);
+            return redirect()->route('prestasi-siswa.index')->with(['success' => 'Data prestasi berhasil disimpan!.', 'type' => 'bootstrap-toast']);
 
         } catch (\Exception $e) {
-            return redirect()->route('prestasi.index')->with(['error' => 'Terjadi kesalahan saat menyimpan data. ' . $e->getMessage(), 'type' => 'bootstrap-toast']);
+            return redirect()->route('prestasi-siswa.index')->with(['error' => 'Terjadi kesalahan saat menyimpan data. ' . $e->getMessage(), 'type' => 'bootstrap-toast']);
         }
     }
 
@@ -214,10 +214,10 @@ class JalurPrestasiController extends Controller
 
             $prestasi->update($data);
 
-            return redirect()->route('prestasi.index')->with(['success' => 'Data prestasi berhasil diperbarui!', 'type' => 'bootstrap-toast']);
+            return redirect()->route('prestasi-siswa.index')->with(['success' => 'Data prestasi berhasil diperbarui!', 'type' => 'bootstrap-toast']);
 
         } catch (\Exception $e) {
-            return redirect()->route('prestasi.index')->with(['error' => 'Terjadi kesalahan saat memperbarui data. ' . $e->getMessage(), 'type' => 'bootstrap-toast']);
+            return redirect()->route('prestasi-siswa.index')->with(['error' => 'Terjadi kesalahan saat memperbarui data. ' . $e->getMessage(), 'type' => 'bootstrap-toast']);
         }
     }
 
