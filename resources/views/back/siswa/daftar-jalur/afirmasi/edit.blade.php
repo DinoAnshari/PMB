@@ -12,7 +12,7 @@
                 </div>
                 <div class="col-sm-6 col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#"><i class="iconly-Home icli svg-color"></i></a></li>
+                        <li class="breadcrumb-item"><a href="{{ url('dashboard/index_siswa') }}"><i class="iconly-Home icli svg-color"></i></a></li>
                         <li class="breadcrumb-item">Afirmasi</li>
                     </ol>
                 </div>
@@ -21,8 +21,17 @@
     </div>
 
     <div class="container-fluid">
-        <form action="#" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('afirmasi-siswa.update', $afirmasi->id) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
             <div class="row">
+                @php
+                $semesters = [
+                ['kelas' => 6, 'semester' => 1],
+                ['kelas' => 6, 'semester' => 2],
+                ];
+                $mapel = ['b_indo' => 'Bahasa Indonesia', 'matematika' => 'Matematika', 'ipa' => 'IPA', 'b_inggris' => 'Bahasa Inggris', 'pai' => 'Pendidikan Agama dan Budi Pekerti (PAI)'];
+                @endphp
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-header pb-0">
@@ -32,65 +41,82 @@
                             <div class="mb-3">
                                 <label class="form-label">SKL / Ijazah</label>
                                 <input class="form-control" type="file" name="skl_ijazah">
-                                <small class="form-text text-muted">Dokumen sudah ada: skl_ijazah.pdf</small>
+                                @if ($afirmasi->skl_ijazah)
+                                <small class="form-text text-muted">
+                                    Dokumen sudah ada:
+                                    <a href="{{ asset('storage/' . $afirmasi->skl_ijazah) }}" target="_blank" class="text-info">
+                                        {{ $afirmasi->skl_ijazah }}
+                                    </a>
+                                </small>
+                                @endif
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Kartu Keluarga</label>
                                 <input class="form-control" type="file" name="kartu_keluarga">
-                                <small class="form-text text-muted">Dokumen sudah ada: kk.pdf</small>
+                                @if ($afirmasi->kartu_keluarga)
+                                <small class="form-text text-muted">
+                                    Dokumen sudah ada:
+                                    <a href="{{ asset('storage/' . $afirmasi->kartu_keluarga) }}" target="_blank" class="text-info">
+                                        {{ $afirmasi->kartu_keluarga }}
+                                    </a>
+                                </small>
+
+                                @endif
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Dokumen Pendukung</label>
                                 <input class="form-control" type="file" name="dokumen_pendukung">
-                                <small class="form-text text-muted">Dokumen sudah ada: kip.pdf</small>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Jarak Ke Sekolah</label>
-                                <input class="form-control" type="number" name="jarak_km" value="3.5" readonly>
+                                @if ($afirmasi->dokumen_pendukung)
+                                <small class="form-text text-muted">
+                                    Dokumen sudah ada:
+                                    <a href="{{ asset('storage/' . $afirmasi->dokumen_pendukung) }}" target="_blank" class="text-info">
+                                        {{ $afirmasi->dokumen_pendukung }}
+                                    </a>
+                                </small>
+
+                                @endif
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Hanya contoh 1 semester dan 1 kategori ditampilkan -->
+                @foreach($semesters as $s)
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-header pb-0">
-                            <h4>Nilai Kelas 5 Semester 1</h4>
+                            <h4>Nilai Kelas {{ $s['kelas'] }} Semester {{ $s['semester'] }}</h4>
                         </div>
                         <div class="card-body">
                             <div class="mb-3">
                                 <label class="form-label">Upload Rapot</label>
-                                <input class="form-control" type="file" name="rapot_kelas5_semester1">
-                                <small class="form-text text-muted">Rapot sudah ada: rapot_5_1.pdf</small>
+                                <input class="form-control" type="file" name="rapot_kelas{{ $s['kelas'] }}_semester{{ $s['semester'] }}">
+                                @if (!empty($afirmasi->{'rapot_kelas' . $s['kelas'] . '_semester' . $s['semester']}))
+                                <small class="form-text text-muted">
+                                    Rapot sudah ada:
+                                    <a href="{{ asset('storage/' . $afirmasi->{'rapot_kelas' . $s['kelas'] . '_semester' . $s['semester']}) }}" target="_blank" class="text-info">
+                                        {{ $afirmasi->{'rapot_kelas' . $s['kelas'] . '_semester' . $s['semester']} }}
+                                    </a>
+                                </small>
+                                @endif
+
                             </div>
+                            @foreach($mapel as $kode => $label)
                             <div class="mb-3">
-                                <label class="form-label">Bahasa Indonesia</label>
-                                <input class="form-control" type="number" name="nilai_b_indo_kelas5_semester1" value="80">
+                                <label class="form-label">{{ $label }}</label>
+                                <input class="form-control nilai" type="number" name="nilai_{{ $kode }}_kelas{{ $s['kelas'] }}_semester{{ $s['semester'] }}"
+                                    data-semester="{{ $s['semester'] }}" data-kelas="{{ $s['kelas'] }}"
+                                    value="{{ $afirmasi->{'nilai_' . $kode . '_kelas' . $s['kelas'] . '_semester' . $s['semester']} }}">
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label">Matematika</label>
-                                <input class="form-control" type="number" name="nilai_matematika_kelas5_semester1" value="85">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">IPA</label>
-                                <input class="form-control" type="number" name="nilai_ipa_kelas5_semester1" value="82">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Bahasa Inggris</label>
-                                <input class="form-control" type="number" name="nilai_b_inggris_kelas5_semester1" value="83">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">PAI</label>
-                                <input class="form-control" type="number" name="nilai_pai_kelas5_semester1" value="87">
-                            </div>
+                            @endforeach
                             <div class="mb-3">
                                 <label class="form-label">Rata-rata Semester Ini</label>
-                                <input class="form-control" type="number" value="83.4" readonly>
+                                <input class="form-control rata-rata-semester" type="number" step="0.01" name="rata_rata_kelas{{ $s['kelas'] }}_semester{{ $s['semester'] }}"
+                                    value="{{ $afirmasi->{'rata_rata_kelas' . $s['kelas'] . '_semester' . $s['semester']} }}" readonly>
                             </div>
                         </div>
                     </div>
                 </div>
+                @endforeach
 
                 <div class="col-md-6">
                     <div class="card">
@@ -98,39 +124,7 @@
                             <h4>Rata-rata Keseluruhan</h4>
                         </div>
                         <div class="card-body">
-                            <input class="form-control" type="number" value="83.4" readonly>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header pb-0">
-                            <h4>Sertifikat Akademik (jika Ada)</h4>
-                        </div>
-                        <div class="card-body row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label">Sertifikat Kabkota 1</label>
-                                    <input class="form-control" type="file" name="sertifikat_akademik_kabkota_1">
-                                    <small class="form-text text-muted">Sertifikat sudah ada: lomba1.pdf</small>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Nilai Sertifikat</label>
-                                    <input class="form-control" type="number" value="20" readonly>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-header pb-0">
-                            <h4>Total Nilai Sertifikat</h4>
-                        </div>
-                        <div class="card-body">
-                            <input class="form-control" type="number" value="20" readonly>
+                            <input class="form-control" type="number" step="0.01" name="rata_rata_keseluruhan" value="{{ $afirmasi->rata_rata_keseluruhan }}" readonly>
                         </div>
                     </div>
                 </div>
@@ -139,7 +133,55 @@
                     <button type="submit" class="btn btn-primary">Update Data Afirmasi</button>
                 </div>
             </div>
+
         </form>
     </div>
 </div>
+
+<script>
+    function hitungRataRataSemester(semester, kelas) {
+        let totalNilai = 0;
+        let jumlahMapel = 0;
+
+        let nilaiInputs = document.querySelectorAll(`[data-semester="${semester}"][data-kelas="${kelas}"]`);
+
+        nilaiInputs.forEach(function(input) {
+            if (input.value) {
+                totalNilai += parseFloat(input.value);
+                jumlahMapel++;
+            }
+        });
+
+        if (jumlahMapel > 0) {
+            let rataRata = totalNilai / jumlahMapel;
+            document.querySelector(`input[name="rata_rata_kelas${kelas}_semester${semester}"]`).value = rataRata.toFixed(2);
+        } else {
+            document.querySelector(`input[name="rata_rata_kelas${kelas}_semester${semester}"]`).value = '';
+        }
+
+        hitungRataRataKeseluruhan();
+    }
+
+    function hitungRataRataKeseluruhan() {
+        let totalNilaiKeseluruhan = 0;
+        let jumlahSemester = 0;
+
+        let rataRataInputs = document.querySelectorAll('.rata-rata-semester');
+
+        rataRataInputs.forEach(function(input) {
+            if (input.value) {
+                totalNilaiKeseluruhan += parseFloat(input.value);
+                jumlahSemester++;
+            }
+        });
+
+        if (jumlahSemester > 0) {
+            let rataRataKeseluruhan = totalNilaiKeseluruhan / jumlahSemester;
+            document.querySelector('input[name="rata_rata_keseluruhan"]').value = rataRataKeseluruhan.toFixed(2);
+        } else {
+            document.querySelector('input[name="rata_rata_keseluruhan"]').value = '';
+        }
+    }
+</script>
+
 @endsection

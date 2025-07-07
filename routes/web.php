@@ -12,6 +12,7 @@ use App\Http\Controllers\Back\SekolahController;
 use App\Http\Controllers\Back\SettingController;
 use App\Http\Controllers\Back\Siswa\BiodataController;
 use App\Http\Controllers\Back\Siswa\DashboardSiswaController;
+use App\Http\Controllers\Back\Siswa\JalurAfirmasiController;
 use App\Http\Controllers\Back\Siswa\JalurPrestasiController;
 use App\Http\Controllers\Back\SliderController;
 use App\Http\Controllers\Back\StudentActionController;
@@ -180,9 +181,16 @@ Route::middleware(['auth', 'verified', 'role:siswa'])->prefix('/dashboard')->gro
     Route::post('/prestasi-siswa/store', [JalurPrestasiController::class, 'store'])->name('prestasi-siswa.store');
     Route::get('/prestasi-siswa/{id}/edit', [JalurPrestasiController::class, 'edit'])->name('prestasi-siswa.edit');
     Route::put('/prestasi-siswa/{id}', [JalurPrestasiController::class, 'update'])->name('prestasi-siswa.update');
+    
+    Route::get('/afirmasi', [JalurAfirmasiController::class, 'index'])->name('afirmasi-siswa.index')->middleware('jalur.aktif');
+    Route::get('/afirmasi-siswa/create', [JalurAfirmasiController::class, 'create'])->name('afirmasi-siswa.create');
+    Route::post('/afirmasi-siswa/store', [JalurAfirmasiController::class, 'store'])->name('afirmasi-siswa.store');
+    Route::get('/afirmasi-siswa/{id}/edit', [JalurAfirmasiController::class, 'edit'])->name('afirmasi-siswa.edit');
+    Route::put('/afirmasi-siswa/{id}', [JalurAfirmasiController::class, 'update'])->name('afirmasi-siswa.update');
 });
 Route::middleware(['auth', 'verified'])->prefix('/dashboard')->group(function () {
     Route::get('/jalur-prestasi/{id}/cetak-kartu', [JalurPrestasiController::class, 'cetakKartu'])->name('jalur-prestasi.cetak-kartu');
+    Route::get('/jalur-afirmasi/{id}/cetak-kartu', [JalurAfirmasiController::class, 'cetakKartu'])->name('jalur-afirmasi.cetak-kartu');
 });
 Route::get('/check-biodata', function () {
     $user = Auth::user();
@@ -193,7 +201,6 @@ Route::get('/check-biodata', function () {
         'hasDomisili' => $user->domisili()->exists(),
         'hasAnyJalur' => $user->prestasi()->exists() ||
             $user->afirmasi()->exists() ||
-            $user->pindah()->exists() ||
             $user->domisili()->exists(),
     ]);
 })->middleware('auth');
