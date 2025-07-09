@@ -20,12 +20,12 @@ use App\Http\Controllers\Back\StudentActionController;
 use App\Http\Controllers\Back\TimelineController;
 use App\Http\Controllers\Back\UserController;
 use App\Http\Controllers\Back\VideoController;
+use App\Http\Controllers\Front\HomePageController;
+use App\Http\Controllers\Siswa\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('front/index');
-});
+Route::get('/', [HomePageController::class, 'index'])->name('home');
 
 Route::middleware(['auth', 'verified', 'role:super admin'])->prefix('/dashboard')->group(function () {
     Route::get('/index_super_admin', [DashboardController::class, 'superadmin'])->name('dashboard.index_super_admin');
@@ -194,6 +194,9 @@ Route::middleware(['auth', 'verified', 'role:siswa'])->prefix('/dashboard')->gro
     Route::post('/domisili-siswa/store', [JalurDomisiliController::class, 'store'])->name('domisili-siswa.store');
     Route::get('/domisili-siswa/{id}/edit', [JalurDomisiliController::class, 'edit'])->name('domisili-siswa.edit');
     Route::put('/domisili-siswa/{id}', [JalurDomisiliController::class, 'update'])->name('domisili-siswa.update');
+
+    Route::get('/profile', [ProfileController::class, 'editUser'])->name('edit-profile.index');
+    Route::put('/profile/{user}', [ProfileController::class, 'updateUser'])->name('edit-profile.update');
 });
 Route::middleware(['auth', 'verified'])->prefix('/dashboard')->group(function () {
     Route::get('/jalur-prestasi/{id}/cetak-kartu', [JalurPrestasiController::class, 'cetakKartu'])->name('jalur-prestasi.cetak-kartu');

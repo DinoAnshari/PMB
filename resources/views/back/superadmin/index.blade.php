@@ -51,7 +51,7 @@
                     </div>
                 </div>
                 <div class="card-body pb-0">
-                    <div id="column-chart"></div>
+                    <div id="superadmin-chart"></div>
                 </div>
             </div>
         </div>

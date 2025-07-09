@@ -356,6 +356,15 @@
       </a>
     </li>
     @endforeach
+    <li class="sidebar-list {{ request()->is('dashboard/profile*') ? 'active' : '' }}">
+      <i class="fa-solid fa-thumbtack"></i>
+      <a class="sidebar-link" href="{{ url('dashboard/profile') }}">
+        <svg class="stroke-icon">
+          <use href="{{ asset('back/assets/svg/iconly-sprite.svg#Activity') }}"></use>
+        </svg>
+        <h6>Update Profile</h6>
+      </a>
+    </li>
     @endif
     </ul>
   </div>

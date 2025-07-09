@@ -13,12 +13,10 @@
 
   <div class="page-main-header col">
     <div class="header-left">
-      <!-- Tambahan jika ada -->
     </div>
     <div class="nav-right">
       <ul class="header-right">
         <li class="custom-dropdown">
-          <!-- Tambahan jika ada dropdown -->
         </li>
 
         <li>
@@ -57,10 +55,13 @@
                 <svg class="svg-color">
                   <use href="{{ asset('back/assets/svg/iconly-sprite.svg#Profile') }}"></use>
                 </svg>
-                <a class="ms-2" href="#">Account</a>
+                @if(auth()->user()->hasRole('siswa'))
+                <a class="ms-2" href="{{ route('edit-profile.index') }}">Account</a>
+                @else
+                <a class="ms-2 text-muted" href="javascript:void(0)" onclick="return false;" style="cursor: not-allowed;">Account</a>
+                @endif
               </li>
 
-              <!-- Logout -->
               <li class="d-flex">
                 <svg class="svg-color">
                   <use href="{{ asset('back/assets/svg/iconly-sprite.svg#Login') }}"></use>
