@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,67 +10,157 @@
             font-family: Arial, sans-serif;
             text-align: center;
         }
+
         .container {
             width: 90%;
             margin: auto;
             border: 1px solid #000;
             padding: 20px;
         }
+
         .title {
             font-size: 22px;
             font-weight: bold;
+            text-align: center;
         }
+
         .header {
+            text-align: center;
             margin-bottom: 5px;
         }
+
         .data-table {
             width: 100%;
             margin-top: 20px;
             border-collapse: collapse;
         }
+
         .data-table th,
         .data-table td {
             text-align: left;
             padding: 8px;
         }
+
+        .data-table th {
+            color: black;
+        }
+
         .data-table td {
             border-bottom: 1px solid #ddd;
         }
+
         .page-break {
             page-break-before: always;
         }
     </style>
 </head>
-<body>
 
+<body>
     <div class="container">
+       @php
+        $manualPath = public_path('images/header.png');
+
+        $fileExists = file_exists($manualPath);
+        $imageData = $fileExists ? base64_encode(file_get_contents($manualPath)) : null;
+        $type = pathinfo($manualPath, PATHINFO_EXTENSION);
+
+
+        @endphp
+
         <div class="header">
-            <img src="logo.png" alt="Logo Sekolah" height="150">
+            @if ($imageData)
+            <img src="data:image/{{ $type }};base64,{{ $imageData }}" class="logo" height="150">
+            @else
+            <p>Gambar tidak ditemukan.</p>
+            @endif
         </div>
 
         <h3 style="background-color: rgb(30, 161, 179); color: white; padding: 5px;">Data Siswa Jalur Domisili</h3>
         <table class="data-table">
             <tr>
                 <th>Foto 3x4</th>
-                <td><img src="pasfoto.jpg" width="100" alt="Foto Siswa"></td>
+                @php
+                $filename = $domisili->student->pas_foto;
+                $path = $filename ? storage_path('app/public/' . $filename) : null;
+                $fotoData = $path && file_exists($path) ? base64_encode(file_get_contents($path)) : null;
+                $fotoType = $path ? pathinfo($path, PATHINFO_EXTENSION) : null;
+                @endphp
+
+                @if ($fotoData)
+                <img src="data:image/{{ $fotoType }};base64,{{ $fotoData }}" width="100">
+                @else
+                <span>Gambar tidak ditemukan</span>
+                @endif
+
             </tr>
-            <tr><th>Tanggal dan Jam Mendaftar</th><td>: 2025-06-26 08:00</td></tr>
-            <tr><th>Nama</th><td>: Budi Santoso</td></tr>
-            <tr><th>Nomor Pendaftaran</th><td>: PPDB-001</td></tr>
-            <tr><th>Sekolah Tujuan</th><td>: SMPN Maju Jaya</td></tr>
-            <tr><th>Email</th><td>: budi@example.com</td></tr>
-            <tr><th>NISN</th><td>: 1234567890</td></tr>
-            <tr><th>NIK</th><td>: 3210987654321000</td></tr>
-            <tr><th>No. KK</th><td>: 1234567890123456</td></tr>
-            <tr><th>Jenis Kelamin</th><td>: Laki-laki</td></tr>
-            <tr><th>Tempat, Tanggal Lahir</th><td>: Medan, 15 Agustus 2012</td></tr>
-            <tr><th>Agama</th><td>: Islam</td></tr>
-            <tr><th>Alamat</th><td>: Jl. Pendidikan No. 123</td></tr>
-            <tr><th>Kecamatan</th><td>: Siantar Utara</td></tr>
-            <tr><th>Kelurahan</th><td>: Martoba</td></tr>
-            <tr><th>Asal Sekolah</th><td>: SDN 101</td></tr>
-            <tr><th>Alamat Asal Sekolah</th><td>: Jl. Sekolah Lama No. 10</td></tr>
-            <tr><th>Tinggal Dengan</th><td>: Orang Tua</td></tr>
+            <tr>
+                <th>Tanggal dan Jam Mendaftar</th>
+                <td>: {{ $domisili->user->created_at }}</td>
+            </tr>
+            <tr>
+                <th>Nama</th>
+                <td>: {{ $domisili->user->name }}</td>
+            </tr>
+            <tr>
+                <th>Nomor Pendaftaran</th>
+                <td>: {{ 'PPDB-' . str_pad($domisili->id, 3, '0', STR_PAD_LEFT) }}</td>
+            </tr>
+            <tr>
+                <th>Sekolah Tujuan</th>
+                <td>: {{ $domisili->user->sekolah->nama_sekolah ?? '-' }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>: {{ $domisili->user->email }}</td>
+            </tr>
+            <tr>
+                <th>NISN</th>
+                <td>: {{ $domisili->student->nisn ?? '-' }}</td>
+            </tr>
+            <tr>
+                <th>NIK</th>
+                <td>: {{ $domisili->student->nik ?? '-' }}</td>
+            </tr>
+            <tr>
+                <th>No. KK</th>
+                <td>: {{ $domisili->student->no_kk ?? '-' }}</td>
+            </tr>
+            <tr>
+                <th>Jenis Kelamin</th>
+                <td>: {{ $domisili->student->jenis_kelamin ?? '-' }}</td>
+            </tr>
+            <tr>
+                <th>Tempat, Tanggal Lahir</th>
+                <td>: {{ $domisili->student->tempat_lahir ?? '-' }}, {{ $domisili->student->tanggal_lahir ?? '-' }}</td>
+            </tr>
+            <tr>
+                <th>Agama</th>
+                <td>: {{ $domisili->student->agama ?? '-' }}</td>
+            </tr>
+            <tr>
+                <th>Alamat</th>
+                <td>: {{ $domisili->student->alamat ?? '-' }}</td>
+            </tr>
+            <tr>
+                <th>Kecamatan</th>
+                <td>: {{ $domisili->student->kecamatan ?? '-' }}</td>
+            </tr>
+            <tr>
+                <th>Kelurahan</th>
+                <td>: {{ $domisili->student->kelurahan ?? '-' }}</td>
+            </tr>
+            <tr>
+                <th>Asal Sekolah</th>
+                <td>: {{ $domisili->student->asal_sekolah ?? '-' }}</td>
+            </tr>
+            <tr>
+                <th>Alamat Asal Sekolah</th>
+                <td>: {{ $domisili->student->alamat_asal_sekolah ?? '-' }}</td>
+            </tr>
+            <tr>
+                <th>Tinggal Dengan</th>
+                <td>: {{ $domisili->student->tinggal_dengan ?? '-' }}</td>
+            </tr>
         </table>
     </div>
 
@@ -78,49 +169,109 @@
     <div class="container">
         <h3 style="background-color: rgb(30, 161, 179); color: white; padding: 5px;">Data Orang Tua</h3>
         <table class="data-table">
-            <tr><th>Nama Ayah</th><td>: Sugeng Santoso</td></tr>
-            <tr><th>Pekerjaan Ayah</th><td>: Pegawai Negeri</td></tr>
-            <tr><th>Nama Ibu</th><td>: Rina Marlina</td></tr>
-            <tr><th>Pekerjaan Ibu</th><td>: Ibu Rumah Tangga</td></tr>
-            <tr><th>Alamat</th><td>: Jl. Pendidikan No. 123</td></tr>
-            <tr><th>No. HP</th><td>: 081234567890</td></tr>
+            <tr>
+                <th>Nama Ayah</th>
+                <td>: {{ $domisili->student->parent->nama_ayah ?? '-' }}</td>
+            </tr>
+            <tr>
+                <th>Pekerjaan Ayah</th>
+                <td>: {{ $domisili->student->parent->pekerjaan_ayah ?? '-' }}</td>
+            </tr>
+            <tr>
+                <th>Nama Ibu</th>
+                <td>: {{ $domisili->student->parent->nama_ibu ?? '-' }}</td>
+            </tr>
+            <tr>
+                <th>Pekerjaan Ibu</th>
+                <td>: {{ $domisili->student->parent->pekerjaan_ibu ?? '-' }}</td>
+            </tr>
+            <tr>
+                <th>Alamat</th>
+                <td>: {{ $domisili->student->parent->alamat ?? '-' }}</td>
+            </tr>
+            <tr>
+                <th>No. HP</th>
+                <td>: {{ $domisili->student->parent->no_hp ?? '-' }}</td>
+            </tr>
         </table>
 
         <h3 style="background-color:rgb(30, 161, 179); color: white; padding: 5px;">Data Wali</h3>
         <table class="data-table">
-            <tr><th>Nama Wali</th><td>: -</td></tr>
-            <tr><th>Pekerjaan Wali</th><td>: -</td></tr>
-            <tr><th>Alamat</th><td>: -</td></tr>
-            <tr><th>No. HP</th><td>: -</td></tr>
+            <tr>
+                <th>Nama Wali</th>
+                <td>: {{ $domisili->student->guardian->nama_wali ?? '-' }}</td>
+            </tr>
+            <tr>
+                <th>Pekerjaan Wali</th>
+                <td>: {{ $domisili->student->guardian->pekerjaan_wali ?? '-' }}</td>
+            </tr>
+            <tr>
+                <th>Alamat</th>
+                <td>: {{ $domisili->student->guardian->alamat ?? '-' }}</td>
+            </tr>
+            <tr>
+                <th>No. HP</th>
+                <td>: {{ $domisili->student->guardian->no_hp ?? '-' }}</td>
+            </tr>
         </table>
     </div>
-
     <div class="page-break"></div>
 
     <div class="container">
         <h3 style="background-color: rgb(30, 161, 179); color: white; padding: 5px;">Data Domisili</h3>
         <table class="data-table">
-            <tr><th>Jarak dari Sekolah</th><td>: 3.2 km</td></tr>
-            <tr><th>SKL / Ijazah</th><td>: skl_ijazah.pdf</td></tr>
-            <tr><th>Kartu Keluarga</th><td>: kk.pdf</td></tr>
+            @php
+            $fields = [
+            'skl_ijazah' => 'SKL / Ijazah',
+            'kartu_keluarga' => 'Kartu Keluarga',
 
-            <tr><th>Rapot Kelas 5 Semester 1</th><td>: rapot_5_1.pdf</td></tr>
-            <tr><th>Nilai Bahasa Indonesia</th><td>: 85</td></tr>
-            <tr><th>Nilai Matematika</th><td>: 88</td></tr>
-            <tr><th>Nilai IPA</th><td>: 87</td></tr>
-            <tr><th>Nilai Bahasa Inggris</th><td>: 84</td></tr>
-            <tr><th>Nilai Pendidikan Agama dan Budi Pekerti (PAI)</th><td>: 86</td></tr>
-            <tr><th>Rata-rata</th><td>: 86.0</td></tr>
 
-            <tr><th>Rapot Kelas 5 Semester 2</th><td>: rapot_5_2.pdf</td></tr>
-            <tr><th>Rata-rata Keseluruhan</th><td>: 86.25</td></tr>
+            'rapot_kelas6_semester1' => 'Rapot Kelas 6 Semester 1',
+            'nilai_b_indo_kelas6_semester1' => 'Nilai Bahasa Indonesia',
+            'nilai_matematika_kelas6_semester1' => 'Nilai Matematika',
+            'nilai_ipa_kelas6_semester1' => 'Nilai IPA',
+            'nilai_b_inggris_kelas6_semester1' => 'Nilai Bahasa Inggris',
+            'nilai_pai_kelas6_semester1' => 'Nilai Pendidikan Agama dan Budi Pekerti (PAI)',
+            'rata_rata_kelas6_semester1' => 'Rata-rata',
 
-            <tr><th>Sertifikat Akademik Kab/Kota 1</th><td>: sertifikat_kab1.pdf</td></tr>
-            <tr><th>Nilai Akademik Kab/Kota 1</th><td>: 20</td></tr>
-            <tr><th>Sertifikat Non-Akademik Nasional</th><td>: sertifikat_non_nasional.pdf</td></tr>
-            <tr><th>Nilai Non-Akademik Nasional</th><td>: 25</td></tr>
+            'rapot_kelas6_semester2' => 'Rapot Kelas 6 Semester 2',
+            'nilai_b_indo_kelas6_semester2' => 'Nilai Bahasa Indonesia',
+            'nilai_matematika_kelas6_semester2' => 'Nilai Matematika',
+            'nilai_ipa_kelas6_semester2' => 'Nilai IPA',
+            'nilai_b_inggris_kelas6_semester2' => 'Nilai Bahasa Inggris',
+            'nilai_pai_kelas6_semester2' => 'Nilai Pendidikan Agama dan Budi Pekerti (PAI)',
+            'rata_rata_kelas6_semester2' => 'Rata-rata',
 
-            <tr><th>Total Nilai Sertifikat</th><td>: 45</td></tr>
+            'rata_rata_keseluruhan' => 'Rata-rata Keseluruhan',
+            ];
+            @endphp
+            <tr>
+                <th>Jarak dari Sekolah</th>
+                <td>: {{ $domisili->jarak_km ?? '-' }} km</td>
+            </tr>
+            @foreach ($fields as $key => $label)
+
+            <tr>
+                <th>{{ $label }}</th>
+                <td>:
+                    @php
+                    $value = $domisili->$key ?? null;
+                    $isImage = $value && str_starts_with($value, 'uploads/') && preg_match('/\.(jpg|jpeg|png|gif)$/i', $value);
+                    $path = $value ? storage_path('app/public/' . $value) : null;
+                    $imageData = $path && file_exists($path) ? base64_encode(file_get_contents($path)) : null;
+                    $imageType = $path ? pathinfo($path, PATHINFO_EXTENSION) : null;
+                    @endphp
+
+                    @if ($imageData)
+                    <img src="data:image/{{ $imageType }};base64,{{ $imageData }}" width="100" style="margin-top: 50px;">
+                    @elseif ($isImage)
+                    <img src="{{ asset($value) }}" alt="{{ $label }}" style="max-width: 200px; height: auto; margin-top: 10px;">
+                    @else
+                    {{ $value ?? '-' }}
+                    @endif
+                </td>
+            </tr>
+            @endforeach
         </table>
     </div>
 
@@ -128,4 +279,5 @@
         Copyright © 2025 PPDB Online Dinas Pendidikan Maju Jaya.
     </footer>
 </body>
+
 </html>
