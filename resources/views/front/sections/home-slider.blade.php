@@ -8,8 +8,8 @@
                         <div class="row align-items-center">
                             <div class="col-md-12 col-lg-7">
                                 <div class="slider-text">
-                                    <h1>{{ $slider->title }}</h1>
-                                    <p>{{ $slider->description }}</p>
+                                    <h1>{{ $slider->judul }}</h1>
+                                    <p>{{ $slider->deskripsi }}</p>
 
                                     <div class="slide-button">
                                         <a href="#daftar" class="slide-btn-white mr-10">
@@ -22,7 +22,7 @@
 
                             <div class="col-md-12 col-lg-5">
                                 <div class="welcome-phone">
-                                    <img src="{{ asset('storage/sliders/' . $slider->image) }}" alt="App Mockup image">
+                                    <img src="{{ asset('storage/sliders/' . $slider->gambar) }}" alt="App Mockup image">
                                 </div>
                             </div>
                         </div>

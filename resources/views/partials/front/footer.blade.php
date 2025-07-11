@@ -5,13 +5,17 @@
                 <!-- Kiri -->
                 <div class="col-md-6 mb-4 mb-md-0">
                     <div class="footer-logo mb-2">
-                        <a href="/">
-                            <img src="{{ asset('images/logo/smpn-maju-jaya.png') }}" alt="Logo Footer" style="height: 50px;">
+                        <a href="{{ url('/') }}">
+                            @if ($setting?->gambar_footer)
+                            <img src="{{ asset('storage/' . $setting->gambar_footer) }}" alt="Logo Footer" style="height: 50px;">
+                            @else
+                            <img src="{{ asset('images/logo-black.svg') }}" alt="Default Logo" style="height: 50px;">
+                            @endif
                         </a>
                     </div>
-                    <p style="color: #f1f1f1;">Email: info@smpnmajujaya.sch.id</p>
-                    <p style="color: #f1f1f1;">Telepon: (0622) 123-4567</p>
-                    <p style="color: #f1f1f1;">Alamat: Jl. Pendidikan No. 45</p>
+                    <p style="color: #f1f1f1;">Email: {{ $setting->email ?? 'info@example.com' }}</p>
+                    <p style="color: #f1f1f1;">Telepon: {{ $setting->phone ?? '(021) 123-4567' }}</p>
+                    <p style="color: #f1f1f1;">Alamat: {{ $setting->alamat ?? 'Alamat belum diisi' }}</p>
                 </div>
 
                 <!-- Kanan -->
@@ -19,18 +23,23 @@
                     <ul class="social-links list-inline mb-2" style="color: #f1f1f1;">
                         <li class="list-inline-item me-2">Portal Resmi:</li>
                         <li class="list-inline-item">
-                            <a href="https://ppdb.smpnmajujaya.sch.id" target="_blank" class="btn btn-outline-light btn-sm" style="border-radius: 20px;">
-                                PPDB Online
+                            <a href="https://facebook.com/yourpage" target="_blank" class="btn btn-outline-light btn-sm" style="border-radius: 20px;">
+                                Facebook
                             </a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="https://elearning.smpnmajujaya.sch.id" target="_blank" class="btn btn-outline-light btn-sm" style="border-radius: 20px;">
-                                E-Learning
+                            <a href="https://instagram.com/yourpage" target="_blank" class="btn btn-outline-light btn-sm" style="border-radius: 20px;">
+                                Instagram
                             </a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="https://smpnmajujaya.sch.id" target="_blank" class="btn btn-outline-light btn-sm" style="border-radius: 20px;">
-                                Website Utama
+                            <a href="{{ $latestVideo->video_url ?? '#' }}" target="_blank" class="btn btn-outline-light btn-sm" style="border-radius: 20px;">
+                                YouTube
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="https://twitter.com/yourpage" target="_blank" class="btn btn-outline-light btn-sm" style="border-radius: 20px;">
+                                Twitter
                             </a>
                         </li>
                     </ul>
@@ -43,7 +52,8 @@
         <div class="container">
             <div class="text-center mt-3">
                 <p class="mb-0" style="color: #ccc;">
-                    © 2025 SMPN Maju Jaya.
+                    {{ $setting->copyright ??
+                    '© 2025 PPDB SMPN Maju Jaya. All rights reserved by Lagikoding' }}
                 </p>
             </div>
         </div>
