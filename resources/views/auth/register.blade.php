@@ -4,9 +4,9 @@
 
 @section('content')
     <div class="col-xl-5 login_two_image">
-        @if ($setting?->image_register)
+        @if ($setting?->gambar_register)
             <img class="bg-img-cover bg-center"
-                src="{{ asset('storage/' . $setting->image_register) }}"
+                src="{{ asset('storage/' . $setting->gambar_register) }}"
                 alt="Logo Header"
                 style="max-width: 150px;" />
         @else

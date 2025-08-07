@@ -92,7 +92,7 @@ class DashboardController extends Controller
             })
             ->get();
 
-        return view('back.superadmin.afirmasi.index', compact('affirmationTracks'));
+        return view('back.superadmin.daftar-jalur.afirmasi.index', compact('affirmationTracks'));
     }
 
     // Menampilkan data siswa jalur Domisili berdasarkan sekolah user yang login

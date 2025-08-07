@@ -79,12 +79,12 @@
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="heading{{ $faq->id }}">
                                     <button class="accordion-button collapsed accordion-light-primary text-primary @if($index == 0) active @endif" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $faq->id }}" aria-expanded="{{ $index == 0 ? 'true' : 'false' }}" aria-controls="collapse{{ $faq->id }}">
-                                        {{ $faq->question }} <i class="iconly-Arrow-Down-2 icli ms-auto icon"></i>
+                                        {{ $faq->pertanyaan }} <i class="iconly-Arrow-Down-2 icli ms-auto icon"></i>
                                     </button>
                                 </h2>
                                 <div class="accordion-collapse collapse @if($index == 0) show @endif" id="collapse{{ $faq->id }}" aria-labelledby="heading{{ $faq->id }}" data-bs-parent="#simpleaccordion">
                                     <div class="accordion-body">
-                                        <p>{{ $faq->answer }}</p>
+                                        <p>{{ $faq->jawaban }}</p>
                                     </div>
                                 </div>
                             </div>

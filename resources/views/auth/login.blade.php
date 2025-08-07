@@ -4,8 +4,8 @@
 
 @section('content')
 <div class="col-xl-7 login_one_image">
-  @if ($setting?->image_login)
-  <img class="bg-img-cover bg-center" src="{{ asset('storage/' . $setting->image_login) }}" alt="Logo Header" style="max-width: 150px;" />
+  @if ($setting?->gambar_login)
+  <img class="bg-img-cover bg-center" src="{{ asset('storage/' . $setting->gambar_login) }}" alt="Logo Header" style="max-width: 150px;" />
   @else
   <img class="bg-img-cover bg-center" src="{{ asset('images/logo-white-1.svg') }}" data-sticky-logo="{{ asset('images/logo-light-dark.svg') }}" alt="Default Logo" />
   @endif
