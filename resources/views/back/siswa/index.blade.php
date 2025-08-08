@@ -1,6 +1,6 @@
 @extends('layouts.back')
 
-@section('title', 'Dashboard PPDB SMPN Maju Jaya')
+@section('title', 'Dashboard PMB')
 
 @section('content')
 

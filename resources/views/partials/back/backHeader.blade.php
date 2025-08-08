@@ -1,7 +1,7 @@
 <header class="page-header row">
   <div class="logo-wrapper d-flex align-items-center col-auto">
     <a href="#">
-      <h3 style="color: black;">PPDB</h3>
+      <h3 style="color: black;">PMB</h3>
       <img class="dark-logo img-fluid" src="{{ asset('back/assets/images/logo/logo-dark.png') }}" alt="logo" />
     </a>
     <a class="close-btn toggle-sidebar" href="javascript:void(0)">

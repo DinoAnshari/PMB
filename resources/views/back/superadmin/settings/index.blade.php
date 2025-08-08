@@ -1,6 +1,6 @@
 @extends('layouts.back')
 
-@section('title', 'Settings - PPDB SMPN Maju Jaya')
+@section('title', 'Settings - PMB')
 
 @section('content')
 <div class="page-body">

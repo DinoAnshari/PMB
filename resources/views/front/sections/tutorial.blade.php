@@ -4,8 +4,8 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="section-title wow animate__animated animate__fadeInUp" data-wow-delay=".3s">
-                    <h2>Tutorial PPDB Online</h2>
-                    <p>Langkah step by step pendaftaraan PPDB SMPN Maju Jaya.</p>
+                    <h2>Tutorial PMB Online</h2>
+                    <p>Langkah step by step pendaftaraan PMB.</p>
                 </div>
             </div>
         </div>

@@ -12,12 +12,14 @@
 }
 
 .section-title h2::after {
-  background: #ee0979;
-  background: linear-gradient(to right, #ee0979, #ff6a00);
+  background: #014AF7;
+  /* background: #ee0979;
+  background: linear-gradient(to right, #ee0979, #ff6a00); */
 }
 .section-title h2::before {
-  background: #ee0979;
-  background: linear-gradient(to right, #ee0979, #ff6a00);
+  background: #014AF7;
+  /* background: #ee0979;
+  background: linear-gradient(to right, #ee0979, #ff6a00); */
 }
 
 /* Preloader style */
@@ -91,8 +93,9 @@
 /* End Preloader style */
 @media only screen and (min-width: 768px) {
   .top-menu.menu-shrink {
-    background: #ee0979;
-    background: linear-gradient(to right, #ee0979, #ff6a00);
+    background: #014AF7;
+    /* background: #ee0979;
+    background: linear-gradient(to right, #ee0979, #ff6a00); */
   }
 }
 .navbar-white .navbar-nav .nav-item .nav-link:focus, .navbar-white .navbar-nav .nav-item .nav-link:hover {
@@ -133,8 +136,10 @@
   position: relative;
 }
 .video-bg::after {
-  background: #ee0979;
-  background: linear-gradient(to right, #ee0979, #ff6a00);
+  background: #014AF7;
+  background: linear-gradient(to right, #014AF7, #F89D08);
+  /* background: #ee0979;
+  background: linear-gradient(to right, #ee0979, #ff6a00); */
 }
 
 .app-about-text h3::after {
@@ -146,16 +151,20 @@
 }
 
 .single-hiw-feature i {
-  background: #ee0979;
-  background: linear-gradient(to right, #ee0979, #ff6a00);
+  background: #014AF7;
+  background: linear-gradient(to right, #014AF7, #F89D08);
+  /* background: #ee0979;
+  background: linear-gradient(to right, #ee0979, #ff6a00); */
 }
 .single-hiw-feature i:hover i {
   box-shadow: 0 0 10px #ee0979;
 }
 
 .video-demo-content::before {
-  background: #ee0979;
-  background: linear-gradient(to right, #ee0979, #ff6a00);
+  background: #014AF7;
+  background: linear-gradient(to right, #014AF7, #F89D08);
+  /* background: #ee0979;
+  background: linear-gradient(to right, #ee0979, #ff6a00); */
 }
 
 .single-feature::after {
@@ -227,8 +236,10 @@
 }
 
 .faq-content .faq-title::before {
-  background: #ee0979;
-  background: linear-gradient(to right, #ee0979, #ff6a00);
+  background: #014AF7;
+  background: linear-gradient(to right, #014AF7, #F89D08);
+  /* background: #ee0979;
+  background: linear-gradient(to right, #ee0979, #ff6a00); */
 }
 .faq-content .faq-title.active {
   background: #ee0979;
@@ -246,8 +257,10 @@
 }
 
 .app-download-section::after {
-  background: #ee0979;
-  background: linear-gradient(to right, #ee0979, #ff6a00);
+  background: #014AF7;
+  background: linear-gradient(to right, #014AF7, #F89D08);
+  /* background: #ee0979;
+  background: linear-gradient(to right, #ee0979, #ff6a00); */
 }
 
 .single-blog-post .blog-date {
@@ -312,8 +325,10 @@
 }
 
 .single-contact-info i {
-  background: #ee0979;
-  background: linear-gradient(to right, #ee0979, #ff6a00);
+  background: #014AF7;
+  background: linear-gradient(to right, #014AF7, #F89D08);
+  /* background: #ee0979;
+  background: linear-gradient(to right, #ee0979, #ff6a00); */
 }
 
 .error-page-content {
@@ -392,5 +407,14 @@
 }
 
 .back-top-button i {
-  color: #ee0979;
+  background: linear-gradient(to left, #014AF7, #F89D08);
+
+  /* Potong background mengikuti bentuk teks */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* Untuk browser yang mendukung standar */
+  background-clip: text;
+  color: transparent;
+  /* color: #ee0979; */
 }/*# sourceMappingURL=gradient-color-eight.css.map */

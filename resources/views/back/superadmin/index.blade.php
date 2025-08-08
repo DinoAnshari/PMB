@@ -1,6 +1,6 @@
 @extends('layouts.back')
 
-@section('title', 'Dashboard PPDB SMPN Maju Jaya')
+@section('title', 'Dashboard PMB')
 
 @section('content')
 <div class="container-fluid">
@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-sm-6 col-12">
                 <h2>Dashboard</h2>
-                <p class="mb-0 text-title-gray">PPDB SMPN Maju Jaya.</p>
+                <p class="mb-0 text-title-gray">PMB.</p>
             </div>
             <div class="col-sm-6 col-12">
                 <ol class="breadcrumb">

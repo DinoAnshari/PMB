@@ -1,4 +1,4 @@
-<footer id="footer" style="background-color: #222; padding: 40px 0;">
+<footer id="footer" style="/*background-color: #222;*/ background-color: #FAC833; padding: 40px 0;">
     <div class="footer-top">
         <div class="container">
             <div class="row align-items-center text-center text-md-start text-light">
@@ -48,7 +48,7 @@
         </div>
     </div>
 
-    <div class="footer-bottom" style="background-color: #111; padding: 20px 0;">
+    <div class="footer-bottom" style="/*background-color: #111;*/ background-color: #014AF7; padding: 20px 0;">
         <div class="container">
             <div class="text-center mt-3">
                 <p class="mb-0" style="color: #ccc;">
