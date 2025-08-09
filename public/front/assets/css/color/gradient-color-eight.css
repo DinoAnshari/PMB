@@ -237,13 +237,15 @@
 
 .faq-content .faq-title::before {
   background: #014AF7;
-  background: linear-gradient(to right, #014AF7, #F89D08);
+  /* background: linear-gradient(to right, #014AF7, #F89D08); */
   /* background: #ee0979;
   background: linear-gradient(to right, #ee0979, #ff6a00); */
 }
 .faq-content .faq-title.active {
-  background: #ee0979;
-  background: linear-gradient(to right, #ee0979, #ff6a00);
+  /* background: #ee0979;
+  background: linear-gradient(to right, #ee0979, #ff6a00); */
+  background: #014AF7;
+  background: linear-gradient(to right, #014AF7, #F89D08);
 }
 
 .accordion__item.active .accordion-header {

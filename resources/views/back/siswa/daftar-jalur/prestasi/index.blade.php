@@ -1,6 +1,6 @@
 @extends('layouts.back')
 
-@section('title', 'Data Prestasi - PPDB SMPN Maju Jaya')
+@section('title', 'Data Prestasi - PMB')
 
 @section('content')
 <div class="page-body">
