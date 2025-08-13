@@ -3,7 +3,7 @@
 @section('title', 'Register')
 
 @section('content')
-    <div class="col-xl-5 login_two_image">
+    <div class="col-xl-7 login_two_image">
         @if ($setting?->gambar_register)
             <img class="bg-img-cover bg-center"
                 src="{{ asset('storage/' . $setting->gambar_register) }}"
@@ -17,15 +17,18 @@
         @endif
     </div>
 
-    <div class="col-xl-7 p-0">
+    <div class="col-xl-5 p-0">
         <div class="login-card login-dark login-bg">
             <div>
                 <div class="text-center mb-4">
                     <a class="logo" href="{{ url('/') }}">
-                        <img src="{{ asset('images/logo/logo.png') }}"
+                        <!-- <img src="{{ asset('images/logo/logo.png') }}"
                             alt="Logo"
                             class="img-fluid m-auto"
-                            style="max-height: 150px;" />
+                            style="max-height: 150px;" /> -->
+                            <span style="font-family: Arial, sans-serif; font-size: 64px; font-weight: bold; color: #014AF7; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); letter-spacing: 3px;">
+                        PMB
+                    </span>
                     </a>
                 </div>
 

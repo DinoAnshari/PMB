@@ -116,6 +116,9 @@
                                 <li class="color-layout" data-attr="color-1" data-primary="#308e87" data-secondary="#f39159">\
                                     <div></div>\
                                 </li>\
+                                <li class="color-layout" data-attr="color-1" data-primary="#014AF7" data-secondary="#F89D08">\
+                                    <div></div>\
+                                </li>\
                                 <li class="color-layout" data-attr="color-2" data-primary="#57375D" data-secondary="#FF9B82">\
                                     <div></div>\
                                 </li>\

@@ -11219,3 +11219,15 @@ CHRITY FOOTER STYLE
 /*
 CHRITY LANDING PAGE STYLE END
 ===================================*//*# sourceMappingURL=style.css.map */
+
+/* STYLE TAMBAHAN */
+.bag-footer-1 {
+  /*background-color: #222;*/
+  background-color: #FAC833;
+  padding: 40px 0 0 0;
+}
+.bag-footer-2 {
+  /*background-color: #111;*/
+  background-color: #014AF7;
+  padding: 20px 0;
+}

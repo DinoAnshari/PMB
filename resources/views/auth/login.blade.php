@@ -17,11 +17,14 @@
     <div>
       <div class="text-center mb-4">
         <a class="logo" href="{{ url('/') }}">
-          <img
+          <!-- <img
             src="{{ asset('images/logo/logo.png') }}"
             alt="Logo"
             class="img-fluid m-auto"
-            style="max-height: 150px;" />
+            style="max-height: 150px;" /> -->
+            <span style="font-family: Arial, sans-serif; font-size: 64px; font-weight: bold; color: #014AF7; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); letter-spacing: 3px;">
+            PMB
+          </span>
         </a>
       </div>
 

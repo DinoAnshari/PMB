@@ -663,3 +663,14 @@ Default CSS
     border: 1px dashed #ffffff;
   }
 }/*# sourceMappingURL=dark.css.map */
+
+/* STYLE TAMBAHAN */
+.theme-dark .bag-footer-1 {
+  background: linear-gradient(to right, #050505, #0d0e0e);
+}
+.theme-dark .footer-top {
+  background: rgba(0, 0, 0, 0);
+}
+.theme-dark .bag-footer-2 {
+  background: rgba(0, 0, 0, 0);
+}

@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-lg-5">
                 <div class="text-center wow animate__animated animate__fadeInUp" data-wow-delay=".4s">
-                    <img src="{{ asset('images/logo/faqs.png') }}" alt="Faq Image">
+                    <img src="{{ asset('images/logo/undraw_faq_h01d-2.svg') }}" alt="Faq Image">
                 </div>
             </div>
             <div class="col-lg-7">
