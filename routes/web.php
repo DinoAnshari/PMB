@@ -120,19 +120,22 @@ Route::middleware(['auth', 'verified', 'role.sekolah:pemeriksa prestasi,pemeriks
 Route::middleware(['auth', 'verified', 'role:siswa'])->prefix('/dashboard')->group(function () {
     Route::get('/index_siswa', [DashboardSiswaController::class, 'index'])->name('dashboard.index_siswa');
     Route::resource('/biodata', BiodataController::class);
-    Route::get('/prestasi', [JalurPrestasiController::class, 'index'])->name('prestasi-siswa.index')->middleware('jalur.aktif');
+    Route::get('/prestasi-siswa/index', [JalurPrestasiController::class, 'index'])->name('prestasi-siswa.index');
+    // Route::get('/prestasi-siswa/index', [JalurPrestasiController::class, 'index'])->name('prestasi-siswa.index')->middleware('jalur.aktif');
     Route::get('/prestasi-siswa/create', [JalurPrestasiController::class, 'create'])->name('prestasi-siswa.create');
     Route::post('/prestasi-siswa/store', [JalurPrestasiController::class, 'store'])->name('prestasi-siswa.store');
     Route::get('/prestasi-siswa/{id}/edit', [JalurPrestasiController::class, 'edit'])->name('prestasi-siswa.edit');
     Route::put('/prestasi-siswa/{id}', [JalurPrestasiController::class, 'update'])->name('prestasi-siswa.update');
 
-    Route::get('/afirmasi', [JalurAfirmasiController::class, 'index'])->name('afirmasi-siswa.index')->middleware('jalur.aktif');
+    Route::get('/afirmasi-siswa/index', [JalurAfirmasiController::class, 'index'])->name('afirmasi-siswa.index');
+    // Route::get('/afirmasi', [JalurAfirmasiController::class, 'index'])->name('afirmasi-siswa.index')->middleware('jalur.aktif');
     Route::get('/afirmasi-siswa/create', [JalurAfirmasiController::class, 'create'])->name('afirmasi-siswa.create');
     Route::post('/afirmasi-siswa/store', [JalurAfirmasiController::class, 'store'])->name('afirmasi-siswa.store');
     Route::get('/afirmasi-siswa/{id}/edit', [JalurAfirmasiController::class, 'edit'])->name('afirmasi-siswa.edit');
     Route::put('/afirmasi-siswa/{id}', [JalurAfirmasiController::class, 'update'])->name('afirmasi-siswa.update');
 
-    Route::get('/domisili', [JalurDomisiliController::class, 'index'])->name('domisili-siswa.index')->middleware('jalur.aktif');
+    Route::get('/domisili-siswa/index', [JalurDomisiliController::class, 'index'])->name('domisili-siswa.index');
+    // Route::get('/domisili', [JalurDomisiliController::class, 'index'])->name('domisili-siswa.index')->middleware('jalur.aktif');
     Route::get('/domisili-siswa/create', [JalurDomisiliController::class, 'create'])->name('domisili-siswa.create');
     Route::post('/domisili-siswa/store', [JalurDomisiliController::class, 'store'])->name('domisili-siswa.store');
     Route::get('/domisili-siswa/{id}/edit', [JalurDomisiliController::class, 'edit'])->name('domisili-siswa.edit');

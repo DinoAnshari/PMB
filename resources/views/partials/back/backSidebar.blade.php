@@ -346,9 +346,11 @@
       </a>
     </li>
     @foreach($jalurList as $jalur)
-    <li class="sidebar-list {{ request()->is('dashboard/' . $jalur->nama . '*') ? 'active' : '' }}">
+    <li class="sidebar-list {{ request()->is('dashboard/' . $jalur->nama . '-siswa/*') ? 'active' : '' }}">
+    <!-- <li class="sidebar-list {{ request()->is('dashboard/' . $jalur->nama . '*') ? 'active' : '' }}"> -->
       <i class="fa-solid fa-thumbtack"></i>
-      <a class="sidebar-link" href="#" onclick="checkJalur(event, '{{ url('dashboard/' . $jalur->nama) }}', '{{ strtolower($jalur->nama) }}')">
+      <a class="sidebar-link" href="#" onclick="checkJalur(event, '{{ url('dashboard/' . $jalur->nama . '-siswa/index') }}', '{{ strtolower($jalur->nama) }}')">
+      <!-- <a class="sidebar-link" href="#" onclick="checkJalur(event, '{{ url('dashboard/' . $jalur->nama) }}', '{{ strtolower($jalur->nama) }}')"> -->
         <svg class="stroke-icon">
           <use href="{{ asset('back/assets/svg/iconly-sprite.svg#Activity') }}"></use>
         </svg>
